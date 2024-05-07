@@ -1,0 +1,22 @@
+[{
+		"id":	1,
+		"id_venda":	1,
+		"id_produto":	3,
+		"descricao_produto":	"Coca-Cola",
+		"quantidade_produto":	3,
+		"valor_produto":	5
+	}, {
+		"id":	2,
+		"id_venda":	1,
+		"id_produto":	1,
+		"descricao_produto":	"Cerveja",
+		"quantidade_produto":	3,
+		"valor_produto":	5
+	}, {
+		"id":	3,
+		"id_venda":	1,
+		"id_produto":	2,
+		"descricao_produto":	"Cuba",
+		"quantidade_produto":	1,
+		"valor_produto":	20
+	}]

@@ -1,0 +1,7 @@
+1 'Sidney Rafael' sidneyadm 1234r administrador 1 1
+2 'Sidney Mantovani' sidneyvenda 1234r vendedor 1 1
+2 'teste' teste teste administrador 1 1
+4 'sidney111' qew qwe vendedor 1 1
+5 'sisi' qwq qwq administrador 1 1
+6 'rafa' rafa rafa vendedor 1 1
+7 '1' 1 1 vendedor 1 1
