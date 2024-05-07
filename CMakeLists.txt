@@ -21,7 +21,6 @@ add_executable(projeto_gestao_de_eventos main.c
         venda_detalhes.h
         login.c
         login.h
-        cJSON/cJSON.c
         variaveis_compartilhadas.c
         variaveis_compartilhadas.h
 )

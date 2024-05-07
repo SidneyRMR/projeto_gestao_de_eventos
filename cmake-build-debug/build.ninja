@@ -105,13 +105,6 @@ build CMakeFiles/projeto_gestao_de_eventos.dir/login.c.obj: C_COMPILER__projeto_
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
-build CMakeFiles/projeto_gestao_de_eventos.dir/cJSON/cJSON.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/cJSON/cJSON.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\cJSON\cJSON.c.obj.d
-  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
-  OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
-  OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir\cJSON
-
 build CMakeFiles/projeto_gestao_de_eventos.dir/variaveis_compartilhadas.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/variaveis_compartilhadas.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\variaveis_compartilhadas.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
@@ -127,7 +120,7 @@ build CMakeFiles/projeto_gestao_de_eventos.dir/variaveis_compartilhadas.c.obj: C
 #############################################
 # Link the executable projeto_gestao_de_eventos.exe
 
-build projeto_gestao_de_eventos.exe: C_EXECUTABLE_LINKER__projeto_gestao_de_eventos_Debug CMakeFiles/projeto_gestao_de_eventos.dir/main.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/produto.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/usuario.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/venda.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/evento.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/menu.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/venda_detalhes.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/login.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/cJSON/cJSON.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/variaveis_compartilhadas.c.obj
+build projeto_gestao_de_eventos.exe: C_EXECUTABLE_LINKER__projeto_gestao_de_eventos_Debug CMakeFiles/projeto_gestao_de_eventos.dir/main.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/produto.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/usuario.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/venda.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/evento.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/menu.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/venda_detalhes.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/login.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/variaveis_compartilhadas.c.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
