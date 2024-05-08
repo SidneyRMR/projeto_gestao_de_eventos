@@ -6,48 +6,34 @@
 #include "menu.h"
 #include "venda_detalhes.h"
 
-void criarVenda() {
-    Venda venda;
-    char dataAtual[11];
-    venda.id = carregarUltimaVenda();
-    obterDataAtual(dataAtual);
-    strcpy(venda.data, dataAtual);
-    venda.id_evento = 1; // Preciso receber como parâmetro - TODO
-    venda.id_usuario = 2; // Preciso receber como parâmetro - TODO
-    salvarVenda(venda);
-}
-
-int listarVendas() {
-    FILE *file;
-    char filename[] = "data/vendas.txt";
-    file = fopen(filename, "r");
-
-    if (file != NULL) {
-        //printf("Arquivo foi aberto com sucesso.\n\n");
-
-        // Imprimir cabeçalho da tabela
-
-        printf("|=====================================================|\n");
-        printf("|                  LISTA DAS VENDAS                   |\n");
-        printf("|-----------------------------------------------------|\n");
-        printf("| %-3s | %-20s | %-5s | %-10s |\n", "Cod", "Data", "ID_Evento", "ID_Usuario");
-        printf("|-----|----------------------|-----------|------------|\n");
-
-        Venda venda;
-
-        // Ler e exibir cada linha do arquivo
-        while (fscanf(file, "%d %11s %d %d", &venda.id, venda.data, &venda.id_evento, &venda.id_usuario) != EOF) {
-            printf("| %-3d | %-20s | %-9d | %-10d |\n", venda.id, venda.data, venda.id_evento, venda.id_usuario);
-        }
-        printf("|-----------------------------------------------------|\n");
-
-        fclose(file);
-    } else {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
-    }
-
-    return 0;
-}
+//int listarVendas() {
+//    FILE *file;
+//    char filename[] = "data/vendas.txt";
+//    file = fopen(filename, "r");
+//
+//    if (file != NULL) {
+//        //printf("Arquivo foi aberto com sucesso.\n\n");
+//        // Imprimir cabeçalho da tabela
+//        printf("|=====================================================|\n");
+//        printf("|                  LISTA DAS VENDAS                   |\n");
+//        printf("|-----------------------------------------------------|\n");
+//        printf("| %-3s | %-20s | %-5s | %-10s |\n", "Cod", "Data", "ID_Evento", "ID_Usuario");
+//        printf("|-----|----------------------|-----------|------------|\n");
+//
+//        Venda venda;
+//
+//        // Ler e exibir cada linha do arquivo
+//        while (fscanf(file, "%d %11s %d %d", &venda.id, venda.data, &venda.id_evento, &venda.id_usuario) != EOF) {
+//            printf("| %-3d | %-20s | %-9d | %-10d |\n", venda.id, venda.data, venda.id_evento, venda.id_usuario);
+//        }
+//        printf("|-----------------------------------------------------|\n");
+//
+//        fclose(file);
+//    } else {
+//        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+//    }
+//    return 0;
+//}
 
 // Função para carregar o último ID do arquivo vendas.txt
 int carregarUltimaVenda() {
@@ -74,7 +60,6 @@ int carregarUltimaVenda() {
     return contador_linhas+1;
 }
 
-
 // Função para salvar as informações da venda no arquivo vendas.txt
 void salvarVenda(Venda venda) {
     FILE *file;
@@ -90,118 +75,120 @@ void salvarVenda(Venda venda) {
     }
 }// Função para salvar as informações da venda no arquivo vendas.txt
 
-
-
 void menuVenda() {
-    resumoVenda();
     listarProdutos();
+    resumoVenda();
     opcoesVenda();
+}
 
-}
-void limparResumo() {
-    // TODO - Limpa a tela de resumo
-}
+
 struct ResumoVendas {
     int id_produto;
-    char descricao_produto[21];
+    char descricao_produto[51];
     int quantidade_produto;
-    float valor_produto;
+    double valor_produto;
 };
-
 #define MAX_PRODUTO 100
 struct ResumoVendas resumoVendas[MAX_PRODUTO];
+int contProduto;
+
+void adicionarProdutoResumo(int codigoProd, int qtde) {
+    Produto produto = consultarProdutoPorID(codigoProd);
+    int produtoExistente = 0;
+
+    for (int i = 0; i < contProduto; ++i) { // este for é pra verificar se ja existe algum produto com este ai no resumoProdutos, caso tiver, so somatizar a quantidade
+        if(resumoVendas[i].id_produto == codigoProd) {
+            // Se o produto já existe, atualiza apenas a quantidade
+            resumoVendas[i].quantidade_produto += qtde;
+            produtoExistente = 1;
+            break; // Sai do loop após encontrar o produto
+        }
+    }
+    // Se o produto não existe, insere um novo produto
+    if (!produtoExistente) {
+        if (contProduto < MAX_PRODUTO) {
+            resumoVendas[contProduto].id_produto = codigoProd;
+            strcpy(resumoVendas[contProduto].descricao_produto, produto.descricao);
+            resumoVendas[contProduto].quantidade_produto = qtde;
+            resumoVendas[contProduto].valor_produto = produto.preco;
+            contProduto++;
+        } else {
+            printf("Limite de produtos atingido!");
+        }
+    }
+}
+
+void removerProdutoResumo(int codigoProd, int qtde) {
+
+};
+
+void limparResumo() {
+    for (int i = 0; i < MAX_PRODUTO; i++) {
+        resumoVendas[i].id_produto = 0; // Limpa o id do produto
+        strcpy(resumoVendas[i].descricao_produto, ""); // Limpa a descrição do produto
+        resumoVendas[i].quantidade_produto = 0; // Limpa a quantidade do produto
+        resumoVendas[i].valor_produto = 0.0; // Limpa o valor do produto
+    }
+}
 
 void gerarVenda() {
     //TODO - PRECISO GERAR UMA VENDA NOVA E USAR O ID GERADO AQUI NO IDVENDA
-    Venda_detalhes venda_detalhes[MAX_PRODUTO];
-    //ResumoVendas resumoVendas[];
-    int idMinParaCadastrar = carregarUltimaVendaDetalhes();
-    int numProdutos = sizeof(resumoVendas) / sizeof(resumoVendas[0]); // Calcula o numero de elementos
-    // Salva a venda no venda_detalhes.txt
-    for (int i = idMinParaCadastrar; idMinParaCadastrar < numProdutos; ++i) {
-        venda_detalhes[i].id = idMinParaCadastrar;
-        //venda_detalhes.id_venda = //TODO carregar a venda;
-        venda_detalhes[i].id_produto = resumoVendas[i].id_produto;
-        strcpy(venda_detalhes[i].descricao_produto, resumoVendas[i].descricao_produto);
-        venda_detalhes[i].quantidade_produto = resumoVendas[i].quantidade_produto;
-        venda_detalhes[i].valor_produto = resumoVendas[i].valor_produto;
-        idMinParaCadastrar++;
-    }
-    //salvarVendaDetalhes(venda_detalhes);
 }
 
-void adicionarProdutoResumo(int num, int qnde) {
-    int cont = 0;
-    Produto produto = consultarProdutoPorID(num);
-    Venda_detalhes venda_detalhes[100];
-    venda_detalhes[cont].id = carregarUltimaVendaDetalhes();
-    venda_detalhes[cont].id_venda = carregarUltimaVenda();
-    venda_detalhes[cont].id_produto = num;
-    strcpy(venda_detalhes[cont].descricao_produto, produto.descricao);
-    venda_detalhes[cont].quantidade_produto = qnde;
-    venda_detalhes[cont].valor_produto = produto.preco;
-    cont++;
-}
-void removerProdutoResumo(int num) {
-    num = num * -1;
-    Venda_detalhes venda_detalhes[100];
-
-    // TODO
-};
 void opcoesVenda() {
-    char opcao;
+    int opcao = 999;
     int idMax = carregarUltimoProduto();
-    int num = 0;
+    int codigoProduto = 0;
+    int quantidade=0;
     printf("|=========================================================================|\n");
     printf("|                                  OPCOES                                 |\n");
     printf("|-------------------------------------------------------------------------|\n");
     printf("|\tDigite o codigo um produto para adicionar ao pedido.              |\n");
     printf("|\tDigite '-' e o codigo um produto para remover do pedido.          |\n");
-    printf("|\tDigite 'c' e para limpar o pedido.                                |\n");
-    printf("|\tDigite 's' e para sair da tela de pedido.                         |\n");
-    printf("|\tDigite 'f' e para gerar a venda.                                  |\n");
+    printf("|\tDigite '100' para limpar o pedido.                                |\n");
+    printf("|\tDigite '200' e para sair da tela de pedido.                       |\n");
+    printf("|\tDigite '0' e para gerar a venda.                                  |\n");
     printf("|\tEscolha uma opcao: ");
-    scanf(" %c",&opcao);
+    scanf(" %d",&opcao);
     switch (opcao) {
-        case 'c' :
+        case 100 :
             limparResumo();
             system("cls");
             menuVenda();
             break;
-        case 's':
-            system("cls");
-            escolherMenu();
-            break;
-        case 'f':
-            system("cls");
-            gerarVenda();
-            menuVenda();
-            break;
+        //case 200:
+        //    system("cls");
+        //    escolherMenu();
+        //    break;
+        //case 0:
+        //    system("cls");
+        //    criarVenda();
+        //    gerarVenda();
+        //    menuVenda();
+        //    break;
         default:
-            num = atoi(&opcao);
-            if (num > 0 || num <= idMax) {
-                int quantidade=0;
-                printf("|\tDigite quantos produtos deseja adicionar: \n");
+            //codigoProduto = atoi(&opcao);
+
+            if (opcao > 0 && opcao <= idMax) {
+                printf("|\tDigite quantos produtos deseja adicionar: ");
                 scanf("%d", &quantidade);
-                adicionarProdutoResumo(num, quantidade);
-            } else if((num < 0 || num >= -idMax)) {
-                removerProdutoResumo(num);
+                adicionarProdutoResumo(opcao, quantidade);
+                system("cls");
+                menuVenda();
+            } else if((opcao < 0 && opcao >= -idMax)) {
+                removerProdutoResumo(codigoProduto, quantidade);
+                system("cls");
+                menuVenda();
             } else {
                 printf("|\tOpção inválida. Por favor, escolha um código de produto válido.\n");
             }
     }
 }
-//struct ResumoVendas {
-//    char descricao_produto[21];
-//    int quantidade_produto;
-//    float valor_produto;
-//} ;
-
-
 
 void resumoVenda() {
-    //ResumoVendas resumoVendas[MAX_PRODUTO];
     int detalhes_lidos = 0; // Variável para contar quantos detalhes de venda foram lidos
+    double totalGeral = 0;
+    int totalQtde = 0;
 
     printf("|=========================================================================|\n");
     printf("|                            RESUMO DA VENDA                              |\n");
@@ -209,15 +196,40 @@ void resumoVenda() {
     printf("| %-38s | %-10s | %-7s | %-7s |\n", "Produto", "Preco", "Qnde", "Total");
     printf("|----------------------------------------|------------|---------|---------|\n");
 
-   //while (scanf("%20s %d %f", resumoVendas.descricao_produto, &resumoVendas.quantidade_produto, &resumoVendas.valor_produto) == 3) {
-   //    detalhes_lidos++; // Incrementa se um detalhe de venda for lido
-   //    printf("| %-20s | %-8.2f | %-5d | %-8.2f |\n", resumoVendas.descricao_produto, resumoVendas.valor_produto, resumoVendas.quantidade_produto,
-   //           resumoVendas.quantidade_produto * resumoVendas.valor_produto);
-   //}
+    for (int i = 0; i < MAX_PRODUTO; i++) {
+        // Verifica se o id_produto é zero, caso for nao adiciona mais produtos, so a quantidade
+        if (resumoVendas[i].id_produto == 0)
+            break;
+
+        detalhes_lidos++; // Incrementa detalhes_lidos para cada entrada
+        totalGeral = resumoVendas[i].quantidade_produto * resumoVendas[i].valor_produto + totalGeral;
+        totalQtde = totalQtde + resumoVendas[i].quantidade_produto;
+
+        printf("| %-38s | %-10.2f | %-7d | %-7.2f |\n", resumoVendas[i].descricao_produto, resumoVendas[i].valor_produto,
+               resumoVendas[i].quantidade_produto, resumoVendas[i].quantidade_produto * resumoVendas[i].valor_produto);
+    }
+    if (detalhes_lidos != 0) { // Se nenhum detalhe de venda for lido
+        printf("|----------------------------------------|--------------------------------|\n");
+        printf("|      ---     TOTAL GERAL     ---       |     QTD %-5d |    R$ %7.2f  |\n", totalQtde, totalGeral);
+        printf("|----------------------------------------|---------------|----------------|\n");
+    }
 
     if (detalhes_lidos == 0) { // Se nenhum detalhe de venda for lido
         //printf("|-------------------------------------------------------------------------|\n");
         printf("|                            Ainda nao ha nada aqui                       |\n");
         //printf("|-------------------------------------------------------------------------|\n");
     }
+}
+
+void criarVenda() {
+    Venda venda;
+    char dataAtual[11];
+    venda.id = carregarUltimaVenda();
+    obterDataAtual(dataAtual);
+    strcpy(venda.data, dataAtual);
+    venda.id_evento = 1; // Preciso receber como parâmetro - TODO
+    venda.id_usuario = 2; // Preciso receber como parâmetro - TODO
+    salvarVenda(venda);
+    // Retorna o id para ser usado na funcao salvarVendaDetalhes(Venda_detalhes venda_detalhes)
+
 }

@@ -7,7 +7,7 @@
 
 void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
     FILE *file;
-    char filename[] = "data/vendas.txt";
+    char filename[] = "data/vendas_detalhes.txt";
     file = fopen(filename, "a"); // Abrir o arquivo em modo de escrita, acrescentando ao final
 
     if (file != NULL) {

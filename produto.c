@@ -131,7 +131,6 @@ Produto consultarProdutoPorID(int id) {
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
-
     Produto produto_vazio; // Retorna um produto vazio se não encontrar
     produto_vazio.id = -1; // Ou outro valor que você considerar adequado
     return produto_vazio;
