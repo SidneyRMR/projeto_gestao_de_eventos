@@ -9,6 +9,8 @@ typedef struct {
     char descricao_produto[51];
     int quantidade_produto;
     double valor_produto;
+    //id_evento; - herdado do vendas
+    //TODO - precisa adicionar o id evento para que possa ser feito o filtro das próximas vendas_detalhes que forem ser criadas
 } Venda_detalhes;
 
 // Protótipo da função para salvar as informações da venda

@@ -126,6 +126,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
                       &venda_detalhes.id_produto, venda_detalhes.descricao_produto, &venda_detalhes.quantidade_produto,
                       &venda_detalhes.valor_produto) != EOF) {
             if (venda_detalhes.id_venda == opcao) {
+            // TODO - corrigir pois o filtro dever ser feito pelo id_evento e nao pelo id_venda, ams pra isso preciso faze o outro TODO de criar um novo campo id_evento no vendas_detalhes
                 encontrouVendas = 1;
                 accTotal += (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
                 accQtd += venda_detalhes.quantidade_produto;

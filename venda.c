@@ -244,10 +244,6 @@ void resumoVenda() {
     }
 }
 // Função para salvar as informações da venda no arquivo vendas.txt
-void salvarVenda(Venda venda) {
-
-}
-
 void criarVenda() {
     // TODO - fazer verificação de se possui algum item no resumoVendas, caso nao, sair e nao gerar a venda
     Venda venda;
