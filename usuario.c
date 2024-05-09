@@ -1,10 +1,12 @@
 #include <stdio.h>
 #include <string.h>
-#include <stdlib.h>
 #include "usuario.h"
+#include "evento.h"
 
 void criarUsuario() {
     Usuario usuario;
+
+    // TODO - Rever usando struct
     char p_nome[51]; // Array de caracteres para armazenar o nome do usuário
     char p_login[21]; // Array de caracteres para armazenar o login do usuário
     char p_senha[11]; // Array de caracteres para armazenar a senha do usuário
@@ -31,10 +33,10 @@ void criarUsuario() {
 
     // Solicitar ao usuário que escolha o tipo de usuário
     while (opcaoTipo != 1 && opcaoTipo != 2) {
-        printf("Escolha o tipo de usuario: \n"
-               "\t 1. Vendedor\n"
-               "\t 2. Administrador\n"
-               "\t Escolha: ");
+        printf("|\tEscolha o tipo de usuario:                      |\n"
+               "|\t\t 1. Vendedor                                     |\n"
+               "|\t\t 2. Administrador                                |\n"
+               "|\t\t Escolha: ");
         scanf("%d", &opcaoTipo);
     }
 
@@ -46,6 +48,8 @@ void criarUsuario() {
         case 2:
             strcpy(p_tipo, "administrador");
             break;
+        default:
+            printf("Tente novamente!");
     }
 
     // Preencher a estrutura do usuário com os dados inseridos
@@ -55,7 +59,18 @@ void criarUsuario() {
     strcpy(usuario.senha, p_senha);
     strcpy(usuario.tipo, p_tipo);
     usuario.status = p_status;
-    usuario.id_evento = 1; // TODO - Preciso receber como parâmetro
+
+    listarEventos();
+    int eventoMax = carregarUltimoEvento();
+    int opcaoEvento = 0;
+
+    while(opcaoEvento < 1 && opcaoEvento > eventoMax){
+        printf("|\tDigite um codigo de evento valido!");
+        scanf("%d", &opcaoEvento);
+    }
+        usuario.id_evento = opcaoEvento;
+
+
 
     salvarUsuario(usuario);
 }

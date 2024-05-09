@@ -11,10 +11,10 @@ void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
     file = fopen(filename, "a"); // Abrir o arquivo em modo de escrita, acrescentando ao final
 
     if (file != NULL) {
-        fprintf(file, "%d %d %d %s %d %f\n", venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto,
+        fprintf(file, "%d %d %d '%s' %d %f\n", venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto,
                 venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto, venda_detalhes.valor_produto);
         fclose(file);
-        printf("Venda salva com sucesso!\n");
+        printf("|         --------        Venda salva com sucesso!        --------        |\n");
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
@@ -122,14 +122,14 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
         printf("|-----|----------|------------|-------------------------------|------------|--------|--------|\n");
 
     // Ler e exibir cada linha do arquivo
-        while (fscanf(file, "%d %d %d '%50[^']' %d %f", &venda_detalhes.id, &venda_detalhes.id_venda,
+        while (fscanf(file, "%d %d %d '%50[^']' %d %lf.2", &venda_detalhes.id, &venda_detalhes.id_venda,
                       &venda_detalhes.id_produto, venda_detalhes.descricao_produto, &venda_detalhes.quantidade_produto,
                       &venda_detalhes.valor_produto) != EOF) {
             if (venda_detalhes.id_venda == opcao) {
                 encontrouVendas = 1;
                 accTotal += (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
                 accQtd += venda_detalhes.quantidade_produto;
-                printf("| %-3d | %-8d | %-10d | %-29s | %-10d | %-6.2f | %-6.2f | \n",
+                printf("| %-3d | %-8d | %-10d | %-29s | %-10d | %-6.2lf | %-6.2lf | \n",
                        venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto,
                        venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto,
                        venda_detalhes.valor_produto,
@@ -144,7 +144,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
         printf("|--------------------------------------------------------------------------------------------|\n");
     } else {
         printf("|--------------------------------------------------------------------------------------------|\n");
-        printf("|              ------     TOTAL GERAL     ------              |  QTD   %-3d |     R$   %6.2f |\n",
+        printf("|              ------     TOTAL GERAL     ------              |  QTD   %-3d |     R$   %6.2lf |\n",
                accQtd, accTotal);
         printf("|--------------------------------------------------------------------------------------------|\n");
     }
@@ -180,15 +180,15 @@ int relatorioVendasGeral() {
         float accTotal = 0;
         int accQtd = 0;
         // Ler e exibir cada linha do arquivo
-        while (fscanf(file, "%d %d %d '%50[^']' %d %f", &venda_detalhes.id, &venda_detalhes.id_venda, &venda_detalhes.id_produto, venda_detalhes.descricao_produto, &venda_detalhes.quantidade_produto, &venda_detalhes.valor_produto) != EOF) {
+        while (fscanf(file, "%d %d %d '%50[^']' %d %lf.2", &venda_detalhes.id, &venda_detalhes.id_venda, &venda_detalhes.id_produto, venda_detalhes.descricao_produto, &venda_detalhes.quantidade_produto, &venda_detalhes.valor_produto) != EOF) {
             accTotal = (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto) + accTotal;
             accQtd = (venda_detalhes.quantidade_produto) + accQtd;
-            printf("| %-3d | %-8d | %-10d | %-29s | %-10d | %-6.2f | %-6.2f | \n",
+            printf("| %-3d | %-8d | %-10d | %-29s | %-10d | %-6.2lf | %-6.2lf | \n",
                    venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto, venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto, venda_detalhes.valor_produto,
                    venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
         }
         printf("|--------------------------------------------------------------------------------------------|\n");
-        printf("|              ------     TOTAL GERAL     ------              |  QTD   %-3d |     R$   %6.2f |\n", accQtd ,accTotal);
+        printf("|              ------     TOTAL GERAL     ------              |  QTD   %-3d |     R$   %6.2lf |\n", accQtd ,accTotal);
         printf("|--------------------------------------------------------------------------------------------|\n");
 
         fclose(file);

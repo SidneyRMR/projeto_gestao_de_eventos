@@ -5,3 +5,12 @@
 5 2 5 'Pastel' 2 10
 6 3 6 'Cachorro-Quente' 3 10
 7 3 3 'Coca-Cola' 3 15
+8 10 1 'Cerveja' 1 5
+9 10 2 'Cuba' 2 20
+10 10 5 'Pastel' 5 10
+11 10 4 'Fanta' 1 5
+12 11 2 'Cuba' 2 20
+13 11 3 'Coca-Cola' 3 5
+14 11 4 'Fanta' 4 5
+15 12 1 'Cerveja' 1 5.000000
+16 12 2 'Cuba' 2 20.000000

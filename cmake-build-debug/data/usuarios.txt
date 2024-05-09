@@ -5,3 +5,4 @@
 5 'sisi' qwq qwq administrador 1 1
 6 'rafa' rafa rafa vendedor 1 1
 7 '1' 1 1 vendedor 1 1
+8 '2' 2 2 administrador 1 0

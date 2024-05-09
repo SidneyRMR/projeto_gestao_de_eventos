@@ -2,7 +2,7 @@
 #define USUARIO_H
 
 
-typedef struct {
+typedef struct Usuario {
     int id;
     char nome[51];
     char login[21];

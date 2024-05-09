@@ -30,7 +30,7 @@ void menuAdministrador() {
     printf("|-------------------------------------------------------------------------------------------------|\n");
     printf("|  20   |   Relatorio de Vendas                                                                   |\n");
     printf("|-------------------------------------------------------------------------------------------------|\n");
-    printf("|  -1   |   Sair do Menu Administrativo                          || Usuario: %-20s |\n",getNomeUsuarioCompartilhado());
+    printf("|  -1   |   Sair do Menu Administrativo                          || Usuario: %-20s |\n",UsuarioCompartilhado.nome);
     printf("|-------------------------------------------------------------------------------------------------|\n");
     printf("Escolha uma opcao:");
 
@@ -98,7 +98,7 @@ int escolherMenu() {
         printf("|             --------------------------             |\n");
         printf("|  -1   |   Sair do Programa                         |\n");
         printf("|----------------------------------------------------|\n");
-        printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata,getNomeUsuarioCompartilhado());
+        printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata, getUsuarioCompartilhado().nome);
         printf("|----------------------------------------------------|\n");
         printf("Escolha uma opcao:");
 

@@ -2,19 +2,20 @@
 #include <string.h>
 #include <stdlib.h>
 #include "login.h"
+#include "usuario.h"
 #include "menu.h"
 #include "variaveis_compartilhadas.h"
 
 #define MAX_USUARIOS 100 // Defina o número máximo de usuários
-struct Usuario {
-    int id;
-    char nome[51];
-    char login[21];
-    char senha[11];
-    char tipo[15];
-    int status;
-    int id_evento;
-};
+//struct Usuario {
+//    int id;
+//    char nome[51];
+//    char login[21];
+//    char senha[11];
+//    char tipo[15];
+//    int status;
+//    int id_evento;
+//};
 
 struct Usuario usuarios[MAX_USUARIOS]; // Declaração do array de usuários
 int numUsuarios = 0; // Variável para rastrear o número atual de usuários
@@ -47,25 +48,28 @@ void carregarUsuarios() {
 struct Usuario usuarios[MAX_USUARIOS]; // Declaração da matriz de usuários
 
 int loginAux() {
-    char usuario[21];
+    char usuarioo[21];
     char senha[21];
 
     printf("=======================================================\n");
     printf("|          TELA DE LOGIN - GESTAO DE EVENTOS          |\n");
     printf("|-----------------------------------------------------|\n");
     printf("|\tDigite seu usuario: ");
-    scanf(" %20s", usuario);
+    scanf(" %20s", usuarioo);
 
     printf("|\tDigite sua senha: ");
     scanf(" %20s", senha);
 
     printf("|-----------------------------------------------------|\n");
-
     for (int i = 0; i < numUsuarios; i++) {
-        if(strcmp(usuario, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
-            printf("|\tLogin efetuado com sucesso como %s\n", usuario);
 
-            setNomeUsuarioCompartilhado(usuario);
+        if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
+            printf("|\tLogin efetuado com sucesso como %s ", usuarioo);
+            printf(" - Id: %d\n", usuarios[i].id);
+            system("PAUSE");
+
+            setUsuarioCompartilhado(usuarios);
+            //setNomeUsuarioCompartilhado(usuario);
             escolherMenu();
             return 1;
         }

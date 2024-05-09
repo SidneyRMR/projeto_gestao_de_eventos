@@ -8,7 +8,7 @@ typedef struct {
     int id_produto;
     char descricao_produto[51];
     int quantidade_produto;
-    float valor_produto;
+    double valor_produto;
 } Venda_detalhes;
 
 // Protótipo da função para salvar as informações da venda
