@@ -10,15 +10,16 @@
 #include "login.h"
 #include "venda_detalhes.h"
 #include "variaveis_compartilhadas.h"
+
 void menuVendedor() {
     menuVenda();
 }
 
 void menuAdministrador() {
-    int opcao = 0;
+    int opcao = 999;
 
     system("cls");
-    while(opcao != -1) {
+    while(opcao != 0) {
     printf("===================================================================================================\n");
     printf("|                                       MENU ADMINISTRATIVO                                       |\n");
     printf("|-------------------------------------------------------------------------------------------------|\n");
@@ -30,7 +31,7 @@ void menuAdministrador() {
     printf("|-------------------------------------------------------------------------------------------------|\n");
     printf("|  20   |   Relatorio de Vendas                                                                   |\n");
     printf("|-------------------------------------------------------------------------------------------------|\n");
-    printf("|  -1   |   Sair do Menu Administrativo                          || Usuario: %-20s |\n",UsuarioCompartilhado.nome);
+    printf("|   0   |   Sair do Menu Administrativo                          || Usuario: %-20s |\n",UsuarioCompartilhado.nome);
     printf("|-------------------------------------------------------------------------------------------------|\n");
     printf("Escolha uma opcao:");
 
@@ -70,7 +71,7 @@ void menuAdministrador() {
                 system("PAUSE");
                 system("cls");
                 break;
-            case -1:
+            case 0:
                 printf("Saindo do Menu Administrativo...\n");
                 escolherMenu();
                 break;
@@ -81,13 +82,13 @@ void menuAdministrador() {
 }
 
 int escolherMenu() {
-    int opcaoMenu = 0;
+    int opcaoMenu = 999;
     char dataAtual[11];
     char ddata[11];
     obterDataAtual(dataAtual);
     strcpy(ddata, dataAtual);
     system("cls");
-    while(opcaoMenu != 9) {
+    while(opcaoMenu != 0) {
         printf("======================================================\n");
         printf("|     BEM VINDO AO PROGRAMA DE GESTAO DE EVENTOS     |\n");
         printf("|----------------------------------------------------|\n");
@@ -96,7 +97,7 @@ int escolherMenu() {
         printf("|   1   |   Menu de Vendas                           |\n");
         printf("|   2   |   Menu Administrativo                      |\n");
         printf("|             --------------------------             |\n");
-        printf("|  -1   |   Sair do Programa                         |\n");
+        printf("|   0   |   Sair do Programa                         |\n");
         printf("|----------------------------------------------------|\n");
         printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata, getUsuarioCompartilhado().nome);
         printf("|----------------------------------------------------|\n");
@@ -114,7 +115,7 @@ int escolherMenu() {
                 menuAdministrador();
                 system("cls");
                 break;
-            case -1:
+            case 0:
                 system("cls");
                 printf("Fazendo logoff...\n");
                 system("PAUSE");

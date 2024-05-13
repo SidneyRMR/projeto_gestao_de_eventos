@@ -91,7 +91,7 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 // Se o produto já existe, atualiza apenas a quantidade
                 resumoVendas[i].quantidade_produto += qtde;
                 produtoExistente = 1;
-                printf("|         ---------      Adicionando o item %s!      ---------        |\n",produto.descricao);
+                printf("|         ---------      Adicionando o item %-10s     ---------       |\n",produto.descricao);
                 system("PAUSE");
                 break; // Sai do loop após encontrar o produto
             }
@@ -104,7 +104,7 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[contProduto].quantidade_produto = qtde;
                 resumoVendas[contProduto].valor_produto = produto.preco;
                 contProduto++;
-                printf("|         ---------      Adicionando o item %s!      ---------        |\n",produto.descricao);
+                printf("|        ---------      Adicionando o item %-10s!      ---------        |\n",produto.descricao);
                 system("PAUSE");
             } else {
                 printf("|\tLimite de produtos atingido!\n");
@@ -167,23 +167,25 @@ void opcoesVenda() {
     printf("|                                  OPCOES                                 |\n");
     printf("|-------------------------------------------------------------------------|\n");
     printf("|\tDigite o codigo um produto para adicionar ao pedido.              |\n");
-    printf("|\tDigite '-' e o codigo um produto para remover do pedido.          |\n");
-    printf("|\tDigite '100' para limpar o pedido.                                |\n");
-    printf("|\tDigite '200' e para sair da tela de pedido.                       |\n");
-    printf("|\tDigite '0' e para gerar a venda.                                  |\n");
-    printf("|\tEscolha uma opcao: ");
+    if (contProduto > 0) {
+        printf("|\tDigite '-' e o codigo um produto para remover do pedido.          |\n");
+        printf("|\tDigite 100 e para gerar a venda.                                  |\n");
+        printf("|\tDigite 200 para limpar o pedido.                                  |\n");
+    }
+    printf("|\tDigite 0 e para sair da tela de pedido.                           |\n");
+    printf("|\tEscolha uma opcao ou codigo do produto: ");
     scanf(" %d",&opcao);
     switch (opcao) {
-        case 100 :
+        case 200 :
             limparResumo();
             system("cls");
             menuVenda();
             break;
-        case 200:
+        case 0:
             system("cls");
             escolherMenu();
             break;
-        case 0:
+        case 100:
             system("cls");
             criarVenda();
             //gerarVenda();
@@ -246,6 +248,11 @@ void resumoVenda() {
 // Função para salvar as informações da venda no arquivo vendas.txt
 void criarVenda() {
     // TODO - fazer verificação de se possui algum item no resumoVendas, caso nao, sair e nao gerar a venda
+    if (contProduto == 0) {
+        printf("Nao ha itens para criar a venda.\n");
+        system("PAUSE");
+        return; // Sair da função sem criar a venda
+    }
     Venda venda;
     char dataAtual[11];
     venda.id = carregarUltimaVenda();

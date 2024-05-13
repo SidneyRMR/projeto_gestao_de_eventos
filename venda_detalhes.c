@@ -48,8 +48,8 @@ int relatorioVendaEspecificoAux() {
 
 
 void relatorioVendasAux(){
-    int opcaoEvento = -2;
-    while(opcaoEvento != -1) {
+    int opcaoEvento = 999;
+    while(opcaoEvento != 0) {
     system("cls");
         printf("|--------------------------------------------------------------------------------------------------------|\n");
         printf("|                                     ESCOLHA UMA OPCAO DE RELATORIO                                     |\n");
@@ -59,7 +59,7 @@ void relatorioVendasAux(){
         printf("|    1  |   Relatorio Especifico                                                                         |\n");
         printf("|    2  |   Relatorio Geral                                                                              |\n");
         printf("|--------------------------------------------------------------------------------------------------------|\n");
-        printf("|   -1  |   Menu administrativo                                                                          |\n");
+        printf("|    0  |   Menu administrativo                                                                          |\n");
         printf("|--------------------------------------------------------------------------------------------------------|\n");
         printf("Escolha uma opcao:");
 
@@ -75,7 +75,7 @@ void relatorioVendasAux(){
                 relatorioVendasGeral();
                 system("PAUSE");
                 break;
-            case -1:
+            case 0:
                 system("cls");
                 printf("Saindo da tela de relatorio...\n");
                 menuAdministrador();
@@ -128,6 +128,10 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
             if (venda_detalhes.id_venda == opcao) {
             // TODO - corrigir pois o filtro dever ser feito pelo id_evento e nao pelo id_venda, ams pra isso preciso faze o outro TODO de criar um novo campo id_evento no vendas_detalhes
                 encontrouVendas = 1;
+                // TODO - filtro por idproduto para somatizar as quantidades dos produtos para depois imprimir
+                if(venda_detalhes.id_produto) {
+
+                }
                 accTotal += (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
                 accQtd += venda_detalhes.quantidade_produto;
                 printf("| %-3d | %-8d | %-10d | %-29s | %-10d | %-6.2lf | %-6.2lf | \n",
