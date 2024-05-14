@@ -92,7 +92,7 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[i].quantidade_produto += qtde;
                 produtoExistente = 1;
                 printf("|         ---------      Adicionando o item %-10s     ---------       |\n",produto.descricao);
-                system("PAUSE");
+                //system("PAUSE");
                 break; // Sai do loop após encontrar o produto
             }
         }
@@ -104,8 +104,8 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[contProduto].quantidade_produto = qtde;
                 resumoVendas[contProduto].valor_produto = produto.preco;
                 contProduto++;
-                printf("|        ---------      Adicionando o item %-10s!      ---------        |\n",produto.descricao);
-                system("PAUSE");
+                printf("|        ---------      Adicionando o item %-10s      ---------        |\n",produto.descricao);
+                //system("PAUSE");
             } else {
                 printf("|\tLimite de produtos atingido!\n");
             }
@@ -121,7 +121,7 @@ void removerProdutoResumo(int codigoProd, int qtde) {
             if (resumoVendas[i].quantidade_produto > qtde) {
                 resumoVendas[i].quantidade_produto -= qtde;
                 printf("|       --------      Removendo %d item(s) de %s!      --------       |\n", qtde, resumoVendas[i].descricao_produto);
-                system("PAUSE");
+                //system("PAUSE");
                 break; // Sai do loop após atualizar a quantidade do produto
             } else if (resumoVendas[i].quantidade_produto <= qtde) {
                 resumoVendas[i].id_produto = 0; // Limpa o id do produto
@@ -129,8 +129,8 @@ void removerProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[i].quantidade_produto = 0; // Limpa a quantidade do produto
                 resumoVendas[i].valor_produto = 0.0; // Limpa o valor do produto
                 contProduto = contProduto -1;
-                printf("|        ---------      Removendo um item da venda!      ---------        |\n", resumoVendas[i].descricao_produto);
-                system("PAUSE");
+                printf("|        ---------      Removendo um item da venda!      ---------        |\n");
+                //system("PAUSE");
                 break; // Sai do loop após atualizar a quantidade do produto
             } else {
                 printf("|\tDigite uma quantidade valida!\n");
@@ -161,7 +161,6 @@ void limparResumo() {
 void opcoesVenda() {
     int opcao = 999;
     int idMax = carregarUltimoProduto();
-    int codigoProduto = 0;
     int quantidade=0;
     printf("|=========================================================================|\n");
     printf("|                                  OPCOES                                 |\n");
@@ -188,24 +187,23 @@ void opcoesVenda() {
         case 100:
             system("cls");
             criarVenda();
-            //gerarVenda();
             menuVenda();
             break;
         default:
-            if (opcao > 0 && opcao <= idMax) {
+            if (opcao > 0 && opcao <= idMax-1) {
                 printf("|\tDigite quantos produtos deseja ADICIONAR: ");
                 scanf("%d", &quantidade);
                 adicionarProdutoResumo(opcao, quantidade);
                 system("cls");
                 menuVenda();
-            } else if(opcao < 0 && opcao >= -idMax) {
+            } else if(opcao < 0 && opcao >= -idMax+1) {
                 printf("|\tDigite quantos produtos deseja REMOVER: ");
                 scanf("%d", &quantidade);
                 removerProdutoResumo(opcao, quantidade);
                 system("cls");
                 menuVenda();
             } else {
-                printf("|\tOpção inválida. Por favor, escolha um código de produto válido.\n");
+                printf("|\tPor favor, escolha um código de produto valido.\n");
             }
     }
 }
@@ -247,7 +245,7 @@ void resumoVenda() {
 }
 // Função para salvar as informações da venda no arquivo vendas.txt
 void criarVenda() {
-    // TODO - fazer verificação de se possui algum item no resumoVendas, caso nao, sair e nao gerar a venda
+    // Faz a verificação se possui algum item no resumoVendas, caso nao, sair e nao gerar a venda
     if (contProduto == 0) {
         printf("Nao ha itens para criar a venda.\n");
         system("PAUSE");
@@ -286,10 +284,12 @@ void criarVenda() {
         strcpy(venda_detalhes.descricao_produto, resumoVendas[i].descricao_produto);
         venda_detalhes.quantidade_produto = resumoVendas[i].quantidade_produto;
         venda_detalhes.valor_produto = resumoVendas[i].valor_produto;
+        venda_detalhes.id_evento = venda.id_evento;
 
         contId++;
         salvarVendaDetalhes(venda_detalhes);
     }
     limparResumo();
+    system("cls");
 
 }

@@ -7,13 +7,6 @@
 void criarUsuario() {
     Usuario usuario;
 
-    // TODO - Rever usando struct
-    //char p_nome[51]; // Array de caracteres para armazenar o nome do usuário
-    //char p_login[21]; // Array de caracteres para armazenar o login do usuário
-    //char p_senha[11]; // Array de caracteres para armazenar a senha do usuário
-    //char p_tipo[15]; // Array de caracteres para armazenar o tipo do usuário
-    //int p_status = 1; // Status padrão do usuário
-
     int opcaoTipo = 0;
 
     printf("=======================================================\n");
@@ -55,10 +48,7 @@ void criarUsuario() {
 
     // Preencher a estrutura do usuário com os dados inseridos
     usuario.id = carregarUltimoUsuario(); // Incrementar o ID do último usuário
-    //strcpy(usuario.nome, p_nome);
-    //strcpy(usuario.login, p_login);
-    //strcpy(usuario.senha, p_senha);
-    //strcpy(usuario.tipo, p_tipo);
+
     usuario.status = 1;
 
     listarEventos();
@@ -74,7 +64,6 @@ void criarUsuario() {
     usuario.id_evento = opcaoEvento;
     salvarUsuario(usuario);
 }
-
 
 int listarUsuarios() {
     FILE *file;
@@ -95,12 +84,11 @@ int listarUsuarios() {
         Usuario usuario;
         char aux_senha[20]; // Ajuste o tamanho conforme necessário
 
-// Ler e exibir cada linha do arquivo
+        // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%[^']' %s %s %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
-            strcpy(aux_senha, "******"); // Definir uma senha fictícia para exibição
+            strcpy(aux_senha, "******");
             printf("| %-3d | %-38s | %-15s | %-10s | %-14s | %-7d | %-8d |\n", usuario.id, usuario.nome, usuario.login, aux_senha, usuario.tipo, usuario.status, usuario.id_evento);
         }
-
 
         printf("|-------------------------------------------------------------------------------------------------------------------|\n");
 
@@ -108,7 +96,6 @@ int listarUsuarios() {
     } else {
         perror("Não foi possível abrir o arquivo %s.\n\n");
     }
-
     return 0;
 }
 
@@ -132,7 +119,6 @@ int carregarUltimoUsuario() {
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
-
     return contador_linhas+1;
 }
 
@@ -149,7 +135,6 @@ void salvarUsuario(Usuario usuario) {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
 }
-
 
 Usuario consultarUsuarioPorID(int id) {
     FILE *file;

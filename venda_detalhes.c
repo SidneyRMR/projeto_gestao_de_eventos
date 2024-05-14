@@ -11,7 +11,7 @@ void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
     file = fopen(filename, "a"); // Abrir o arquivo em modo de escrita, acrescentando ao final
 
     if (file != NULL) {
-        fprintf(file, "%d %d %d '%s' %d %f\n", venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto,
+        fprintf(file, "%d %d %d %d '%s' %d %f\n", venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto, venda_detalhes.id_evento,
                 venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto, venda_detalhes.valor_produto);
         fclose(file);
         printf("|         --------        Venda salva com sucesso!        --------        |\n");
@@ -85,8 +85,8 @@ void relatorioVendasAux(){
     }
 }
 
+// TODO - ajustar layout
 int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
-    //FILE *file = fopen('data'+nomeArquivo, "r");
     char caminhoArquivo[100]; // Ajuste o tamanho conforme necessário
     strcpy(caminhoArquivo, "data/");
     strcat(caminhoArquivo, nomeArquivo);
@@ -108,7 +108,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
     }
 
         Venda_detalhes venda_detalhes;
-        float accTotal = 0;
+        double accTotal = 0;
         int accQtd = 0;
         int encontrouVendas = 0;
 
@@ -117,30 +117,25 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
         printf("|--------------------------------------------------------------------------------------------|\n");
         printf("|                    RELATORIO ESPECIFICO DAS VENDAS - %-10s                          |\n", nomeEvento);
         printf("|--------------------------------------------------------------------------------------------|\n");
-        printf("| %-3s | %-7s | %-5s | %-29s | %-10s | %-6s | %-6s |\n", "Cod", "ID_Venda", "ID_Produto", "Produto",
+        printf("| %-3s | %-7s | %-5s | %-5s | %-29s | %-10s | %-6s | %-6s |\n", "Cod", "ID_Venda", "ID_Produto", "ID_Evento", "Produto",
                "Quantidade", "Valor", "Total");
         printf("|-----|----------|------------|-------------------------------|------------|--------|--------|\n");
 
     // Ler e exibir cada linha do arquivo
-        while (fscanf(file, "%d %d %d '%50[^']' %d %lf.2", &venda_detalhes.id, &venda_detalhes.id_venda,
-                      &venda_detalhes.id_produto, venda_detalhes.descricao_produto, &venda_detalhes.quantidade_produto,
-                      &venda_detalhes.valor_produto) != EOF) {
-            if (venda_detalhes.id_venda == opcao) {
-            // TODO - corrigir pois o filtro dever ser feito pelo id_evento e nao pelo id_venda, ams pra isso preciso faze o outro TODO de criar um novo campo id_evento no vendas_detalhes
-                encontrouVendas = 1;
-                // TODO - filtro por idproduto para somatizar as quantidades dos produtos para depois imprimir
-                if(venda_detalhes.id_produto) {
-
-                }
-                accTotal += (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
-                accQtd += venda_detalhes.quantidade_produto;
-                printf("| %-3d | %-8d | %-10d | %-29s | %-10d | %-6.2lf | %-6.2lf | \n",
-                       venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto,
-                       venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto,
-                       venda_detalhes.valor_produto,
-                       venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
-            }
+    while (fscanf(file, "%d %d %d %d '%50[^']' %d %lf", &venda_detalhes.id, &venda_detalhes.id_venda,
+                  &venda_detalhes.id_produto, &venda_detalhes.id_evento, venda_detalhes.descricao_produto, &venda_detalhes.quantidade_produto,
+                  &venda_detalhes.valor_produto) != EOF) {
+        if (venda_detalhes.id_evento == opcao) {
+            encontrouVendas = 1;
+            accTotal += (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
+            accQtd += venda_detalhes.quantidade_produto;
+            printf("| %-3d | %-8d | %-10d | %-10d | %-29s | %-10d | %-6.2lf | %-6.2lf | \n",
+                   venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto, venda_detalhes.id_evento,
+                   venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto,
+                   venda_detalhes.valor_produto,
+                   venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
         }
+    }
 
     if (!encontrouVendas) {
         printf("|--------------------------------------------------------------------------------------------|\n");
@@ -157,18 +152,19 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
     relatorioVendaEspecificoAux();
 }
 
+// TODO - ajustar layout
 int relatorioVendasGeral() {
     FILE *file;
     char filename[] = "data/vendas_detalhes.txt";
     file = fopen(filename, "r");
 
+    if (file != NULL) {
         // Imprimir cabeçalho da tabela
         printf("|--------------------------------------------------------------------------------------------|\n");
         printf("|                                 RELATORIO GERAL DAS VENDAS                                 |\n");
         printf("|--------------------------------------------------------------------------------------------|\n");
-        printf("| %-3s | %-7s | %-5s | %-29s | %-10s | %-6s | %-6s |\n", "Cod", "ID_Venda", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
+        printf("| %-3s | %-7s | %-5s | %-5s | %-29s | %-10s | %-6s | %-6s |\n", "Cod", "ID_Venda", "ID_Produto", "ID_Evento", "Produto", "Quantidade", "Valor", "Total");
         printf("|-----|----------|------------|-------------------------------|------------|--------|--------|\n");
-    if (file != NULL) {
 
         fseek(file, 0, SEEK_END);
         if (ftell(file) == 0) {
@@ -181,16 +177,21 @@ int relatorioVendasGeral() {
         rewind(file);
 
         Venda_detalhes venda_detalhes;
-        float accTotal = 0;
+        double accTotal = 0;
         int accQtd = 0;
+
         // Ler e exibir cada linha do arquivo
-        while (fscanf(file, "%d %d %d '%50[^']' %d %lf.2", &venda_detalhes.id, &venda_detalhes.id_venda, &venda_detalhes.id_produto, venda_detalhes.descricao_produto, &venda_detalhes.quantidade_produto, &venda_detalhes.valor_produto) != EOF) {
-            accTotal = (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto) + accTotal;
-            accQtd = (venda_detalhes.quantidade_produto) + accQtd;
-            printf("| %-3d | %-8d | %-10d | %-29s | %-10d | %-6.2lf | %-6.2lf | \n",
-                   venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto, venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto, venda_detalhes.valor_produto,
+        while (fscanf(file, "%d %d %d %d '%50[^']' %d %lf", &venda_detalhes.id, &venda_detalhes.id_venda,
+                      &venda_detalhes.id_produto, &venda_detalhes.id_evento, venda_detalhes.descricao_produto,
+                      &venda_detalhes.quantidade_produto, &venda_detalhes.valor_produto) != EOF) {
+            accTotal += (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
+            accQtd += venda_detalhes.quantidade_produto;
+            printf("| %-3d | %-8d | %-8d | %-10d | %-29s | %-10d | %-6.2lf | %-6.2lf | \n",
+                   venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto, venda_detalhes.id_evento,
+                   venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto, venda_detalhes.valor_produto,
                    venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
         }
+
         printf("|--------------------------------------------------------------------------------------------|\n");
         printf("|              ------     TOTAL GERAL     ------              |  QTD   %-3d |     R$   %6.2lf |\n", accQtd ,accTotal);
         printf("|--------------------------------------------------------------------------------------------|\n");
@@ -202,6 +203,7 @@ int relatorioVendasGeral() {
 
     return 0;
 }
+
 
 int carregarUltimaVendaDetalhes() {
     FILE *file;

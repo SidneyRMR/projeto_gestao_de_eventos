@@ -53,8 +53,8 @@ int loginAux() {
 
         if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
             printf("|\tLogin efetuado com sucesso como %s ", usuarioo);
-            printf(" - Id: %d\n", usuarios[i].id);
-            system("PAUSE");
+            //printf(" - Id: %d\n", usuarios[i].id);
+            //system("PAUSE");
 
             //setUsuarioCompartilhado(usuarios);
             setNomeUsuarioCompartilhado(usuarios[i].nome);

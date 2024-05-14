@@ -1,16 +1,19 @@
-1 1 3 'Coca-Cola' 3 5
-2 1 1 'Cerveja' 3 5
-3 1 2 'Cuba' 1 20
-4 2 4 'Fanta' 2 5
-5 2 5 'Pastel' 2 10
-6 3 6 'Cachorro-Quente' 3 10
-7 3 3 'Coca-Cola' 3 15
-8 10 1 'Cerveja' 1 5
-9 10 2 'Cuba' 2 20
-10 10 5 'Pastel' 5 10
-11 10 4 'Fanta' 1 5
-12 11 2 'Cuba' 2 20
-13 11 3 'Coca-Cola' 3 5
-14 11 4 'Fanta' 4 5
-15 12 1 'Cerveja' 1 5.000000
-16 12 2 'Cuba' 2 20.000000
+1 1 3 2 'Coca-Cola' 3 5
+2 1 1 2 'Cerveja' 3 5
+3 1 2 2 'Cuba' 1 20
+4 2 4 2 'Fanta' 2 5
+5 2 5 2 'Pastel' 2 10
+6 3 6 2 'Cachorro-Quente' 3 10
+7 3 3 2 'Coca-Cola' 3 15
+8 10 1 3 'Cerveja' 1 5
+9 10 2 3 'Cuba' 2 20
+10 10 5 1 'Pastel' 5 10
+11 10 4 1 'Fanta' 1 5
+12 11 2 1 'Cuba' 2 20
+13 11 3 1 'Coca-Cola' 3 5
+14 11 4 1 'Fanta' 4 5
+15 12 1 1 'Cerveja' 1 5.000000
+16 12 2 1 'Cuba' 2 20.000000
+17 14 1 1 'Cerveja' 5 5.000000
+18 15 1 1 'Cerveja' 12 5.000000
+19 15 2 1 'Cuba' 22 20.000000
