@@ -31,7 +31,7 @@ void menuAdministrador() {
     printf("|-------------------------------------------------------------------------------------------------|\n");
     printf("|  20   |   Relatorio de Vendas                                                                   |\n");
     printf("|-------------------------------------------------------------------------------------------------|\n");
-    printf("|   0   |   Sair do Menu Administrativo                          || Usuario: %-20s |\n",UsuarioCompartilhado.nome);
+    printf("|   0   |   Sair do Menu Administrativo                          || Usuario: %-20s |\n",getNomeUsuarioCompartilhado());
     printf("|-------------------------------------------------------------------------------------------------|\n");
     printf("Escolha uma opcao:");
 
@@ -99,7 +99,7 @@ int escolherMenu() {
         printf("|             --------------------------             |\n");
         printf("|   0   |   Sair do Programa                         |\n");
         printf("|----------------------------------------------------|\n");
-        printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata, getUsuarioCompartilhado().nome);
+        printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata, getNomeUsuarioCompartilhado());
         printf("|----------------------------------------------------|\n");
         printf("Escolha uma opcao:");
 
@@ -128,6 +128,7 @@ int escolherMenu() {
     }
 }
 
+// Obtem a data atual
 void obterDataAtual(char *dataAtual) {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);

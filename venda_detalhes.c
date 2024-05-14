@@ -140,7 +140,6 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
                        venda_detalhes.valor_produto,
                        venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
             }
-
         }
 
     if (!encontrouVendas) {

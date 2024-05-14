@@ -2,6 +2,7 @@
 #include "login.h"
 #include <windows.h>
 
+// Ajuste o tamanho da janela
 void ajustarTamanhoJanela(int largura, int altura) {
     HWND hwnd = GetConsoleWindow();
     RECT rect;
@@ -10,7 +11,6 @@ void ajustarTamanhoJanela(int largura, int altura) {
 }
 
 int main() {
-    // Ajuste o tamanho da janela
     ajustarTamanhoJanela(1000, 800);
     login();
     return 0;

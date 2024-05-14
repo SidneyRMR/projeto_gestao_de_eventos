@@ -7,15 +7,6 @@
 #include "variaveis_compartilhadas.h"
 
 #define MAX_USUARIOS 100 // Defina o número máximo de usuários
-//struct Usuario {
-//    int id;
-//    char nome[51];
-//    char login[21];
-//    char senha[11];
-//    char tipo[15];
-//    int status;
-//    int id_evento;
-//};
 
 struct Usuario usuarios[MAX_USUARIOS]; // Declaração do array de usuários
 int numUsuarios = 0; // Variável para rastrear o número atual de usuários
@@ -44,9 +35,6 @@ void carregarUsuarios() {
     }
 }
 
-
-struct Usuario usuarios[MAX_USUARIOS]; // Declaração da matriz de usuários
-
 int loginAux() {
     char usuarioo[21];
     char senha[21];
@@ -68,8 +56,8 @@ int loginAux() {
             printf(" - Id: %d\n", usuarios[i].id);
             system("PAUSE");
 
-            setUsuarioCompartilhado(usuarios);
-            //setNomeUsuarioCompartilhado(usuario);
+            //setUsuarioCompartilhado(usuarios);
+            setNomeUsuarioCompartilhado(usuarios[i].nome);
             escolherMenu();
             return 1;
         }

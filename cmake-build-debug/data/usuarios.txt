@@ -6,3 +6,5 @@
 6 'rafa' rafa rafa vendedor 1 1
 7 '1' 1 1 vendedor 1 1
 8 '2' 2 2 administrador 1 0
+9 'iuui' 123 123 vendedor 1 0
+10 'po' po po administrador 1 10
