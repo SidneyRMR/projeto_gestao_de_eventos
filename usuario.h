@@ -20,4 +20,6 @@ int carregarUltimoUsuario();
 
 void salvarUsuario(Usuario usuario);
 
+Usuario buscarUsuarioPorId(int id);
+
 #endif // USUARIO_H

@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "usuario.h"
 #include "evento.h"
 
@@ -168,4 +169,42 @@ Usuario consultarUsuarioPorID(int id) {
     return usuario_vazio;
 }
 
+#define MAX_USUARIOS 100 // Defina o número máximo de usuários
 
+
+Usuario buscarUsuarioPorId(int id) {
+struct Usuario usuarios[MAX_USUARIOS]; // Declaração do array de usuários
+
+int numUsuarios = 0; // Variável para rastrear o número atual de usuários
+    Usuario usuarioEncontrado;
+    FILE *file;
+    char filename[] = "data/usuarios.txt";
+    file = fopen(filename, "r");
+
+    if (file != NULL) {
+        while (fscanf(file, "%d '%49[^']' %19s %19s %19s %d %d",
+                      &usuarios[numUsuarios].id,
+                      usuarios[numUsuarios].nome,
+                      usuarios[numUsuarios].login,
+                      usuarios[numUsuarios].senha,
+                      usuarios[numUsuarios].tipo,
+                      &usuarios[numUsuarios].status,
+                      &usuarios[numUsuarios].id_evento) == 7) {
+            if (usuarios[numUsuarios].id == id) {
+                usuarioEncontrado = usuarios[numUsuarios];
+                fclose(file);
+                return usuarioEncontrado;
+            }
+            numUsuarios++;
+        }
+        fclose(file);
+    } else {
+        perror("Erro ao abrir o arquivo de usuários");
+        exit(1);
+    }
+    // Se não encontrar nenhum usuário com o ID especificado, retorna um usuário com ID -1
+    usuarioEncontrado.id = -1;
+    return usuarioEncontrado;
+}
+
+// Função para carregar os usuários do arquivo usuarios.txt

@@ -100,6 +100,7 @@ int escolherMenu() {
         printf("|   0   |   Sair do Programa                         |\n");
         printf("|----------------------------------------------------|\n");
         printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata, getNomeUsuarioCompartilhado());
+        printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata, getUsuarioCompartilhado().nome);
         printf("|----------------------------------------------------|\n");
         printf("Escolha uma opcao:");
 

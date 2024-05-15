@@ -8,6 +8,8 @@ extern Usuario UsuarioCompartilhado;
 void setNomeUsuarioCompartilhado(const char* novoNome);
 const char* getNomeUsuarioCompartilhado();
 
+
+
 void setUsuarioCompartilhado(const Usuario *novoUsuario);
 Usuario getUsuarioCompartilhado();
 

@@ -56,8 +56,8 @@ int loginAux() {
             //printf(" - Id: %d\n", usuarios[i].id);
             //system("PAUSE");
 
-            //setUsuarioCompartilhado(usuarios);
-            setNomeUsuarioCompartilhado(usuarios[i].nome);
+            setUsuarioCompartilhado(&usuarios[i]);
+            //setNomeUsuarioCompartilhado(usuarios[i].nome);
             escolherMenu();
             return 1;
         }

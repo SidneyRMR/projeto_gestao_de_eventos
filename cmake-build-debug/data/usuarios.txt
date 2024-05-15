@@ -4,7 +4,7 @@
 4 'sidney111' qew qwe vendedor 1 1
 5 'sisi' qwq qwq administrador 1 1
 6 'rafa' rafa rafa vendedor 1 1
-7 '1' 1 1 vendedor 1 1
-8 '2' 2 2 administrador 1 0
-9 'iuui' 123 123 vendedor 1 0
+7 'Rafa' 1 1 vendedor 1 5
+8 '2' 2 2 administrador 1 7
+9 'iuui' 123 123 vendedor 1 7
 10 'po' po po administrador 1 10

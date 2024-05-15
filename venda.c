@@ -5,6 +5,8 @@
 #include "produto.h"
 #include "menu.h"
 #include "venda_detalhes.h"
+#include "usuario.h"
+#include "variaveis_compartilhadas.h"
 
 //int listarVendas() {
 //    FILE *file;
@@ -251,13 +253,18 @@ void criarVenda() {
         system("PAUSE");
         return; // Sair da função sem criar a venda
     }
+    // TODO - VERIFICAR SE FUNCIONOU USUARIO COMPARTILHADO
+    Usuario usuario = getUsuarioCompartilhado();
+    //int idUsuario = getNomeUsuarioCompartilhado()
+    //Usuario usuarioEncontrado = buscarUsuarioPorId(idUsuario);
     Venda venda;
     char dataAtual[11];
     venda.id = carregarUltimaVenda();
     obterDataAtual(dataAtual);
     strcpy(venda.data, dataAtual);
-    venda.id_evento = 1; //   TODO - Preciso receber como parâmetro do usuario
-    venda.id_usuario = 2; //  TODO - Preciso receber como parâmetro do usuario
+
+    venda.id_evento = usuario.id_evento; //   TODO - Preciso receber como parâmetro do usuario
+    venda.id_usuario = usuario.id; //  TODO - Preciso receber como parâmetro do usuario
 
     // Retorna o id para ser usado na funcao salvarVendaDetalhes(Venda_detalhes venda_detalhes)
     FILE *file;
