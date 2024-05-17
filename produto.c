@@ -75,6 +75,35 @@ int listarProdutos() {
 
     return 0;
 }
+int listarProdutosVenda() {
+    FILE *file;
+    char filename[] = "data/produtos.txt";
+    file = fopen(filename, "r");
+
+    if (file != NULL) {
+        //printf("Arquivo foi aberto com sucesso.\n\n");
+        imprimirRodape();
+        // Imprimir cabeçalho da tabela
+        imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
+
+        printf("| %-3s | %-75s | %-10s | %-15s |\n", "Cod", "Descricao", "Preco", "Estoque");
+        imprimirLinhaDivisoria();
+
+        Produto produto;
+
+        // Ler e exibir cada linha do arquivo
+        while (fscanf(file, "%d '%[^']' %lf %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento ) != EOF) {
+            printf("| %-3d | %-75s | %-10.2f | %-15d |\n", produto.id, produto.descricao, produto.preco, produto.estoque);
+        }
+
+        imprimirLinhaDivisoria();
+        fclose(file);
+    } else {
+        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+    }
+
+    return 0;
+}
 
 int carregarUltimoProduto() {
     FILE *file;

@@ -14,6 +14,8 @@ void criarProduto();
 
 int listarProdutos();
 
+int listarProdutosVenda();
+
 int carregarUltimoProduto();
 
 void salvarProduto(Produto produto);

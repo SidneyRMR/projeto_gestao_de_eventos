@@ -67,7 +67,7 @@ int carregarUltimaVenda() {
 
 
 void menuVenda() {
-    listarProdutos();
+    listarProdutosVenda();
     resumoVenda();
     opcoesVenda();
 }

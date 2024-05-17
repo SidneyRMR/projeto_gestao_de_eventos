@@ -54,12 +54,12 @@ void relatorioVendasAux(){
     system("cls");
         imprimirTituloCabecario("ESCOLHA UMA OPCAO DE RELATORIO", NULL);
 
-        printf("| Opcao |   Descricao                                                                                    |\n");
+        printf("| Opcao |   Descricao                                                                                                       |\n");
         imprimirLinhaDivisoria();
-        printf("|    1  |   Relatorio Especifico                                                                         |\n");
-        printf("|    2  |   Relatorio Geral                                                                              |\n");
+        printf("|   1   |   Relatorio Especifico                                                                                            |\n");
+        printf("|   2   |   Relatorio Geral                                                                                                 |\n");
         imprimirLinhaDivisoria();
-        printf("|    0  |   Menu administrativo                                                                          |\n");
+        printf("|   0   |   Menu administrativo                                                                                             |\n");
         imprimirLinhaDivisoria();
         printf("|\tEscolha uma opcao:");
 
@@ -118,7 +118,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
     imprimirTituloCabecario("RELATORIO ESPECIFICO DAS VENDAS", nomeEvento);
 
         printf("| %-3s | %-7s | %-7s | %-5s | %-29s | %-10s | %-6s | %-6s |\n", "Cod", "ID_Venda", "ID_Produto", "ID_Evento", "Produto", "Quantidade", "Valor", "Total");
-        printf("|-----|----------|------------|-----------|-------------------------------|------------|--------|--------|\n");
+        imprimirLinhaDivisoria();
 
     // Ler e exibir cada linha do arquivo
     while (fscanf(file, "%d %d %d %d '%50[^']' %d %lf", &venda_detalhes.id, &venda_detalhes.id_venda,
@@ -162,7 +162,7 @@ int relatorioVendasGeral() {
         imprimirTituloCabecario("RELATORIO GERAL DAS VENDAS", NULL);
 
         printf("| %-3s | %-7s | %-7s | %-5s | %-29s | %-10s | %-6s | %-6s |\n", "Cod", "ID_Venda", "ID_Produto", "ID_Evento", "Produto", "Quantidade", "Valor", "Total");
-        printf("|-----|----------|------------|-----------|-------------------------------|------------|--------|--------|\n");
+        imprimirLinhaDivisoria();
 
         fseek(file, 0, SEEK_END);
         if (ftell(file) == 0) {
