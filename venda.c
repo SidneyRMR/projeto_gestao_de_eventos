@@ -166,16 +166,16 @@ void opcoesVenda() {
 
     imprimirTituloCabecario("OPCOES",NULL);
 
-    printf("|\tDigite o codigo um produto para adicionar ao pedido.              |\n");
+        printf("|\tDigite o codigo um produto para adicionar ao pedido.                                                       |\n");
     if (contProduto > 0) {
-        printf("|\tDigite '-' e o codigo um produto para remover do pedido.          |\n");
-        printf("|\tDigite 100 e para gerar a venda.                                  |\n");
-        printf("|\tDigite 200 para limpar o pedido.                                  |\n");
+        printf("|\tDigite '-' e o codigo um produto para remover do pedido.                                                   |\n");
+        printf("|\tDigite 100 e para gerar a venda.                                                                           |\n");
+        printf("|\tDigite 200 para limpar o pedido.                                                                           |\n");
     }
     if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
-        printf("|\tDigite 0 e para sair da tela de pedido.                           |\n");
+        printf("|\tDigite 0 e para sair da tela de pedido.                                                                    |\n");
     } else {
-        printf("|\tDigite 0 e para sair do programa.                           |\n");
+        printf("|\tDigite 0 e para sair do programa.                                                                          |\n");
     }
     printf("|\tEscolha uma opcao ou codigo do produto: ");
     scanf(" %d",&opcao);
@@ -212,7 +212,7 @@ void opcoesVenda() {
                 system("cls");
                 menuVenda();
             } else {
-                printf("|\tPor favor, escolha um código de produto valido.\n");
+                opcaoInvalida();
             }
     }
 }
@@ -223,8 +223,8 @@ void resumoVenda() {
     int totalQtde = 0;
 
     imprimirTituloCabecario("RESUMO DA VENDA", NULL);
-    printf("| %-3s | %-32s | %-10s | %-7s | %-7s |\n","Cod", "Produto", "Preco", "Qnde", "Total");
-    printf("|----------------------------------------|------------|---------|---------|\n");
+    printf("| %-3s | %-67s | %-10s | %-10s | %-10s |\n","Cod", "Produto", "Preco", "Qnde", "Total");
+    imprimirLinhaDivisoria();
 
     for (int i = 0; i < MAX_PRODUTO; i++) {
         // Verifica se o id_produto é zero, caso for nao adiciona mais produtos, so a quantidade
@@ -235,19 +235,17 @@ void resumoVenda() {
         totalGeral = resumoVendas[i].quantidade_produto * resumoVendas[i].valor_produto + totalGeral;
         totalQtde = totalQtde + resumoVendas[i].quantidade_produto;
 
-        printf("| %-3d | %-32s | %-10.2f | %-7d | %-7.2f |\n", resumoVendas[i].id_produto, resumoVendas[i].descricao_produto, resumoVendas[i].valor_produto,
+        printf("| %-3d | %-67s | %-10.2f | %-10d | %-10.2f |\n", resumoVendas[i].id_produto, resumoVendas[i].descricao_produto, resumoVendas[i].valor_produto,
                resumoVendas[i].quantidade_produto, resumoVendas[i].quantidade_produto * resumoVendas[i].valor_produto);
     }
     if (detalhes_lidos != 0) { // Se nenhum detalhe de venda for lido
-        printf("|----------------------------------------|--------------------------------|\n");
-        printf("|      ---     TOTAL GERAL     ---       |     QTD %-5d |    R$ %7.2f  |\n", totalQtde, totalGeral);
-        printf("|----------------------------------------|---------------|----------------|\n");
+        imprimirLinhaDivisoria();
+        printf("|                        ---     TOTAL GERAL     ---                        |   QTD %-10d  |   R$ %10.2f  |\n", totalQtde, totalGeral);
+        imprimirLinhaDivisoria();
     }
 
     if (detalhes_lidos == 0) { // Se nenhum detalhe de venda for lido
-        //printf("|-------------------------------------------------------------------------|\n");
-        printf("|                            Ainda nao ha nada aqui                       |\n");
-        //printf("|-------------------------------------------------------------------------|\n");
+        printf("|                                              Ainda nao ha nada aqui                                              |\n");
     }
 }
 // Função para salvar as informações da venda no arquivo vendas.txt
@@ -268,8 +266,8 @@ void criarVenda() {
     obterDataAtual(dataAtual);
     strcpy(venda.data, dataAtual);
 
-    venda.id_evento = usuario.id_evento; //   TODO - Preciso receber como parâmetro do usuario
-    venda.id_usuario = usuario.id; //  TODO - Preciso receber como parâmetro do usuario
+    venda.id_evento = usuario.id_evento;
+    venda.id_usuario = usuario.id;
 
     // Retorna o id para ser usado na funcao salvarVendaDetalhes(Venda_detalhes venda_detalhes)
     FILE *file;

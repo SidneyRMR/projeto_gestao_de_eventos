@@ -1,14 +1,22 @@
-#include "components.h"
 #include <stdio.h>
 #include <string.h>
-#define LARGURA 104
+#include "variaveis_compartilhadas.h"
+#include "menu.h"
+
+#define LARGURA 114
 
 void imprimirLinhaDivisoria() {
-    printf("|--------------------------------------------------------------------------------------------------------|\n");
+    for (int i = 0; i < LARGURA+2; i++) {
+        printf("-");
+    }
+    printf("\n");
 }
 
 void imprimirLinha() {
-    printf("|========================================================================================================|\n");
+    for (int i = 0; i < LARGURA+2; i++) {
+        printf("=");
+    }
+    printf("\n");
 }
 
 void imprimirCentralizado(const char *texto) {
@@ -34,3 +42,60 @@ int imprimirTituloCabecario(const char *titulo, const char *subtitulo) {
 }
 
 
+// Função para centralizar uma string dentro de um espaço de largura específica
+void centralizarString(char *str, int largura) {
+    int comprimento = strlen(str);
+    int espacos = (largura - comprimento) / 2;
+    for (int i = 0; i < espacos; i++) {
+        printf(" ");
+    }
+    printf("%s", str);
+    for (int i = 0; i < espacos; i++) {
+        printf(" ");
+    }
+    // Caso a largura não seja um número par, adiciona um espaço extra no final
+    if ((largura - comprimento) % 2 != 0) {
+        printf(" ");
+    }
+}
+int imprimirRodape() {
+    char dataAtual[11];
+    obterDataAtual(dataAtual);
+
+    imprimirLinhaDivisoria();
+
+    printf("|");
+    // Centraliza "DATA: ddata" em metade da linha
+    char dataStr[20];
+    snprintf(dataStr, sizeof(dataStr), "DATA: %-11s", dataAtual);
+    centralizarString(dataStr, (LARGURA / 2) );
+    printf("|");
+
+    // Centraliza "USUARIO: nomeUsuario" na outra metade da linha
+    char usuarioStr[21];
+    snprintf(usuarioStr, sizeof(usuarioStr), "USUARIO: %-21s", getUsuarioCompartilhado().nome);
+    centralizarString(usuarioStr, (LARGURA / 2)-1 );
+    printf("|\n");
+
+    imprimirLinhaDivisoria();
+
+    return 0;
+}
+
+
+void imprimirMenu(const char *opcoes[], int numOpcoes) {
+    imprimirLinhaDivisoria();
+    printf("| Opcao |   Descricao                                                                                    |\n");
+    imprimirLinhaDivisoria();
+
+    for (int i = 0; i < numOpcoes; i++) {
+        printf("|   %-2d  |   %-90s |\n", i + 1, opcoes[i]);
+    }
+
+    imprimirLinhaDivisoria();
+    printf("|\tEscolha uma opcao: ");
+}
+
+void opcaoInvalida() {
+    printf("Opcao invalida.\n");
+}

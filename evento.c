@@ -2,6 +2,7 @@
 #include <string.h>
 #include "evento.h"
 #include "menu.h"
+#include "components.h"
 
 // Definição da estrutura para armazenar os dados do evento
 void criarEvento() {
@@ -12,14 +13,13 @@ void criarEvento() {
     int p_status = 1;
 
     // Solicitar ao usuário que insira os dados do evento
-    printf("=======================================================\n");
-    printf("|            TELA DE CADASTRO DE EVENTOS              |\n");
-    printf("|-----------------------------------------------------|\n");
+    imprimirTituloCabecario("TELA DE CADASTRO DE EVENTOS",NULL);
+
     printf("|\tDigite o nome do evento: ");
     scanf(" %20[^\n]", p_evento); // Lê o nome do evento
     printf("|\tDigite uma descricao para o evento: ");
     scanf(" %50[^\n]", p_descricao); // Lê a descrição do evento
-    printf("|-----------------------------------------------------|\n");
+    imprimirLinhaDivisoria();
 
     // Preencher a estrutura do evento com os dados inseridos
     evento.id = carregarUltimoEvento() ; // Incrementar o ID do último evento
@@ -37,20 +37,21 @@ void listarEventos() {
     file = fopen(filename, "r");
 
     if (file != NULL) {
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
-        printf("|                                            LISTA DE EVENTOS                                            |\n");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
-        printf("| %-3s | %-20s | %-50s | %-10s | %-7s |\n", "Cod", "Evento", "Descricao", "Data", "Status");
-        printf("|-----|----------------------|----------------------------------------------------|------------|---------|\n");
+
+        imprimirRodape();
+        imprimirTituloCabecario("LISTA DE EVENTOS", NULL);
+
+        printf("| %-3s | %-20s | %-60s | %-10s | %-7s |\n", "Cod", "Evento", "Descricao", "Data", "Status");
+        imprimirLinhaDivisoria();
 
         // Variável para armazenar cada registro lido do arquivo
         Evento evento;
 
         // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%[^']' '%[^']' %s %d", &evento.id, evento.evento, evento.descricao, evento.data, &evento.status) != EOF) {
-            printf("| %-3d | %-20s | %-50s | %-10s | %-7d |\n", evento.id, evento.evento, evento.descricao, evento.data, evento.status);
+            printf("| %-3d | %-20s | %-60s | %-10s | %-7d |\n", evento.id, evento.evento, evento.descricao, evento.data, evento.status);
         }
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
         fclose(file);
     } else {
         printf("Não foi possível abrir o arquivo %s.\n\n", filename);

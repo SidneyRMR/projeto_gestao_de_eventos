@@ -30,4 +30,8 @@ void imprimirLinhaDivisoria();
  */
 int imprimirTituloCabecario(const char *titulo, const char *subtitulo);
 
+int imprimirRodape();
+
+void opcaoInvalida();
+
 #endif //PROJETO_GESTAO_DE_EVENTOS_COMPONENTS_H

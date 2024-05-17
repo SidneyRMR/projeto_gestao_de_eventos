@@ -37,7 +37,7 @@ int relatorioVendaEspecificoAux() {
                 break;
             default:
                 if (escolhaIdRelatorio < 1 || escolhaIdRelatorio >= idMax) {
-                    printf("|\tOpção inválida. Por favor, escolha um código de evento válido.\n");
+                    opcaoInvalida();
                 } else {
                     relatorioVendaEspecifico("vendas_detalhes.txt", escolhaIdRelatorio, idMax);
                 }
@@ -55,12 +55,12 @@ void relatorioVendasAux(){
         imprimirTituloCabecario("ESCOLHA UMA OPCAO DE RELATORIO", NULL);
 
         printf("| Opcao |   Descricao                                                                                    |\n");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
         printf("|    1  |   Relatorio Especifico                                                                         |\n");
         printf("|    2  |   Relatorio Geral                                                                              |\n");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
         printf("|    0  |   Menu administrativo                                                                          |\n");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
         printf("|\tEscolha uma opcao:");
 
         scanf("%d", &opcaoEvento);
@@ -80,7 +80,7 @@ void relatorioVendasAux(){
                 printf("Saindo da tela de relatorio...\n");
                 menuAdministrador();
             default:
-                printf("Opcao invalida.\n");
+                opcaoInvalida();
         }
     }
 }

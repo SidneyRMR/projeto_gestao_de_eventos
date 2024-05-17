@@ -14,29 +14,29 @@
 
 
 void menuAdministrador() {
-    int opcao = 999;
+    int opcaoAdm = 999;
 
     system("cls");
-    while(opcao != 0) {
+    while(opcaoAdm != 0) {
 
     imprimirTituloCabecario("MENU ADMINISTRATIVO",NULL);
 
-    printf("| Opcao |   Listar              || Opcao |   Criar               || Opcao |   Desativar           |\n");
+    printf("| Opcao |   Listar                || Opcao |   Criar                 || Opcao |     Desativar                      |\n");
     imprimirLinhaDivisoria();
-    printf("|   1   |   Listar Eventos      ||   4   |   Criar Evento        ||   7   |   Desativar Evento    |\n");
-    printf("|   2   |   Listar Usuarios     ||   5   |   Criar Usuario       ||   8   |   Desativar Usuario   |\n");
-    printf("|   3   |   Listar Produtos     ||   6   |   Criar Produto       ||   9   |   Desativar Produto   |\n");
+    printf("|   1   |     Listar Eventos          ||   4   |     Criar Evento            ||   7   |     Desativar Evento       |\n");
+    printf("|   2   |     Listar Usuarios         ||   5   |     Criar Usuario           ||   8   |     Desativar Usuario      |\n");
+    printf("|   3   |     Listar Produtos         ||   6   |     Criar Produto           ||   9   |     Desativar Produto      |\n");
     imprimirLinhaDivisoria();
-    printf("|  20   |   Relatorio de Vendas                                                                   |\n");
+    printf("|  20   |   Relatorio de Vendas                                                                                    |\n");
     imprimirLinhaDivisoria();
-    printf("|   0   |   Sair do Menu Administrativo                          || Usuario: %-20s |\n",getNomeUsuarioCompartilhado());
-    imprimirLinhaDivisoria();
+    printf("|   0   |   Sair do Menu Administrativo                                                                            |\n");
+    imprimirRodape();
     printf("Escolha uma opcao:");
 
-    scanf("%d", &opcao);
+    scanf("%d", &opcaoAdm);
 
         system("cls");
-        switch (opcao) {
+        switch (opcaoAdm) {
             case 1:
                 listarEventos();
                 system("PAUSE");
@@ -74,7 +74,7 @@ void menuAdministrador() {
                 escolherMenu();
                 break;
             default:
-                printf("Opcao invalida.\n");
+                opcaoInvalida();
         }
     }
 }
@@ -84,8 +84,12 @@ int escolherMenu() {
     char dataAtual[11];
     char ddata[11];
     char tipoUsuario[15];
+    char nomeUsuario[21];
+
     strcpy(tipoUsuario, getUsuarioCompartilhado().tipo);
+    strcpy(nomeUsuario, getUsuarioCompartilhado().nome);
     obterDataAtual(dataAtual);
+
     strcpy(ddata, dataAtual);
     system("cls");
 
@@ -94,15 +98,15 @@ int escolherMenu() {
         while (opcaoMenu != 0) {
             imprimirTituloCabecario("BEM VINDO AO PROGRAMA DE GESTAO DE EVENTOS",NULL);
 
-            printf("| Opcao |              Descricao                     |\n");
+            printf("| Opcao |              Descricao                                                                                   |\n");
             imprimirLinhaDivisoria();
-            printf("|   1   |   Menu de Vendas                           |\n");
-            printf("|   2   |   Menu Administrativo                      |\n");
-            printf("|             --------------------------             |\n");
-            printf("|   0   |   Sair do Programa                         |\n");
-            imprimirLinhaDivisoria();
-            printf("|  DATA: %-11s     | Usuario: %-16s |\n", ddata, getUsuarioCompartilhado().nome);
-            imprimirLinhaDivisoria();
+            printf("|   1   |   Menu de Vendas                                                                                         |\n");
+            printf("|   2   |   Menu Administrativo                                                                                    |\n");
+            printf("|                   ----------------------------------------------------------------------------                   |\n");
+            printf("|   0   |   Sair do Programa                                                                                       |\n");
+
+            imprimirRodape();
+
             printf("|\tEscolha uma opcao:");
 
             scanf("%d", &opcaoMenu);
@@ -119,13 +123,13 @@ int escolherMenu() {
                     break;
                 case 0:
                     system("cls");
-                    printf("Fazendo logoff...\n");
+                    printf("\tFazendo logoff...\n");
                     system("PAUSE");
                     system("cls");
                     login();
                     return 0;
                 default:
-                    printf("Opcao invalida.\n");
+                    opcaoInvalida();
             }
         }
     } else {

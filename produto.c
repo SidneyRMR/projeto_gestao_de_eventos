@@ -2,6 +2,7 @@
 #include <string.h>
 #include "produto.h"
 #include "components.h"
+#include "evento.h"
 
 void criarProduto() {
     Produto produto;
@@ -25,12 +26,24 @@ void criarProduto() {
     strcpy(produto.descricao, p_descricao);
     produto.preco = p_preco;
     produto.estoque = p_estoque;
-    produto.id_evento = 1; // Preciso receber como parâmetro - TODO
+
+    // TODO - PRECISA SER MELHORADA ESTA LISTAGEM DE EVENTOS
+    listarEventos();
+    int eventoMax = carregarUltimoEvento();
+    int opcaoEvento = 0;
+
+    do {
+        printf("|\tDigite o codigo do evento para o usuario: ");
+        scanf("%d", &opcaoEvento);
+    }
+    while(opcaoEvento < 1 || opcaoEvento > eventoMax);
+
+    produto.id_evento = opcaoEvento;
 
     // Salvar o produto
     salvarProduto(produto);
 
-    printf("Produto criado com sucesso.\n");
+    printf("\tProduto criado com sucesso.\n");
 }
 
 int listarProdutos() {
@@ -40,18 +53,18 @@ int listarProdutos() {
 
     if (file != NULL) {
         //printf("Arquivo foi aberto com sucesso.\n\n");
-
+        imprimirRodape();
         // Imprimir cabeçalho da tabela
         imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
 
-        printf("| %-3s | %-35s | %-5s | %-7s | %-9s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento");
-        printf("|-----|-------------------------------------|-------|---------|-----------|\n");
+        printf("| %-3s | %-70s | %-10s | %-9s | %-8s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento");
+        imprimirLinhaDivisoria();
 
         Produto produto;
 
         // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%[^']' %lf %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento ) != EOF) {
-            printf("| %-3d | %-35s | %-5.2f | %-7d | %-9d |\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento);
+            printf("| %-3d | %-70s | %-10.2f | %-9d | %-8d |\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento);
         }
 
         imprimirLinhaDivisoria();

@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include "usuario.h"
 #include "evento.h"
+#include "components.h"
 
 // Função para cadastro de usuário
 void criarUsuario() {
@@ -10,9 +11,9 @@ void criarUsuario() {
 
     int opcaoTipo = 0;
 
-    printf("=======================================================\n");
-    printf("|             TELA DE CADASTRO DE USUARIO             |\n");
-    printf("|-----------------------------------------------------|\n");
+
+    imprimirTituloCabecario("TELA DE CADASTRO DE USUARIO",NULL);
+
     printf("|\tDigite o NOME: ");
     scanf(" %50[^\n]", usuario.nome);
     printf("|\tDigite o LOGIN: ");
@@ -24,7 +25,7 @@ void criarUsuario() {
     printf("|\t\t2. Administrador                      |\n");
     printf("|     Escolha: ");
     scanf("%d", &opcaoTipo);
-    printf("|-----------------------------------------------------|\n");
+    imprimirLinhaDivisoria();
 
     // Solicitar ao usuário que escolha o tipo de usuário
     while (opcaoTipo != 1 && opcaoTipo != 2) {
@@ -44,14 +45,14 @@ void criarUsuario() {
             strcpy(usuario.tipo, "administrador");
             break;
         default:
-            printf("Tente novamente!");
+            opcaoInvalida();
     }
 
     // Preencher a estrutura do usuário com os dados inseridos
     usuario.id = carregarUltimoUsuario(); // Incrementar o ID do último usuário
-
     usuario.status = 1;
 
+    // TODO - PRECISA SER MELHORADA ESTA LISTAGEM DE EVENTOS
     listarEventos();
     int eventoMax = carregarUltimoEvento();
     int opcaoEvento = 0;
@@ -74,13 +75,12 @@ int listarUsuarios() {
     if (file != NULL) {
         //printf("Arquivo foi aberto com sucesso.\n\n");
 
+        imprimirRodape();
         // Imprimir cabeçalho da tabela
+        imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
 
-        printf("|-------------------------------------------------------------------------------------------------------------------|\n");
-        printf("|                                                 LISTA DE USUARIOS                                                 |\n");
-        printf("|-------------------------------------------------------------------------------------------------------------------|\n");
-        printf("| %-3s | %-38s | %-15s | %-10s | %-14s | %-7s | %-8s |\n", "Cod", "Nome", "Login", "Senha", "Tipo", "Status", "Evento");
-        printf("|-------------------------------------------------------------------------------------------------------------------|\n");
+        printf("| %-3s | %-38s | %-15s | %-10s | %-14s | %-7s | %-7s |\n", "Cod", "Nome", "Login", "Senha", "Tipo", "Status", "Evento");
+        imprimirLinhaDivisoria();
 
         Usuario usuario;
         char aux_senha[20]; // Ajuste o tamanho conforme necessário
@@ -88,11 +88,10 @@ int listarUsuarios() {
         // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%[^']' %s %s %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
             strcpy(aux_senha, "******");
-            printf("| %-3d | %-38s | %-15s | %-10s | %-14s | %-7d | %-8d |\n", usuario.id, usuario.nome, usuario.login, aux_senha, usuario.tipo, usuario.status, usuario.id_evento);
+            printf("| %-3d | %-38s | %-15s | %-10s | %-14s | %-7d | %-7d |\n", usuario.id, usuario.nome, usuario.login, aux_senha, usuario.tipo, usuario.status, usuario.id_evento);
         }
 
-        printf("|-------------------------------------------------------------------------------------------------------------------|\n");
-
+        imprimirLinhaDivisoria();
         fclose(file);
     } else {
         perror("Não foi possível abrir o arquivo %s.\n\n");
