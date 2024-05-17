@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "produto.h"
+#include "components.h"
 
 void criarProduto() {
     Produto produto;
@@ -8,17 +9,16 @@ void criarProduto() {
     int p_preco = 0;
     int p_estoque = 0;
 
+    imprimirTituloCabecario("TELA DE CADASTRO DE PRODUTOS",NULL);
+
     // Solicitar ao usuário que insira os dados do produto
-    printf("========================================================\n");
-    printf("|            TELA DE CADASTRO DE PRODUTOS              |\n");
-    printf("|------------------------------------------------------|\n");
     printf("|\tDigite a descricao do produto: ");
     scanf(" %50[^\n]", p_descricao); // Lê a descrição até uma nova linha ou 99 caracteres
     printf("|\tDigite o preco do produto: ");
     scanf("%d", &p_preco);
     printf("|\tDigite o estoque do produto: ");
     scanf("%d", &p_estoque);
-    printf("|------------------------------------------------------|\n");
+    imprimirLinhaDivisoria();
 
     // Preencher a estrutura do produto com os dados inseridos
     produto.id = carregarUltimoProduto() ; // Incrementar o ID do último produto
@@ -42,10 +42,8 @@ int listarProdutos() {
         //printf("Arquivo foi aberto com sucesso.\n\n");
 
         // Imprimir cabeçalho da tabela
+        imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
 
-        printf("|=========================================================================|\n");
-        printf("|                            LISTA DE PRODUTOS                            |\n");
-        printf("|-------------------------------------------------------------------------|\n");
         printf("| %-3s | %-35s | %-5s | %-7s | %-9s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento");
         printf("|-----|-------------------------------------|-------|---------|-----------|\n");
 
@@ -56,7 +54,7 @@ int listarProdutos() {
             printf("| %-3d | %-35s | %-5.2f | %-7d | %-9d |\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento);
         }
 
-        printf("|-------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
         fclose(file);
     } else {
         printf("Não foi possível abrir o arquivo %s.\n\n", filename);

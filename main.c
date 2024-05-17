@@ -35,10 +35,11 @@ void centralizarJanela() {
     MoveWindow(hwnd, posX, posY, windowWidth, windowHeight, TRUE); // Move a janela para as coordenadas centralizadas
 }
 
+
 /**
  * @brief Função principal do programa.
  *
- * Esta função configura o tamanho e a posição da janela do console e chama a função de login.
+ * Esta função configura o tamanho e a posição da janela do console e chama a função de login para iniciar o programa.
  *
  * @return Retorna 0 após a execução do programa.
  */

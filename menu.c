@@ -10,29 +10,27 @@
 #include "login.h"
 #include "venda_detalhes.h"
 #include "variaveis_compartilhadas.h"
+#include "components.h"
 
-void menuVendedor() {
-    menuVenda();
-}
 
 void menuAdministrador() {
     int opcao = 999;
 
     system("cls");
     while(opcao != 0) {
-    printf("===================================================================================================\n");
-    printf("|                                       MENU ADMINISTRATIVO                                       |\n");
-    printf("|-------------------------------------------------------------------------------------------------|\n");
+
+    imprimirTituloCabecario("MENU ADMINISTRATIVO",NULL);
+
     printf("| Opcao |   Listar              || Opcao |   Criar               || Opcao |   Desativar           |\n");
-    printf("|-------------------------------------------------------------------------------------------------|\n");
+    imprimirLinhaDivisoria();
     printf("|   1   |   Listar Eventos      ||   4   |   Criar Evento        ||   7   |   Desativar Evento    |\n");
     printf("|   2   |   Listar Usuarios     ||   5   |   Criar Usuario       ||   8   |   Desativar Usuario   |\n");
     printf("|   3   |   Listar Produtos     ||   6   |   Criar Produto       ||   9   |   Desativar Produto   |\n");
-    printf("|-------------------------------------------------------------------------------------------------|\n");
+    imprimirLinhaDivisoria();
     printf("|  20   |   Relatorio de Vendas                                                                   |\n");
-    printf("|-------------------------------------------------------------------------------------------------|\n");
+    imprimirLinhaDivisoria();
     printf("|   0   |   Sair do Menu Administrativo                          || Usuario: %-20s |\n",getNomeUsuarioCompartilhado());
-    printf("|-------------------------------------------------------------------------------------------------|\n");
+    imprimirLinhaDivisoria();
     printf("Escolha uma opcao:");
 
     scanf("%d", &opcao);
@@ -85,47 +83,53 @@ int escolherMenu() {
     int opcaoMenu = 999;
     char dataAtual[11];
     char ddata[11];
+    char tipoUsuario[15];
+    strcpy(tipoUsuario, getUsuarioCompartilhado().tipo);
     obterDataAtual(dataAtual);
     strcpy(ddata, dataAtual);
     system("cls");
-    while(opcaoMenu != 0) {
-        printf("======================================================\n");
-        printf("|     BEM VINDO AO PROGRAMA DE GESTAO DE EVENTOS     |\n");
-        printf("|----------------------------------------------------|\n");
-        printf("| Opcao |              Descricao                     |\n");
-        printf("|----------------------------------------------------|\n");
-        printf("|   1   |   Menu de Vendas                           |\n");
-        printf("|   2   |   Menu Administrativo                      |\n");
-        printf("|             --------------------------             |\n");
-        printf("|   0   |   Sair do Programa                         |\n");
-        printf("|----------------------------------------------------|\n");
-        printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata, getNomeUsuarioCompartilhado());
-        printf("|  DATA: %-11s     | Usuario: %-11s      |\n", ddata, getUsuarioCompartilhado().nome);
-        printf("|----------------------------------------------------|\n");
-        printf("Escolha uma opcao:");
 
-        scanf("%d", &opcaoMenu);
-        system("cls");
-        switch (opcaoMenu) {
-            case 1:
-                menuVendedor();
-                system("PAUSE");
-                system("cls");
-                break;
-            case 2:
-                menuAdministrador();
-                system("cls");
-                break;
-            case 0:
-                system("cls");
-                printf("Fazendo logoff...\n");
-                system("PAUSE");
-                system("cls");
-                login();
-                return 0;
-            default:
-                printf("Opcao invalida.\n");
+    if(strcmp(tipoUsuario, "vendedor")) {
+
+        while (opcaoMenu != 0) {
+            imprimirTituloCabecario("BEM VINDO AO PROGRAMA DE GESTAO DE EVENTOS",NULL);
+
+            printf("| Opcao |              Descricao                     |\n");
+            imprimirLinhaDivisoria();
+            printf("|   1   |   Menu de Vendas                           |\n");
+            printf("|   2   |   Menu Administrativo                      |\n");
+            printf("|             --------------------------             |\n");
+            printf("|   0   |   Sair do Programa                         |\n");
+            imprimirLinhaDivisoria();
+            printf("|  DATA: %-11s     | Usuario: %-16s |\n", ddata, getUsuarioCompartilhado().nome);
+            imprimirLinhaDivisoria();
+            printf("|\tEscolha uma opcao:");
+
+            scanf("%d", &opcaoMenu);
+            system("cls");
+            switch (opcaoMenu) {
+                case 1:
+                    menuVenda();
+                    system("PAUSE");
+                    system("cls");
+                    break;
+                case 2:
+                    menuAdministrador();
+                    system("cls");
+                    break;
+                case 0:
+                    system("cls");
+                    printf("Fazendo logoff...\n");
+                    system("PAUSE");
+                    system("cls");
+                    login();
+                    return 0;
+                default:
+                    printf("Opcao invalida.\n");
+            }
         }
+    } else {
+        menuVenda();
     }
 }
 

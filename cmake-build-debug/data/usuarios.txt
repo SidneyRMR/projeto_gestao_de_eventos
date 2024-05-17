@@ -2,9 +2,9 @@
 2 'Sidney Mantovani' sidneyvenda 1234r vendedor 1 1
 2 'teste' teste teste administrador 1 1
 4 'sidney111' qew qwe vendedor 1 1
-5 'sisi' qwq qwq administrador 1 1
+5 'sid' qwq qwq administrador 1 1
 6 'rafa' rafa rafa vendedor 1 1
-7 'Rafa' 1 1 vendedor 1 5
-8 '2' 2 2 administrador 1 7
+7 'Rafa Vend' 1 1 vendedor 1 5
+8 'Rafa Adm' 2 2 administrador 1 7
 9 'iuui' 123 123 vendedor 1 7
 10 'po' po po administrador 1 10

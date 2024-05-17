@@ -5,6 +5,7 @@
 #include "usuario.h"
 #include "menu.h"
 #include "variaveis_compartilhadas.h"
+#include "components.h"
 
 #define MAX_USUARIOS 100 // Defina o número máximo de usuários
 
@@ -39,25 +40,19 @@ int loginAux() {
     char usuarioo[21];
     char senha[21];
 
-    printf("=======================================================\n");
-    printf("|          TELA DE LOGIN - GESTAO DE EVENTOS          |\n");
-    printf("|-----------------------------------------------------|\n");
+    imprimirTituloCabecario("TELA DE LOGIN - GESTAO DE EVENTOS",NULL);
+
     printf("|\tDigite seu usuario: ");
     scanf(" %20s", usuarioo);
 
     printf("|\tDigite sua senha: ");
     scanf(" %20s", senha);
 
-    printf("|-----------------------------------------------------|\n");
+    imprimirLinhaDivisoria();
     for (int i = 0; i < numUsuarios; i++) {
-
         if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
             printf("|\tLogin efetuado com sucesso como %s ", usuarioo);
-            //printf(" - Id: %d\n", usuarios[i].id);
-            //system("PAUSE");
-
             setUsuarioCompartilhado(&usuarios[i]);
-            //setNomeUsuarioCompartilhado(usuarios[i].nome);
             escolherMenu();
             return 1;
         }

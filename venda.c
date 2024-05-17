@@ -4,9 +4,11 @@
 #include "venda.h"
 #include "produto.h"
 #include "menu.h"
+#include "login.h"
 #include "venda_detalhes.h"
 #include "usuario.h"
 #include "variaveis_compartilhadas.h"
+#include "components.h"
 
 //int listarVendas() {
 //    FILE *file;
@@ -36,6 +38,7 @@
 //    }
 //    return 0;
 //}
+
 
 // Função para carregar o último ID do arquivo vendas.txt
 int carregarUltimaVenda() {
@@ -144,8 +147,6 @@ void removerProdutoResumo(int codigoProd, int qtde) {
 
 }
 
-
-
 void limparResumo() {
     for (int i = 0; i < MAX_PRODUTO; i++) {
         resumoVendas[i].id_produto = 0; // Limpa o id do produto
@@ -158,22 +159,24 @@ void limparResumo() {
     contProduto = 0; // Redefine o contador de produtos para zero
 }
 
-
-
 void opcoesVenda() {
     int opcao = 999;
     int idMax = carregarUltimoProduto();
     int quantidade=0;
-    printf("|=========================================================================|\n");
-    printf("|                                  OPCOES                                 |\n");
-    printf("|-------------------------------------------------------------------------|\n");
+
+    imprimirTituloCabecario("OPCOES",NULL);
+
     printf("|\tDigite o codigo um produto para adicionar ao pedido.              |\n");
     if (contProduto > 0) {
         printf("|\tDigite '-' e o codigo um produto para remover do pedido.          |\n");
         printf("|\tDigite 100 e para gerar a venda.                                  |\n");
         printf("|\tDigite 200 para limpar o pedido.                                  |\n");
     }
-    printf("|\tDigite 0 e para sair da tela de pedido.                           |\n");
+    if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
+        printf("|\tDigite 0 e para sair da tela de pedido.                           |\n");
+    } else {
+        printf("|\tDigite 0 e para sair do programa.                           |\n");
+    }
     printf("|\tEscolha uma opcao ou codigo do produto: ");
     scanf(" %d",&opcao);
     switch (opcao) {
@@ -184,7 +187,11 @@ void opcoesVenda() {
             break;
         case 0:
             system("cls");
-            escolherMenu();
+            if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
+                escolherMenu();
+            } else {
+                login();
+            }
             break;
         case 100:
             system("cls");
@@ -215,9 +222,7 @@ void resumoVenda() {
     double totalGeral = 0;
     int totalQtde = 0;
 
-    printf("|=========================================================================|\n");
-    printf("|                            RESUMO DA VENDA                              |\n");
-    printf("|-------------------------------------------------------------------------|\n");
+    imprimirTituloCabecario("RESUMO DA VENDA", NULL);
     printf("| %-3s | %-32s | %-10s | %-7s | %-7s |\n","Cod", "Produto", "Preco", "Qnde", "Total");
     printf("|----------------------------------------|------------|---------|---------|\n");
 

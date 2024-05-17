@@ -4,6 +4,7 @@
 #include "venda_detalhes.h"
 #include "menu.h"
 #include "evento.h"
+#include "components.h"
 
 void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
     FILE *file;
@@ -51,9 +52,8 @@ void relatorioVendasAux(){
     int opcaoEvento = 999;
     while(opcaoEvento != 0) {
     system("cls");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
-        printf("|                                     ESCOLHA UMA OPCAO DE RELATORIO                                     |\n");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirTituloCabecario("ESCOLHA UMA OPCAO DE RELATORIO", NULL);
+
         printf("| Opcao |   Descricao                                                                                    |\n");
         printf("|--------------------------------------------------------------------------------------------------------|\n");
         printf("|    1  |   Relatorio Especifico                                                                         |\n");
@@ -114,9 +114,9 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
 
         // Imprimir cabeçalho da tabela
         system("cls");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
-        printf("|                          RELATORIO ESPECIFICO DAS VENDAS - %-15s                             |\n", nomeEvento);
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+
+    imprimirTituloCabecario("RELATORIO ESPECIFICO DAS VENDAS", nomeEvento);
+
         printf("| %-3s | %-7s | %-7s | %-5s | %-29s | %-10s | %-6s | %-6s |\n", "Cod", "ID_Venda", "ID_Produto", "ID_Evento", "Produto", "Quantidade", "Valor", "Total");
         printf("|-----|----------|------------|-----------|-------------------------------|------------|--------|--------|\n");
 
@@ -137,13 +137,13 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
     }
 
     if (!encontrouVendas) {
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
         printf("| Nenhuma venda encontrada para o evento especificado.                                                   |\n");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
     } else {
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
         printf("|                    ------     TOTAL GERAL     ------                   |  QTD   %-3d |     R$   %6.2lf  |\n", accQtd ,accTotal);
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
 
     }
     fclose(file);
@@ -159,17 +159,16 @@ int relatorioVendasGeral() {
 
     if (file != NULL) {
         // Imprimir cabeçalho da tabela
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
-        printf("|                                       RELATORIO GERAL DAS VENDAS                                       |\n");
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirTituloCabecario("RELATORIO GERAL DAS VENDAS", NULL);
+
         printf("| %-3s | %-7s | %-7s | %-5s | %-29s | %-10s | %-6s | %-6s |\n", "Cod", "ID_Venda", "ID_Produto", "ID_Evento", "Produto", "Quantidade", "Valor", "Total");
         printf("|-----|----------|------------|-----------|-------------------------------|------------|--------|--------|\n");
 
         fseek(file, 0, SEEK_END);
         if (ftell(file) == 0) {
-            printf("|--------------------------------------------------------------------------------------------------------|\n");
+            imprimirLinhaDivisoria();
             printf("|\tNenhuma venda encontrada.                                                                         |\n");
-            printf("|--------------------------------------------------------------------------------------------------------|\n");
+            imprimirLinhaDivisoria();
             fclose(file);
             return 0;
         }
@@ -190,9 +189,9 @@ int relatorioVendasGeral() {
                    venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto, venda_detalhes.valor_produto,
                    venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
         }
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
         printf("|                    ------     TOTAL GERAL     ------                   |  QTD   %-3d |     R$   %6.2lf  |\n", accQtd ,accTotal);
-        printf("|--------------------------------------------------------------------------------------------------------|\n");
+        imprimirLinhaDivisoria();
 
         fclose(file);
     } else {

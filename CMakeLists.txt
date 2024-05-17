@@ -23,4 +23,6 @@ add_executable(projeto_gestao_de_eventos main.c
         login.h
         variaveis_compartilhadas.c
         variaveis_compartilhadas.h
+        components.c
+        components.h
 )
