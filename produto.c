@@ -27,7 +27,7 @@ void criarProduto() {
     produto.preco = p_preco;
     produto.estoque = p_estoque;
 
-    // TODO - PRECISA SER MELHORADA ESTA LISTAGEM DE EVENTOS
+    // TODO - PRECISA SER MELHORADA ESTA LISTAGEM DE EVENTOS - CRIAR UM LISTAR EVENTOS ESPECIFICAMENTE PARA CADASTRAR PRODUTOS E USUARIOS
     listarEventos();
     int eventoMax = carregarUltimoEvento();
     int opcaoEvento = 0;

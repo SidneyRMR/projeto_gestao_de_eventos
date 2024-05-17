@@ -119,7 +119,6 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
 }
 
 void removerProdutoResumo(int codigoProd, int qtde) {
-    // TODO - NÃO ESTA FUNCIOANDO CORRETAMENTE
     codigoProd = codigoProd * -1;
     for (int i = 0; i < contProduto; ++i) {
         if (resumoVendas[i].id_produto == codigoProd) {
@@ -256,7 +255,7 @@ void criarVenda() {
         system("PAUSE");
         return; // Sair da função sem criar a venda
     }
-    // TODO - VERIFICAR SE FUNCIONOU USUARIO COMPARTILHADO
+
     Usuario usuario = getUsuarioCompartilhado();
     //int idUsuario = getNomeUsuarioCompartilhado()
     //Usuario usuarioEncontrado = buscarUsuarioPorId(idUsuario);
@@ -286,7 +285,6 @@ void criarVenda() {
     Venda_detalhes venda_detalhes;
 
     int contId = 0;
-    //TODO - RECEBER AS VARIAVEIS DO VENDA-DETALHES - aparentemento ok - fazer mais testes
     for (int i = 0; i < contProduto; ++i) {
         venda_detalhes.id = idUltimaVendaDetalhes + contId;
         venda_detalhes.id_venda = idUltimaVenda;
