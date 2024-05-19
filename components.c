@@ -41,7 +41,6 @@ int imprimirTituloCabecario(const char *titulo, const char *subtitulo) {
     return 0;
 }
 
-
 // Função para centralizar uma string dentro de um espaço de largura específica
 void centralizarString(char *str, int largura) {
     int comprimento = strlen(str);
@@ -58,6 +57,7 @@ void centralizarString(char *str, int largura) {
         printf(" ");
     }
 }
+
 int imprimirRodape() {
     char dataAtual[11];
     obterDataAtual(dataAtual);
@@ -80,20 +80,6 @@ int imprimirRodape() {
     imprimirLinhaDivisoria();
 
     return 0;
-}
-
-
-void imprimirMenu(const char *opcoes[], int numOpcoes) {
-    imprimirLinhaDivisoria();
-    printf("| Opcao |   Descricao                                                                                    |\n");
-    imprimirLinhaDivisoria();
-
-    for (int i = 0; i < numOpcoes; i++) {
-        printf("|   %-2d  |   %-90s |\n", i + 1, opcoes[i]);
-    }
-
-    imprimirLinhaDivisoria();
-    printf("|\tEscolha uma opcao: ");
 }
 
 void opcaoInvalida() {

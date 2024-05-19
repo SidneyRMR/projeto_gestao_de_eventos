@@ -10,35 +10,6 @@
 #include "variaveis_compartilhadas.h"
 #include "components.h"
 
-//int listarVendas() {
-//    FILE *file;
-//    char filename[] = "data/vendas.txt";
-//    file = fopen(filename, "r");
-//
-//    if (file != NULL) {
-//        //printf("Arquivo foi aberto com sucesso.\n\n");
-//        // Imprimir cabeçalho da tabela
-//        printf("|=====================================================|\n");
-//        printf("|                  LISTA DAS VENDAS                   |\n");
-//        printf("|-----------------------------------------------------|\n");
-//        printf("| %-3s | %-20s | %-5s | %-10s |\n", "Cod", "Data", "ID_Evento", "ID_Usuario");
-//        printf("|-----|----------------------|-----------|------------|\n");
-//
-//        Venda venda;
-//
-//        // Ler e exibir cada linha do arquivo
-//        while (fscanf(file, "%d %11s %d %d", &venda.id, venda.data, &venda.id_evento, &venda.id_usuario) != EOF) {
-//            printf("| %-3d | %-20s | %-9d | %-10d |\n", venda.id, venda.data, venda.id_evento, venda.id_usuario);
-//        }
-//        printf("|-----------------------------------------------------|\n");
-//
-//        fclose(file);
-//    } else {
-//        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
-//    }
-//    return 0;
-//}
-
 
 // Função para carregar o último ID do arquivo vendas.txt
 int carregarUltimaVenda() {
@@ -57,14 +28,12 @@ int carregarUltimaVenda() {
             }
         }
         fclose(file);
-        //printf("\tRegistro %d\n", contador_linhas);
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
 
     return contador_linhas+1;
 }
-
 
 void menuVenda() {
     listarProdutosVenda();
@@ -78,6 +47,7 @@ struct ResumoVendas {
     int quantidade_produto;
     double valor_produto;
 };
+
 #define MAX_PRODUTO 100
 struct ResumoVendas resumoVendas[MAX_PRODUTO];
 int contProduto;
@@ -143,9 +113,8 @@ void removerProdutoResumo(int codigoProd, int qtde) {
             }
         }
     }
-
 }
-
+double totalGeral = 0;
 void limparResumo() {
     for (int i = 0; i < MAX_PRODUTO; i++) {
         resumoVendas[i].id_produto = 0; // Limpa o id do produto
@@ -153,6 +122,7 @@ void limparResumo() {
         resumoVendas[i].quantidade_produto = 0; // Limpa a quantidade do produto
         resumoVendas[i].valor_produto = 0.0; // Limpa o valor do produto
     }
+    totalGeral = 0.00;
     printf("|       -------      Limpando todos os itens da venda!      -------       |\n");
     system("PAUSE");
     contProduto = 0; // Redefine o contador de produtos para zero
@@ -178,6 +148,7 @@ void opcoesVenda() {
     }
     printf("|\tEscolha uma opcao ou codigo do produto: ");
     scanf(" %d",&opcao);
+
     switch (opcao) {
         case 200 :
             limparResumo();
@@ -189,6 +160,7 @@ void opcoesVenda() {
             if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
                 escolherMenu();
             } else {
+                printf("Logoff feito com sucesso!...\n");
                 login();
             }
             break;
@@ -211,14 +183,16 @@ void opcoesVenda() {
                 system("cls");
                 menuVenda();
             } else {
+                system("cls");
                 opcaoInvalida();
+                menuVenda();
             }
     }
 }
 
+
 void resumoVenda() {
     int detalhes_lidos = 0; // Variável para contar quantos detalhes de venda foram lidos
-    double totalGeral = 0;
     int totalQtde = 0;
 
     imprimirTituloCabecario("RESUMO DA VENDA", NULL);
@@ -235,7 +209,7 @@ void resumoVenda() {
         totalQtde = totalQtde + resumoVendas[i].quantidade_produto;
 
         printf("| %-3d | %-67s | %-10.2f | %-10d | %-10.2f |\n", resumoVendas[i].id_produto, resumoVendas[i].descricao_produto, resumoVendas[i].valor_produto,
-               resumoVendas[i].quantidade_produto, resumoVendas[i].quantidade_produto * resumoVendas[i].valor_produto);
+               resumoVendas[i].quantidade_produto , resumoVendas[i].quantidade_produto * resumoVendas[i].valor_produto);
     }
     if (detalhes_lidos != 0) { // Se nenhum detalhe de venda for lido
         imprimirLinhaDivisoria();
@@ -247,8 +221,10 @@ void resumoVenda() {
         printf("|                                              Ainda nao ha nada aqui                                              |\n");
     }
 }
+
 // Função para salvar as informações da venda no arquivo vendas.txt
 void criarVenda() {
+    Venda venda;
     // Faz a verificação se possui algum item no resumoVendas, caso nao, sair e nao gerar a venda
     if (contProduto == 0) {
         printf("Nao ha itens para criar a venda.\n");
@@ -256,10 +232,34 @@ void criarVenda() {
         return; // Sair da função sem criar a venda
     }
 
+    int opcaoPgto = 0;
+    while(opcaoPgto == 0) {
+        printf("|\tO valor total do pedido eh: %.2lf",totalGeral);
+        system("cls");
+        imprimirTituloCabecario("Escolha a forma de Pagamento",
+                                "1. Credito | 2. Dinheiro | 3. Pix | 4. Debito");
+        scanf("%d",&opcaoPgto);
+        switch (opcaoPgto) {
+            case 1:
+                strcpy(venda.formaPgto, "credito");
+                break;
+            case 2:
+                strcpy(venda.formaPgto, "dinheiro");
+                break;
+            case 3:
+                strcpy(venda.formaPgto, "pix");
+                break;
+            case 4:
+                strcpy(venda.formaPgto, "debito");
+                break;
+            default:
+                opcaoInvalida();
+                break;
+        }
+    }
+
     Usuario usuario = getUsuarioCompartilhado();
-    //int idUsuario = getNomeUsuarioCompartilhado()
-    //Usuario usuarioEncontrado = buscarUsuarioPorId(idUsuario);
-    Venda venda;
+
     char dataAtual[11];
     venda.id = carregarUltimaVenda();
     obterDataAtual(dataAtual);
@@ -274,12 +274,13 @@ void criarVenda() {
     file = fopen(filename, "a"); // Abrir o arquivo em modo de escrita, acrescentando ao final
 
     if (file != NULL) {
-        fprintf(file, "%d %s %d %d\n", venda.id, venda.data, venda.id_evento, venda.id_usuario);
+        fprintf(file, "%d %s %d %d '%s'\n", venda.id, venda.data, venda.id_evento, venda.id_usuario , venda.formaPgto);
         fclose(file);
         printf("|         --------        Venda salva com sucesso!        --------        |\n");
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
+
     int idUltimaVenda = carregarUltimaVenda();
     int idUltimaVendaDetalhes = carregarUltimaVendaDetalhes();
     Venda_detalhes venda_detalhes;
@@ -299,5 +300,4 @@ void criarVenda() {
     }
     limparResumo();
     system("cls");
-
 }

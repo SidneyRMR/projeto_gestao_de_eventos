@@ -41,7 +41,7 @@ void listarEventos() {
         imprimirRodape();
         imprimirTituloCabecario("LISTA DE EVENTOS", NULL);
 
-        printf("| %-3s | %-20s | %-60s | %-10s | %-7s |\n", "Cod", "Evento", "Descricao", "Data", "Status");
+        printf("| %-3s | %-20s | %-57s | %-10s | %-10s |\n", "Cod", "Evento", "Descricao", "Data", "Status");
         imprimirLinhaDivisoria();
 
         // Variável para armazenar cada registro lido do arquivo
@@ -49,7 +49,50 @@ void listarEventos() {
 
         // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%[^']' '%[^']' %s %d", &evento.id, evento.evento, evento.descricao, evento.data, &evento.status) != EOF) {
-            printf("| %-3d | %-20s | %-60s | %-10s | %-7d |\n", evento.id, evento.evento, evento.descricao, evento.data, evento.status);
+            char status[10];
+            if(evento.id == 0) continue;
+            if(evento.status == 1){
+                strcpy(status, "Ativo");
+            } else {
+                strcpy(status, "Desativo");
+            }
+            printf("| %-3d | %-20s | %-57s | %-10s | %-10s |\n", evento.id, evento.evento, evento.descricao, evento.data, status);
+        }
+        imprimirLinhaDivisoria();
+        fclose(file);
+    } else {
+        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+    }
+}
+
+void listarEventosCadastro() {
+    FILE *file;
+    char filename[] = "data/eventos.txt";
+    file = fopen(filename, "r");
+
+    if (file != NULL) {
+        imprimirTituloCabecario("LISTA DE EVENTOS", NULL);
+
+        printf("| %-3s | %-20s | %-57s | %-10s | %-10s |\n", "Cod", "Evento", "Descricao", "Data", "Status");
+        imprimirLinhaDivisoria();
+
+        // Variável para armazenar cada registro lido do arquivo
+        Evento evento;
+
+        // Ler e exibir cada linha do arquivo
+        while (fscanf(file, "%d '%[^']' '%[^']' %s %d", &evento.id, evento.evento, evento.descricao, evento.data, &evento.status) != EOF) {
+            char status[10];
+            if(evento.id == 0) continue;
+            if(evento.status == 1){
+                strcpy(status, "Ativo");
+            } else {
+                strcpy(status, "Desativo");
+            }
+            if(evento.status == 0){
+                continue;
+            } else {
+                printf("| %-10d | %-100s |\n", evento.id, evento.evento);
+            }
         }
         imprimirLinhaDivisoria();
         fclose(file);

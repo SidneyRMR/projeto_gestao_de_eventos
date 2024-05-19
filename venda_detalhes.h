@@ -17,7 +17,7 @@ void salvarVendaDetalhes(Venda_detalhes venda_detalhes);
 
 void relatorioVendasAux();
 
-int relatorioVendasGeral();
+int relatorioVendasGeral(char* criterio, char* ordem);
 
 int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo);
 

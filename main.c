@@ -44,7 +44,7 @@ void centralizarJanela() {
  * @return Retorna 0 após a execução do programa.
  */
 int main() {
-    ajustarTamanhoJanela(1000, 800); // Ajusta o tamanho da janela do console
+    ajustarTamanhoJanela(1000, 900); // Ajusta o tamanho da janela do console
     centralizarJanela(); // Centraliza a janela do console
     login(); // Chama a função de login
     return 0;

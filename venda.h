@@ -7,16 +7,12 @@ typedef struct {
     char data[11];
     int id_evento;
     int id_usuario;
+    char formaPgto[10];
 } Venda;
 
-// Protótipo da função para salvar as informações da venda
 void criarVenda();
 
-int listarVendas();
-
 int carregarUltimaVenda();
-
-void salvarVenda(Venda venda);
 
 void menuVenda();
 

@@ -43,11 +43,5 @@
 
 ####
 
-- **Usuário administrativo**
-    - Definir somente um usuário administrativo (master)
-    - Remover a opção de criar novo usuário Administrativo
-
-####
-
 - **Listagem de eventos**
     - Criar uma função `listarEventosCadastro()` para ser usada ao cadastrar Usuários e Produtos

@@ -3,6 +3,8 @@
 #include "produto.h"
 #include "components.h"
 #include "evento.h"
+#include "menu.h"
+#include "variaveis_compartilhadas.h"
 
 void criarProduto() {
     Produto produto;
@@ -27,8 +29,7 @@ void criarProduto() {
     produto.preco = p_preco;
     produto.estoque = p_estoque;
 
-    // TODO - PRECISA SER MELHORADA ESTA LISTAGEM DE EVENTOS - CRIAR UM LISTAR EVENTOS ESPECIFICAMENTE PARA CADASTRAR PRODUTOS E USUARIOS
-    listarEventos();
+    listarEventosCadastro();
     int eventoMax = carregarUltimoEvento();
     int opcaoEvento = 0;
 
@@ -57,14 +58,17 @@ int listarProdutos() {
         // Imprimir cabeçalho da tabela
         imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
 
-        printf("| %-3s | %-70s | %-10s | %-9s | %-8s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento");
+        printf("| %-3s | %-63s | %-10s | %-9s | %-15s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento");
         imprimirLinhaDivisoria();
 
         Produto produto;
 
         // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%[^']' %lf %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento ) != EOF) {
-            printf("| %-3d | %-70s | %-10.2f | %-9d | %-8d |\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento);
+            char evento[10];
+            char* nomeEvento = obterNomeEvento("eventos.txt", produto.id_evento);
+
+            printf("| %-3d | %-63s | %-10.2f | %-9d | %-15s |\n", produto.id, produto.descricao, produto.preco, produto.estoque, nomeEvento);
         }
 
         imprimirLinhaDivisoria();
@@ -93,6 +97,8 @@ int listarProdutosVenda() {
 
         // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%[^']' %lf %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento ) != EOF) {
+            if(produto.id_evento != getUsuarioCompartilhado().id_evento) continue;
+
             printf("| %-3d | %-75s | %-10.2f | %-15d |\n", produto.id, produto.descricao, produto.preco, produto.estoque);
         }
 

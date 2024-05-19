@@ -17,4 +17,6 @@ int carregarUltimoEvento();
 
 void salvarEvento(Evento evento);
 
+void listarEventosCadastro();
+
 #endif // EVENTO_H
