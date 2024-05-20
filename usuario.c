@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <malloc.h>
 #include "usuario.h"
 #include "evento.h"
 #include "components.h"
@@ -122,4 +123,80 @@ void salvarUsuario(Usuario usuario) {
     }
 }
 
+char* obterNomeUsuario(const char *nomeArquivo, int idBusca) {
+    //FILE *file = fopen('data/'+nomeArquivo, "r");
+    char caminhoArquivo[100]; // Ajuste o tamanho conforme necessário
+    sprintf(caminhoArquivo, "data/%s", nomeArquivo);
+    FILE *file = fopen(caminhoArquivo, "r");
 
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return NULL;
+    }
+
+    Usuario usuario;
+    char *nomeEvento = NULL;
+
+    while (fscanf(file, "%d '%30[^']' %s %s %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
+        if (usuario.id == idBusca) {
+            nomeEvento = (char*)malloc(strlen(usuario.nome) + 1);
+            if (nomeEvento != NULL) {
+                strcpy(nomeEvento, usuario.nome);
+            } else {
+                perror("Erro ao alocar memória para o nome do evento");
+            }
+            break;
+        }
+    }
+
+    fclose(file);
+    return nomeEvento;
+}
+
+void alterarStatusUsuario() {
+    int escolhaIdUsuario;
+    int idMax = carregarUltimoUsuario();
+
+    do {
+        system("cls");
+        listarUsuarios();
+        escolhaIdUsuario = centralizarEObterValorInt(
+                "Escolha o codigo da venda que deseja ver o relatorio (ou digite 0 para SAIR): ");
+        switch (escolhaIdUsuario) {
+            case 0:
+                menuAdministrador();
+                break;
+            default:
+                if (escolhaIdUsuario < 1 || escolhaIdUsuario >= idMax) {
+                    opcaoInvalida();
+                } else {
+                    alterarStatusDoUsuario(escolhaIdUsuario);
+                }
+        }
+    } while (escolhaIdUsuario != 0 && (escolhaIdUsuario < 1 || escolhaIdUsuario >= idMax));
+}
+void alterarStatusDoUsuario(int idUsuario) {
+    FILE *arquivo;
+    arquivo = fopen("usuario.txt", "r+");
+
+    if (arquivo == NULL) {
+        printf("Erro ao abrir o arquivo.\n");
+        return;
+    }
+
+    Usuario usuario;
+
+    while (fread(&usuario, sizeof(Usuario), 1, arquivo)) {
+        if (usuario.id == idUsuario) {
+            fseek(arquivo, -sizeof(Usuario), SEEK_CUR);
+            usuario.status = 0;
+            fwrite(&usuario, sizeof(Usuario), 1, arquivo);
+            printf("Status do usuário com ID %d alterado para 0.\n", idUsuario);
+            fclose(arquivo);
+            return;
+        }
+    }
+
+    printf("Usuário com ID %d não encontrado.\n", idUsuario);
+    fclose(arquivo);
+}

@@ -107,7 +107,12 @@ int centralizarEObterValorInt(const char *frase) {
     printf("%s ", frase);
 
     // Lendo o valor com scanf
-    scanf("%d", &valor);
+    while (scanf("%d", &valor) != 1) {
+        // Limpar o buffer de entrada
+        while (getchar() != '\n');
+        centralizarString("Entrada inválida. Tente um numero inteiro.", 35);
+        centralizarEObterValorInt(frase);
+    }
 
     // Retornando o valor lido
     return valor;

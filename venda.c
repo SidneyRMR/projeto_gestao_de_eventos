@@ -30,6 +30,35 @@ void menuVenda() {
     opcoesVenda();
 }
 
+void listarVendas() {
+    FILE *file;
+    char filename[] = "data/vendas.txt";
+    file = fopen(filename, "r");
+
+    if (file != NULL) {
+        imprimirTituloCabecario("LISTA DE VENDAS", NULL);
+
+        printf("| %-4s | %-10s | %-46s | %-25s | %-15s |\n", "Cod", "Data", "Evento", "Usuario", "Forma Pgto");
+        imprimirLinhaDivisoria();
+
+        Venda venda;
+
+        while (fscanf(file, "%d %10s %d %d '%15[^']'", &venda.id, venda.data, &venda.id_evento, &venda.id_usuario, venda.formaPgto) != EOF) {
+            // Suponha que você tenha uma função para obter o nome do evento com base no id do evento
+            char evento[10];
+            char* nomeEvento = obterNomeEvento("eventos.txt", venda.id_evento);
+            char* nomeUsuario = obterNomeUsuario("usuarios.txt", venda.id_usuario);
+
+            printf("| %-4d | %-10s | %-46s | %-25s | %-15s |\n", venda.id, venda.data, nomeEvento, nomeUsuario, venda.formaPgto);
+        }
+
+        imprimirLinhaDivisoria();
+        fclose(file);
+    } else {
+        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+    }
+}
+
 // Função para carregar o último ID do arquivo vendas.txt
 int carregarUltimaVenda() {
     FILE *file = NULL;

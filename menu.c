@@ -62,15 +62,15 @@ void menuAdministrador() {
                 system("cls");
                 break;
             case 7:
-                desativarEvento();
+                //desativarEvento();
                 system("cls");
                 break;
             case 8:
-                desativarUsuario();
+                alterarStatusUsuario();
                 system("cls");
                 break;
             case 9:
-                desativarProduto();
+                //desativarProduto();
                 system("cls");
                 break;
             case 20:

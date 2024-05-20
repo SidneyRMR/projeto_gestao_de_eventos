@@ -12,7 +12,11 @@ typedef struct Usuario {
     int id_evento;
 } Usuario;
 
+void alterarStatusUsuario();
+
 void criarUsuario();
+
+void alterarStatusDoUsuario(int idUsuario);
 
 int listarUsuarios();
 
@@ -21,5 +25,7 @@ int carregarUltimoUsuario();
 void salvarUsuario(Usuario usuario);
 
 Usuario buscarUsuarioPorId(int id);
+
+char* obterNomeUsuario(const char *nomeArquivo, int idBusca);
 
 #endif // USUARIO_H

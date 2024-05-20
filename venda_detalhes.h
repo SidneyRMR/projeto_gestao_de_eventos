@@ -19,9 +19,12 @@ void relatorioVendasAux();
 
 int relatorioVendasGeral(char* criterio, char* ordem);
 
-int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo);
+int relatorioVendaEspecifico(const char *nomeArquivo, int opcao);
+
+int relatorioEventoEspecifico(const char *nomeArquivo, int opcao);
 
 void salvarVendaDetalhes(Venda_detalhes venda_detalhes);
 
 int carregarUltimaVendaDetalhes();
+
 #endif // VENDA_DETALHES_H
