@@ -12,12 +12,14 @@ void criarUsuario() {
 
     imprimirTituloCabecario("TELA DE CADASTRO DE USUARIO",NULL);
 
-    printf("|\tDigite o NOME: ");
-    scanf(" %50[^\n]", usuario.nome);
-    printf("|\tDigite o LOGIN: ");
-    scanf(" %20[^\n]", usuario.login);
-    printf("|\tDigite A SENHA: ");
-    scanf(" %10[^\n]", usuario.senha);
+    char *p_nome = centralizarEObterValorChar("Digite o nome: ", 51);
+    strncpy(usuario.nome, p_nome, sizeof(usuario.nome) - 1);
+
+    char *p_login = centralizarEObterValorChar("Digite o login: ", 21);
+    strncpy(usuario.login, p_login, sizeof(usuario.login) - 1);
+
+    char *p_senha = centralizarEObterValorChar("Digite a senha: ", 11);
+    strncpy(usuario.senha, p_senha, sizeof(usuario.senha) - 1);
 
     imprimirLinhaDivisoria();
 
@@ -48,7 +50,7 @@ int listarUsuarios() {
     if (file != NULL) {
         //printf("Arquivo foi aberto com sucesso.\n\n");
 
-        imprimirRodape();
+        imprimirUsuarioEData();
         // Imprimir cabeçalho da tabela
         imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
 
@@ -105,14 +107,18 @@ int carregarUltimoUsuario() {
 void salvarUsuario(Usuario usuario) {
     FILE *file;
     char filename[] = "data/usuarios.txt";
-    file = fopen(filename, "a"); // Abrir o arquivo em modo de escrita, acrescentando ao final
+
+    // Abre o arquivo em modo de acréscimo ("a"), que cria o arquivo se ele não existir
+    file = fopen(filename, "a");
 
     if (file != NULL) {
+        // Escreve os dados do usuário no arquivo
         fprintf(file, "%d '%s' %s %s %s %d %d\n", usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.status, usuario.id_evento);
         fclose(file);
         printf("Usuario salvo com sucesso!\n");
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        // Exibe uma mensagem de erro se o arquivo não pôde ser aberto
+        perror("Erro ao abrir o arquivo");
     }
 }
 

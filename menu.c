@@ -20,20 +20,17 @@ void menuAdministrador() {
     while(opcaoAdm != 0) {
 
     imprimirTituloCabecario("MENU ADMINISTRATIVO",NULL);
+    imprimirUsuarioEData();
+    printf("| Opcao |     Listar                   | Opcao |     Criar                    | Opcao |     Desativar              |\n");
+    imprimirLinhaDivisoria();
+    printf("|   1   |     Listar Eventos           |   4   |     Criar Evento             |   7   |     Desativar Evento       |\n");
+    printf("|   2   |     Listar Usuarios          |   5   |     Criar Usuario            |   8   |     Desativar Usuario      |\n");
+    printf("|   3   |     Listar Produtos          |   6   |     Criar Produto            |   9   |     Desativar Produto      |\n");
+    imprimirLinhaDivisoria();
+    printf("|  20   |   Relatorio de Vendas        |   21  |     Ajustar estoque          |   0   |   Fazer Logoff             |\n");
+    imprimirLinhaDivisoria();
 
-    printf("| Opcao |   Listar                    || Opcao |   Criar                     || Opcao |     Desativar              |\n");
-    imprimirLinhaDivisoria();
-    printf("|   1   |     Listar Eventos          ||   4   |     Criar Evento            ||   7   |     Desativar Evento       |\n");
-    printf("|   2   |     Listar Usuarios         ||   5   |     Criar Usuario           ||   8   |     Desativar Usuario      |\n");
-    printf("|   3   |     Listar Produtos         ||   6   |     Criar Produto           ||   9   |     Desativar Produto      |\n");
-    imprimirLinhaDivisoria();
-    printf("|  20   |   Relatorio de Vendas                                                                                    |\n");
-    imprimirLinhaDivisoria();
-    printf("|   0   |   Fazer Logoff                                                                                           |\n");
-    imprimirRodape();
-    printf("Escolha uma opcao:");
-
-    scanf("%d", &opcaoAdm);
+    opcaoAdm = centralizarEObterValorInt("Escolha uma opcao:");
 
         system("cls");
         switch (opcaoAdm) {
@@ -64,13 +61,30 @@ void menuAdministrador() {
                 criarProduto();
                 system("cls");
                 break;
+            case 7:
+                desativarEvento();
+                system("cls");
+                break;
+            case 8:
+                desativarUsuario();
+                system("cls");
+                break;
+            case 9:
+                desativarProduto();
+                system("cls");
+                break;
             case 20:
                 relatorioVendasAux();
                 system("PAUSE");
                 system("cls");
                 break;
+            case 21:
+                ajustarEstoque();
+                //system("PAUSE");
+                system("cls");
+                break;
             case 0:
-                printf("Logoff feito com sucesso!...\n");
+                centralizarFrase("Logoff feito com sucesso!...");
                 login();
                 break;
             default:

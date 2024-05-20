@@ -37,27 +37,24 @@ void carregarUsuarios() {
 }
 
 int loginAux() {
-    char usuarioo[21];
-    char senha[21];
-
     imprimirTituloCabecario("TELA DE LOGIN - GESTAO DE EVENTOS",NULL);
+    char *usuarioo = centralizarEObterValorChar("Digite seu usuario: ", 21);
 
-    printf("|\tDigite seu usuario: ");
-    scanf(" %20s", usuarioo);
-
-    printf("|\tDigite sua senha: ");
-    scanf(" %20s", senha);
+    char *senha = centralizarEObterValorChar("Digite sua senha: ",21);
 
     imprimirLinhaDivisoria();
     for (int i = 0; i < numUsuarios; i++) {
         if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
-            printf("|\tLogin efetuado com sucesso como %s ", usuarioo);
+
+            char fraseLogin[114];
+            sprintf(fraseLogin, "Login efetuado com sucesso como %s ", usuarioo);
+            centralizarFrase(fraseLogin);
             setUsuarioCompartilhado(&usuarios[i]);
             escolherMenu();
             return 1;
         }
     }
-    printf("|\tLogin invalido, tente novamente.\n");
+    centralizarFrase("Login invalido, tente novamente.");
     system("cls");
     return 0;
 }
@@ -72,10 +69,12 @@ void login() {
             return;
         } else {
             tentativas--;
-            printf("|\t\tVoce tem %d tentativas restantes.\n\n", tentativas);
+            char fraseTentativas[114];
+            sprintf(fraseTentativas, "Voce tem %d tentativas restantes.", tentativas);
+            centralizarFrase(fraseTentativas);
         }
     }
-    printf("|\tNumero maximo de tentativas excedido. Saindo...\n");
+    centralizarFrase("Numero maximo de tentativas excedido. Saindo...");
     system("PAUSE");
     exit(1);
 }

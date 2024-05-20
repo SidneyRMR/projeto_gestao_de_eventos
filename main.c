@@ -1,6 +1,7 @@
 #include "menu.h"
 #include "login.h"
 #include <windows.h>
+#include <stdio.h>
 
 /**
  * @brief Ajusta o tamanho da janela do console.
@@ -44,8 +45,12 @@ void centralizarJanela() {
  * @return Retorna 0 após a execução do programa.
  */
 int main() {
+
     ajustarTamanhoJanela(1000, 900); // Ajusta o tamanho da janela do console
     centralizarJanela(); // Centraliza a janela do console
+    //printf("Diferente :%d",strcmp("venda.formaPgto", "dinheiro"));
+    //printf("Igual: %d",strcmp("dinheiro", "dinheiro"));
+    //system("PAUSE");
     login(); // Chama a função de login
     return 0;
 }

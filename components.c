@@ -58,7 +58,7 @@ void centralizarString(char *str, int largura) {
     }
 }
 
-int imprimirRodape() {
+int imprimirUsuarioEData() {
     char dataAtual[11];
     obterDataAtual(dataAtual);
 
@@ -85,3 +85,80 @@ int imprimirRodape() {
 void opcaoInvalida() {
     printf("Opcao invalida.\n");
 }
+
+void centralizarFrase(char *frase) {
+    int espacos = 0;
+    int comprimento_frase= 0;
+    comprimento_frase = strlen(frase);
+    espacos = (LARGURA - comprimento_frase) / 2;
+    printf("|%*s%-*s%*s|\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
+}
+
+int centralizarEObterValorInt(const char *frase) {
+    int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
+    int valor;
+
+    // Imprimindo os espaços à esquerda
+    for (int i = 0; i < espacosEsquerda; i++) {
+        printf(" ");
+    }
+
+    // Imprimindo a frase
+    printf("%s ", frase);
+
+    // Lendo o valor com scanf
+    scanf("%d", &valor);
+
+    // Retornando o valor lido
+    return valor;
+}
+
+double centralizarEObterValorDouble(const char *frase) {
+    int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
+    double valor;
+
+    // Imprimindo os espaços à esquerda
+    for (int i = 0; i < espacosEsquerda; i++) {
+        printf(" ");
+    }
+
+    // Imprimindo a frase
+    printf("%s ", frase);
+
+    // Lendo o valor com scanf
+    scanf("%lf", &valor);
+
+    // Retornando o valor lido
+    return valor;
+}
+
+char* centralizarEObterValorChar(const char *frase, int tamanho) {
+    // Verifica se o tamanho da frase é maior que a largura permitida
+    if (strlen(frase) > LARGURA) {
+        printf("Erro: A valor excede a largura máxima permitida.\n");
+        centralizarEObterValorChar(frase, tamanho);
+    }
+
+    int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
+    static char valor[100]; // Array para armazenar a entrada do usuário
+
+    // Imprimindo os espaços à esquerda
+    for (int i = 0; i < espacosEsquerda; i++) {
+        printf(" ");
+    }
+
+    // Imprimindo a frase
+    printf("%s ", frase);
+
+    // Lendo a entrada com scanf, garantindo que não exceda o tamanho máximo
+    scanf(" %97[^\n]", valor); // lê no máximo 99 caracteres para garantir espaço para o terminador nulo
+
+    // Verificando se a entrada excede o tamanho permitido
+    if (strlen(valor) > tamanho) {
+        printf("\nErro: A entrada excede o tamanho máximo permitido de %d caracteres.\n", tamanho);
+        centralizarEObterValorChar(frase, tamanho);
+    }
+    // Retornando a entrada lida
+    return valor;
+}
+

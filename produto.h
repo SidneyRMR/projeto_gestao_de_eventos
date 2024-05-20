@@ -22,4 +22,6 @@ void salvarProduto(Produto produto);
 
 Produto consultarProdutoPorID(int id);
 
+int ajustarEstoque();
+
 #endif // PRODUTO_H

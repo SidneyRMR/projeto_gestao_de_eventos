@@ -6,6 +6,13 @@
 #include "evento.h"
 #include "components.h"
 
+typedef struct {
+    int id_produto;
+    char descricao_produto[51];
+    int quantidade_total;
+    double valor_total;
+} Produto_Acumulado;
+
 void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
     FILE *file;
     char filename[] = "data/vendas_detalhes.txt";
@@ -15,7 +22,7 @@ void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
         fprintf(file, "%d %d %d %d '%s' %d %f\n", venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto, venda_detalhes.id_evento,
                 venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto, venda_detalhes.valor_produto);
         fclose(file);
-        printf("|         --------        Venda salva com sucesso!        --------        |\n");
+        centralizarFrase("--------        Produto da venda salvos com sucesso!        --------");
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
@@ -28,8 +35,8 @@ int relatorioVendaEspecificoAux() {
     do {
         system("cls");
         listarEventos();
-        printf("|\tEscolha o codigo do evento que deseja ver o relatorio (ou digite 0 para SAIR): ");
-        scanf("%d", &escolhaIdRelatorio);
+        escolhaIdRelatorio = centralizarEObterValorInt(
+                "Escolha o codigo do evento que deseja ver o relatorio (ou digite 0 para SAIR): ");
 
         switch (escolhaIdRelatorio) {
             case 0:
@@ -50,14 +57,14 @@ int relatorioVendaEspecificoAux() {
 void criteriosOrdenacao() {
     char criterio[15];
     char ordem[15];
+    int criterioOpcao;
+    int ordemOpcao;
 
     imprimirTituloCabecario("ESCOLHA O CRITERIO DE ORDENACAO",NULL);
     printf("|\t1. ID do Produto                                                                                           |\n");
     printf("|\t2. Quantidade de Produtos Vendidos                                                                         |\n");
-    int criterioOpcao;
     imprimirLinhaDivisoria();
-    printf("|\tEscolha uma opcao: ");
-    scanf("%d", &criterioOpcao);
+    criterioOpcao = centralizarEObterValorInt("Escolha uma opcao: ");
     imprimirLinhaDivisoria();
 
     if (criterioOpcao == 1) {
@@ -73,10 +80,9 @@ void criteriosOrdenacao() {
     imprimirTituloCabecario("ESCOLHA A ORDEM DE ORDENACAO",NULL);
     printf("|\t1. Crescente                                                                                               |\n");
     printf("|\t2. Decrescente                                                                                             |\n");
-    int ordemOpcao;
-    printf("|\tEscolha uma opcao: ");
-    scanf("%d", &ordemOpcao);
-
+    imprimirLinhaDivisoria();
+    ordemOpcao = centralizarEObterValorInt("Escolha uma opcao: ");
+    imprimirLinhaDivisoria();
     if (ordemOpcao == 1) {
         strcpy(ordem, "crescente");
     } else if (ordemOpcao == 2) {
@@ -94,7 +100,7 @@ void relatorioVendasAux(){
     int opcaoEvento = 999;
     while(opcaoEvento != 0) {
     system("cls");
-        imprimirRodape();
+        imprimirUsuarioEData();
         imprimirTituloCabecario("ESCOLHA UMA OPCAO DE RELATORIO", NULL);
         printf("| Opcao |   Descricao                                                                                              |\n");
         imprimirLinhaDivisoria();
@@ -127,70 +133,8 @@ void relatorioVendasAux(){
     }
 }
 
-
-int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
-
-    char caminhoArquivo[100];
-    strcpy(caminhoArquivo, "data/");
-    strcat(caminhoArquivo, nomeArquivo);
-    FILE *file = fopen(caminhoArquivo, "r");
-
-    if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
-        //return 0;
-    }
-
-    char *nomeEvento = obterNomeEvento("eventos.txt", opcao);
-    if (nomeEvento == NULL) {
-        nomeEvento = (char*)malloc(strlen("Nada encontrado") + 1);
-        if (nomeEvento != NULL) {
-            strcpy(nomeEvento, "Nada encontrado");
-        } else {
-            perror("Erro ao alocar memória para 'Nada encontrado'");
-        }
-    }
-
-        Venda_detalhes venda_detalhes;
-        double accTotal = 0;
-        int accQtd = 0;
-        int encontrouVendas = 0;
-
-        // Imprimir cabeçalho da tabela
-        system("cls");
-
-    imprimirRodape();
-    imprimirTituloCabecario("RELATORIO ESPECIFICO DAS VENDAS", nomeEvento);
-        printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
-        imprimirLinhaDivisoria();
-
-    // Ler e exibir cada linha do arquivo
-    while (fscanf(file, "%d %d %d %d '%50[^']' %d %lf", &venda_detalhes.id, &venda_detalhes.id_venda,
-                  &venda_detalhes.id_produto, &venda_detalhes.id_evento, venda_detalhes.descricao_produto, &venda_detalhes.quantidade_produto,
-                  &venda_detalhes.valor_produto) != EOF) {
-        if (venda_detalhes.id_evento == opcao) {
-            encontrouVendas = 1;
-            accTotal += (venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
-            accQtd += venda_detalhes.quantidade_produto;
-            printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
-                   venda_detalhes.id_produto, venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto,
-                   venda_detalhes.valor_produto,
-                   venda_detalhes.quantidade_produto * venda_detalhes.valor_produto);
-        }
-    }
-
-    if (!encontrouVendas) {
-        imprimirLinhaDivisoria();
-        printf("| Nenhuma venda encontrada para o evento especificado.                                                   |\n");
-        imprimirLinhaDivisoria();
-    } else {
-        imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd ,accTotal);
-        imprimirLinhaDivisoria();
-
-    }
-    fclose(file);
-    system("PAUSE");
-    relatorioVendaEspecificoAux();
+int compararProdutosPorIdCrescente(const void* a, const void* b) {
+    return ((Produto_Acumulado*)a)->id_produto - ((Produto_Acumulado*)b)->id_produto;
 }
 
 int compararPorIdCrescente(const void *a, const void *b) {
@@ -209,6 +153,101 @@ int compararPorQuantidadeDecrescente(const void *a, const void *b) {
     return ((Venda_detalhes*)b)->quantidade_produto - ((Venda_detalhes*)a)->quantidade_produto;
 }
 
+int juntarProdutos(Venda_detalhes* vendas, int count, Produto_Acumulado* produtos) {
+    int produtosCount = 0;
+
+    for (int i = 0; i < count; i++) {
+        int j;
+        for (j = 0; j < produtosCount; j++) {
+            if (produtos[j].id_produto == vendas[i].id_produto) {
+                produtos[j].quantidade_total += vendas[i].quantidade_produto;
+                produtos[j].valor_total += (vendas[i].quantidade_produto * vendas[i].valor_produto);
+                break;
+            }
+        }
+        if (j == produtosCount) {
+            produtos[produtosCount].id_produto = vendas[i].id_produto;
+            strcpy(produtos[produtosCount].descricao_produto, vendas[i].descricao_produto);
+            produtos[produtosCount].quantidade_total = vendas[i].quantidade_produto;
+            produtos[produtosCount].valor_total = (vendas[i].quantidade_produto * vendas[i].valor_produto);
+            produtosCount++;
+        }
+    }
+
+    return produtosCount;
+}
+
+int relatorioVendaEspecifico(const char *nomeArquivo, int opcao, int idMaximo) {
+    char caminhoArquivo[100];
+    strcpy(caminhoArquivo, "data/");
+    strcat(caminhoArquivo, nomeArquivo);
+    FILE *file = fopen(caminhoArquivo, "r");
+
+    if (file == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return 0;
+    }
+
+    char *nomeEvento = obterNomeEvento("eventos.txt", opcao);
+    if (nomeEvento == NULL) {
+        nomeEvento = (char*)malloc(strlen("Nada encontrado") + 1);
+        if (nomeEvento != NULL) {
+            strcpy(nomeEvento, "Nada encontrado");
+        } else {
+            perror("Erro ao alocar memória para 'Nada encontrado'");
+        }
+    }
+
+    Venda_detalhes vendas[1000];
+    int count = 0;
+
+    // Ler todas as vendas do arquivo
+    while (fscanf(file, "%d %d %d %d '%50[^']' %d %lf", &vendas[count].id, &vendas[count].id_venda,
+                  &vendas[count].id_produto, &vendas[count].id_evento, vendas[count].descricao_produto,
+                  &vendas[count].quantidade_produto, &vendas[count].valor_produto) != EOF) {
+        if (vendas[count].id_evento == opcao) {
+            count++;
+        }
+    }
+    fclose(file);
+
+    Produto_Acumulado produtos[1000];
+    int produtosCount = juntarProdutos(vendas, count, produtos);
+    qsort(produtos, produtosCount, sizeof(Produto_Acumulado), compararProdutosPorIdCrescente);
+    double accTotal = 0;
+    int accQtd = 0;
+
+    // Imprimir cabeçalho da tabela
+    system("cls");
+    imprimirUsuarioEData();
+    imprimirTituloCabecario("RELATORIO ESPECIFICO DAS VENDAS", nomeEvento);
+    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
+    imprimirLinhaDivisoria();
+
+    if (produtosCount == 0) {
+        imprimirLinhaDivisoria();
+        printf("| Nenhuma venda encontrada para o evento especificado.                                                   |\n");
+        imprimirLinhaDivisoria();
+    } else {
+        for (int i = 0; i < produtosCount; i++) {
+            accTotal += produtos[i].valor_total;
+            accQtd += produtos[i].quantidade_total;
+            printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
+                   produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
+                   produtos[i].valor_total / produtos[i].quantidade_total,
+                   produtos[i].valor_total);
+        }
+        imprimirLinhaDivisoria();
+        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
+        imprimirLinhaDivisoria();
+    }
+
+    free(nomeEvento);
+    return 0;
+}
+
+
+
 int relatorioVendasGeral(char* criterio, char* ordem) {
     FILE *file;
     char filename[] = "data/vendas_detalhes.txt";
@@ -216,7 +255,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
 
     if (file != NULL) {
         // Imprimir cabeçalho da tabela
-        imprimirRodape();
+        imprimirUsuarioEData();
         imprimirTituloCabecario("RELATORIO GERAL DAS VENDAS", NULL);
         printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
         imprimirLinhaDivisoria();
@@ -255,23 +294,26 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
             }
         }
 
+        Produto_Acumulado produtos[1000];
+        int produtosCount = juntarProdutos(vendas, count, produtos);
+
         double accTotal = 0;
         int accQtd = 0;
 
-        for (int i = 0; i < count; i++) {
-            accTotal += (vendas[i].quantidade_produto * vendas[i].valor_produto);
-            accQtd += vendas[i].quantidade_produto;
+        for (int i = 0; i < produtosCount; i++) {
+            accTotal += produtos[i].valor_total;
+            accQtd += produtos[i].quantidade_total;
             printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
-                   vendas[i].id_produto, vendas[i].descricao_produto, vendas[i].quantidade_produto,
-                   vendas[i].valor_produto,
-                   vendas[i].quantidade_produto * vendas[i].valor_produto);
+                   produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
+                   produtos[i].valor_total / produtos[i].quantidade_total,
+                   produtos[i].valor_total);
         }
 
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd ,accTotal);
+        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
         // Opção para alterar a ordenação
-        imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair ",NULL);
+        imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair ", NULL);
         int opcaoOrdenacao;
         scanf("%d", &opcaoOrdenacao);
         if (opcaoOrdenacao == 1) {

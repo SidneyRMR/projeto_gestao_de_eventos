@@ -7,18 +7,15 @@
 // Definição da estrutura para armazenar os dados do evento
 void criarEvento() {
     Evento evento;
-    char p_evento[21]; // Array de caracteres para armazenar o nome do evento
-    char p_descricao[51]; // Array de caracteres para armazenar a descrição do evento
     char dataAtual[11];
     int p_status = 1;
 
     // Solicitar ao usuário que insira os dados do evento
     imprimirTituloCabecario("TELA DE CADASTRO DE EVENTOS",NULL);
 
-    printf("|\tDigite o nome do evento: ");
-    scanf(" %20[^\n]", p_evento); // Lê o nome do evento
-    printf("|\tDigite uma descricao para o evento: ");
-    scanf(" %50[^\n]", p_descricao); // Lê a descrição do evento
+    char *p_evento = centralizarEObterValorChar("Digite o nome do evento: ", 21);
+    char *p_descricao = centralizarEObterValorChar("Digite uma descricao para o evento: ", 51);
+
     imprimirLinhaDivisoria();
 
     // Preencher a estrutura do evento com os dados inseridos
@@ -28,6 +25,7 @@ void criarEvento() {
     obterDataAtual(dataAtual);
     strcpy(evento.data, dataAtual);
     evento.status = p_status;
+
     salvarEvento(evento);
 }
 
@@ -38,7 +36,7 @@ void listarEventos() {
 
     if (file != NULL) {
 
-        imprimirRodape();
+        imprimirUsuarioEData();
         imprimirTituloCabecario("LISTA DE EVENTOS", NULL);
 
         printf("| %-3s | %-20s | %-57s | %-10s | %-10s |\n", "Cod", "Evento", "Descricao", "Data", "Status");
@@ -122,7 +120,7 @@ int carregarUltimoEvento() {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
 
-    return contador_linhas+1;
+    return contador_linhas;
 }
 
 void salvarEvento(Evento evento) {
@@ -133,7 +131,7 @@ void salvarEvento(Evento evento) {
     if (file != NULL) {
         fprintf(file, "%d '%s' '%s' %s %d\n", evento.id, evento.evento, evento.descricao, evento.data, evento.status);
         fclose(file);
-        printf("Evento salvo com sucesso!\n");
+        centralizarFrase("Evento salvo com sucesso!");
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
