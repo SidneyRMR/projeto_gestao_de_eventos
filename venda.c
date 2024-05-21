@@ -172,7 +172,7 @@ void opcoesVenda() {
 
     imprimirTituloCabecario("OPCOES",NULL);
 
-        printf("|\tDigite o codigo de um produto para adicionar ao pedido.                                                       |\n");
+        printf("|\tDigite o codigo de um produto para adicionar ao pedido.                                                    |\n");
     if (contProduto > 0) {
         printf("|\tDigite '-' e o codigo um produto para remover do pedido.                                                   |\n");
         printf("|\tDigite 100 e para gerar a venda.                                                                           |\n");

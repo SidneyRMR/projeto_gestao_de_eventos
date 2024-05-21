@@ -28,6 +28,9 @@ void carregarUsuarios() {
                       &usuarios[numUsuarios].status,
                       &usuarios[numUsuarios].id_evento) == 7) {
             numUsuarios++;
+            if (numUsuarios >= MAX_USUARIOS) {
+                break; // Evita ultrapassar o tamanho máximo do array
+            }
         }
         fclose(file);
     } else {
@@ -39,13 +42,11 @@ void carregarUsuarios() {
 int loginAux() {
     imprimirTituloCabecario("TELA DE LOGIN - GESTAO DE EVENTOS",NULL);
     char *usuarioo = centralizarEObterValorChar("Digite seu usuario: ", 21);
-
     char *senha = centralizarEObterValorChar("Digite sua senha: ",21);
-
     imprimirLinhaDivisoria();
+
     for (int i = 0; i < numUsuarios; i++) {
         if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
-
             char fraseLogin[114];
             sprintf(fraseLogin, "Login efetuado com sucesso como %s ", usuarioo);
             centralizarFrase(fraseLogin);

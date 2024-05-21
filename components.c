@@ -94,46 +94,60 @@ void centralizarFrase(char *frase) {
     printf("|%*s%-*s%*s|\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
 }
 
+// Função para obter um valor int com entrada validada
 int centralizarEObterValorInt(const char *frase) {
     int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
     int valor;
+    int entradaValida;
 
-    // Imprimindo os espaços à esquerda
-    for (int i = 0; i < espacosEsquerda; i++) {
-        printf(" ");
-    }
+    do {
+        // Imprimindo os espaços à esquerda
+        for (int i = 0; i < espacosEsquerda; i++) {
+            printf(" ");
+        }
 
-    // Imprimindo a frase
-    printf("%s ", frase);
+        // Imprimindo a frase
+        printf("%s ", frase);
 
-    // Lendo o valor com scanf
-    while (scanf("%d", &valor) != 1) {
-        // Limpar o buffer de entrada
-        while (getchar() != '\n');
-        centralizarString("Entrada inválida. Tente um numero inteiro.", 35);
-        centralizarEObterValorInt(frase);
-    }
+        // Tentando ler o valor
+        entradaValida = scanf("%d", &valor);
 
-    // Retornando o valor lido
+        // Limpar o buffer de entrada em caso de erro
+        if (entradaValida != 1 || valor < 0) {
+            while (getchar() != '\n');
+            centralizarString("Entrada invalida. Tente novamente.", LARGURA);
+            entradaValida = 0;  // Definir como 0 para continuar no loop
+        }
+    } while (entradaValida != 1 || valor < 0);
+
     return valor;
 }
 
 double centralizarEObterValorDouble(const char *frase) {
     int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
     double valor;
+    int entradaValida;
 
-    // Imprimindo os espaços à esquerda
-    for (int i = 0; i < espacosEsquerda; i++) {
-        printf(" ");
-    }
+    do {
+        // Imprimindo os espaços à esquerda
+        for (int i = 0; i < espacosEsquerda; i++) {
+            printf(" ");
+        }
 
-    // Imprimindo a frase
-    printf("%s ", frase);
+        // Imprimindo a frase
+        printf("%s ", frase);
 
-    // Lendo o valor com scanf
-    scanf("%lf", &valor);
+        // Tentando ler o valor
+        entradaValida = scanf("%lf", &valor);
 
-    // Retornando o valor lido
+        // Limpar o buffer de entrada em caso de erro
+        if (entradaValida != 1 || valor < 0) {
+            while (getchar() != '\n');
+            centralizarString("Entrada invalida. Tente novamente.", LARGURA);
+            entradaValida = 0;  // Definir como 0 para continuar no loop
+        }
+    } while (entradaValida != 1 || valor < 0);
+
     return valor;
 }
 

@@ -5,4 +5,6 @@ void login();
 
 void carregarUsuarios();
 
+int loginAux();
+
 #endif //PROJETO_GESTAO_DE_EVENTOS_LOGIN_H
