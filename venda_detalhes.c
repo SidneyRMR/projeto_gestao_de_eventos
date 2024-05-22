@@ -138,9 +138,9 @@ void relatorioVendasAux(){
         imprimirLinhaDivisoria();
         printf("|   0   |   Menu administrativo                                                                                    |\n");
         imprimirLinhaDivisoria();
-        printf("|\tEscolha uma opcao:");
-
-        scanf("%d", &opcaoEvento);
+        opcaoEvento = centralizarEObterValorInt("Escolha uma opcao: ");
+        //printf("|\tEscolha uma opcao:");
+        //scanf("%d", &opcaoEvento);
         switch (opcaoEvento) {
             case 1:
                 system("cls");
@@ -419,9 +419,10 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
         // Opção para alterar a ordenação
-        imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair ", NULL);
+        //imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair ", NULL);
         int opcaoOrdenacao;
-        scanf("%d", &opcaoOrdenacao);
+        opcaoOrdenacao = centralizarEObterValorInt("Digite 1 para alterar a ordenacao ou 0 para sair: ");
+        //scanf("%d", &opcaoOrdenacao);
         if (opcaoOrdenacao == 1) {
             system("cls");
             criteriosOrdenacao();

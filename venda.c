@@ -15,6 +15,7 @@
 
 double totalGeral = 0;
 int contProduto;
+//int itensPedido = 0;
 
 struct ResumoVendas {
     int id_produto;
@@ -26,7 +27,9 @@ struct ResumoVendas resumoVendas[MAX_PRODUTO];
 
 void menuVenda() {
     listarProdutosVenda();
-    resumoVenda();
+    //if(itensPedido != 0) {
+        resumoVenda();
+    //}
     opcoesVenda();
 }
 
@@ -128,7 +131,7 @@ void removerProdutoResumo(int codigoProd, int qtde) {
         if (resumoVendas[i].id_produto == codigoProd) {
             if (resumoVendas[i].quantidade_produto > qtde) {
                 resumoVendas[i].quantidade_produto -= qtde;
-                centralizarFrase("--------      Removendo items da venda!      --------");
+                centralizarFrase("Removendo items da venda!");
                 //printf("|       --------      Removendo %d item(s) de %s!      --------       |\n", qtde, resumoVendas[i].descricao_produto);
                 //system("PAUSE");
                 break; // Sai do loop após atualizar a quantidade do produto
@@ -143,7 +146,7 @@ void removerProdutoResumo(int codigoProd, int qtde) {
                 //system("PAUSE");
                 break; // Sai do loop após atualizar a quantidade do produto
             } else {
-                printf("|\tDigite uma quantidade valida!\n");
+                centralizarFrase("Digite uma quantidade valida!");
                 system("PAUSE");
                 break; // Sai do loop
             }
@@ -152,6 +155,8 @@ void removerProdutoResumo(int codigoProd, int qtde) {
 }
 
 void limparResumo() {
+    if (contProduto != 0){
+
     for (int i = 0; i < MAX_PRODUTO; i++) {
         resumoVendas[i].id_produto = 0; // Limpa o id do produto
         strcpy(resumoVendas[i].descricao_produto, ""); // Limpa a descrição do produto
@@ -160,30 +165,30 @@ void limparResumo() {
     }
     totalGeral = 0.00;
     centralizarFrase("-------            Limpando todos os itens da venda!           -------");
-    system("PAUSE");
+    //system("PAUSE");
     contProduto = 0; // Redefine o contador de produtos para zero
+    //itensPedido = 0;
+    } else {
+        centralizarFrase("-------            Nao possui itens na venda ainda!           -------");
+    }
 }
 
 
 void opcoesVenda() {
-    int opcao = 999;
     int idMax = carregarUltimoProduto();
-    //int quantidade=0;
 
     imprimirTituloCabecario("OPCOES",NULL);
 
         printf("|\tDigite o codigo de um produto para adicionar ao pedido.                                                    |\n");
     if (contProduto > 0) {
         printf("|\tDigite '-' e o codigo um produto para remover do pedido.                                                   |\n");
+        imprimirLinhaDivisoria();
         printf("|\tDigite 100 e para gerar a venda.                                                                           |\n");
         printf("|\tDigite 200 para limpar o pedido.                                                                           |\n");
     }
-    if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
-        printf("|\tDigite 0 e para sair da tela de pedido.                                                                    |\n");
-    } else {
         printf("|\tDigite 0 e para sair do programa.                                                                          |\n");
-    }
-    opcao = centralizarEObterValorInt("Escolha uma opcao ou codigo do produto:");
+
+    int opcao = centralizarEObterValorInt("Escolha uma opcao ou codigo do produto:");
 
     switch (opcao) {
         case 200 :
@@ -212,7 +217,7 @@ void opcoesVenda() {
                 adicionarProdutoResumo(opcao, quantidade);
                 system("cls");
                 menuVenda();
-            } else if(opcao < 0 && opcao >= -idMax+1) {
+            } else if(opcao < 0 && opcao >= -idMax+1 && contProduto > 0) {
                 int quantidade;
                 quantidade = centralizarEObterValorInt("Digite quantos produtos deseja REMOVER:");
                 removerProdutoResumo(opcao, quantidade);
@@ -230,15 +235,17 @@ void resumoVenda() {
     int detalhes_lidos = 0; // Variável para contar quantos detalhes de venda foram lidos
     int totalQtde = 0;
 
-    imprimirTituloCabecario("RESUMO DA VENDA", NULL);
-    printf("| %-3s | %-67s | %-10s | %-10s | %-10s |\n","Cod", "Produto", "Preco", "Qnde", "Total");
-    imprimirLinhaDivisoria();
+    if (contProduto != 0){
+        imprimirTituloCabecario("RESUMO DA VENDA", NULL);
+        printf("| %-3s | %-67s | %-10s | %-10s | %-10s |\n","Cod", "Produto", "Preco", "Qnde", "Total");
+        imprimirLinhaDivisoria();
+    }
 
     for (int i = 0; i < MAX_PRODUTO; i++) {
         // Verifica se o id_produto é zero, caso for nao adiciona mais produtos, so a quantidade
         if (resumoVendas[i].id_produto == 0)
             break;
-
+        //itensPedido++;
         detalhes_lidos++; // Incrementa detalhes_lidos para cada entrada
         totalGeral = resumoVendas[i].quantidade_produto * resumoVendas[i].valor_produto + totalGeral;
         totalQtde = totalQtde + resumoVendas[i].quantidade_produto;
@@ -252,15 +259,17 @@ void resumoVenda() {
         imprimirLinhaDivisoria();
     }
 
-    if (detalhes_lidos == 0) { // Se nenhum detalhe de venda for lido
-        centralizarFrase("Ainda nao ha nada aqui");
-    }
+    //if (detalhes_lidos == 0) { // Se nenhum detalhe de venda for lido
+    //    centralizarFrase("Ainda nao ha nada aqui");
+    //}
 }
 
 int verificaValorPago(double valorVenda) {
     double valorPago = 0;
-    centralizarFrase("Digite o valor que sera pago: ");
-    scanf("%lf", &valorPago);
+    //centralizarFrase("Digite o valor que sera pago: ");
+    //scanf("%lf", &valorPago);
+    valorPago = centralizarEObterValorDouble("Digite o valor que sera pago: ");
+
     if(valorPago < totalGeral) {
         centralizarFrase("Valor a ser pago deve ser R$ %.2lf ou maior.");
         verificaValorPago(valorVenda);
@@ -282,7 +291,7 @@ void criarVenda() {
     Venda venda;
     if (contProduto == 0) {
         centralizarFrase("Nao ha itens para criar a venda.");
-        system("PAUSE");
+        //system("PAUSE");
         return;
     }
 
@@ -295,7 +304,8 @@ void criarVenda() {
 
         imprimirTituloCabecario(totalGeralStr, NULL);
         imprimirTituloCabecario("Escolha a forma de Pagamento", "1. Credito | 2. Dinheiro | 3. Pix | 4. Debito");
-        scanf("%d", &opcaoPgto);
+        opcaoPgto = centralizarEObterValorInt("Digite uma opcao: ");
+
         switch (opcaoPgto) {
             case 1:
                 strcpy(venda.formaPgto, "credito");

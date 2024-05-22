@@ -43,6 +43,7 @@ int loginAux() {
     imprimirTituloCabecario("TELA DE LOGIN - GESTAO DE EVENTOS",NULL);
     char *usuarioo = centralizarEObterValorChar("Digite seu usuario: ", 21);
     char *senha = centralizarEObterValorChar("Digite sua senha: ",21);
+
     imprimirLinhaDivisoria();
 
     for (int i = 0; i < numUsuarios; i++) {

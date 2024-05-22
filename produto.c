@@ -32,8 +32,10 @@ void criarProduto() {
     int opcaoEvento = 0;
 
     do {
-        printf("|\tDigite o codigo do evento para o usuario: ");
-        scanf("%d", &opcaoEvento);
+        // TODO - TESTAR SE NAO DEU PROBLEMA
+        //printf("|\tDigite o codigo do evento para o usuario: ");
+        //scanf("%d", &opcaoEvento);
+        opcaoEvento = centralizarEObterValorInt("Digite o codigo do evento para o usuario: ");
     }
     while(opcaoEvento < 1 || opcaoEvento > eventoMax);
 

@@ -97,10 +97,8 @@ int escolherMenu() {
     char dataAtual[11];
     char ddata[11];
     char tipoUsuario[15];
-    //char nomeUsuario[21];
 
     strcpy(tipoUsuario, getUsuarioCompartilhado().tipo);
-    //strcpy(nomeUsuario, getUsuarioCompartilhado().nome);
     obterDataAtual(dataAtual);
 
     strcpy(ddata, dataAtual);

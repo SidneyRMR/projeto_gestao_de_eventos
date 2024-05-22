@@ -1,2 +1,4 @@
 1 'Rafa Adm' 1 1 administrador 1 0
 2 'Rafa Vend' 2 2 vendedor 1 1
+3 'tr]' ttr yt56 vendedor 1 2
+4 '1' 1 pp vendedor 1 1

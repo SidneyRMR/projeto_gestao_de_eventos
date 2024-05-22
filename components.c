@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <malloc.h>
 #include "variaveis_compartilhadas.h"
 #include "menu.h"
 
@@ -100,6 +101,7 @@ int centralizarEObterValorInt(const char *frase) {
     int valor;
     int entradaValida;
 
+    imprimirLinhaDivisoria();
     do {
         // Imprimindo os espaços à esquerda
         for (int i = 0; i < espacosEsquerda; i++) {
@@ -113,22 +115,23 @@ int centralizarEObterValorInt(const char *frase) {
         entradaValida = scanf("%d", &valor);
 
         // Limpar o buffer de entrada em caso de erro
-        if (entradaValida != 1 || valor < 0) {
+        if (entradaValida != 1) {
             while (getchar() != '\n');
-            centralizarString("Entrada invalida. Tente novamente.", LARGURA);
+            centralizarString("Entrada invalida. Tente novamente.", LARGURA + strlen(frase) / 4);
             entradaValida = 0;  // Definir como 0 para continuar no loop
         }
-    } while (entradaValida != 1 || valor < 0);
+    } while (entradaValida != 1);
 
     return valor;
 }
 
 double centralizarEObterValorDouble(const char *frase) {
-    int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
     double valor;
     int entradaValida;
 
+    imprimirLinhaDivisoria();
     do {
+    int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
         // Imprimindo os espaços à esquerda
         for (int i = 0; i < espacosEsquerda; i++) {
             printf(" ");
@@ -143,7 +146,7 @@ double centralizarEObterValorDouble(const char *frase) {
         // Limpar o buffer de entrada em caso de erro
         if (entradaValida != 1 || valor < 0) {
             while (getchar() != '\n');
-            centralizarString("Entrada invalida. Tente novamente.", LARGURA);
+            centralizarString("Entrada invalida. Tente novamente.", LARGURA + strlen(frase) / 4);
             entradaValida = 0;  // Definir como 0 para continuar no loop
         }
     } while (entradaValida != 1 || valor < 0);
@@ -152,31 +155,39 @@ double centralizarEObterValorDouble(const char *frase) {
 }
 
 char* centralizarEObterValorChar(const char *frase, int tamanho) {
-    // Verifica se o tamanho da frase é maior que a largura permitida
     if (strlen(frase) > LARGURA) {
-        printf("Erro: A valor excede a largura máxima permitida.\n");
-        centralizarEObterValorChar(frase, tamanho);
+        printf("Erro: O valor excede a largura máxima permitida.\n");
+        return NULL; // Saída em caso de erro
     }
 
+    imprimirLinhaDivisoria();
     int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
-    static char valor[100]; // Array para armazenar a entrada do usuário
+    char *valor = (char *)
+            malloc((tamanho + 1) * sizeof(char)); // Alocando memória dinamicamente
+
+    if (valor == NULL) {
+        printf("Erro: Falha na alocação de memória.\n");
+        return NULL; // Saída em caso de erro de alocação de memória
+    }
 
     // Imprimindo os espaços à esquerda
     for (int i = 0; i < espacosEsquerda; i++) {
         printf(" ");
     }
-
+    //imprimirTituloCabecario(frase,NULL);
     // Imprimindo a frase
     printf("%s ", frase);
 
     // Lendo a entrada com scanf, garantindo que não exceda o tamanho máximo
-    scanf(" %97[^\n]", valor); // lê no máximo 99 caracteres para garantir espaço para o terminador nulo
+    scanf(" %97[^\n]", valor); // lê no máximo 97 caracteres para garantir espaço para o terminador nulo
 
     // Verificando se a entrada excede o tamanho permitido
     if (strlen(valor) > tamanho) {
         printf("\nErro: A entrada excede o tamanho máximo permitido de %d caracteres.\n", tamanho);
-        centralizarEObterValorChar(frase, tamanho);
+        free(valor); // Liberando a memória alocada
+        return NULL; // Saída em caso de erro
     }
+
     // Retornando a entrada lida
     return valor;
 }

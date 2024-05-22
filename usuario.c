@@ -34,8 +34,9 @@ void criarUsuario() {
     int opcaoEvento = 0;
 
     do {
-        printf("|\tDigite o codigo do evento para o usuario: ");
-        scanf("%d", &opcaoEvento);
+        opcaoEvento = centralizarEObterValorInt("Digite o codigo do evento para o usuario: ");
+        //printf("|\tDigite o codigo do evento para o usuario: ");
+        //scanf("%d", &opcaoEvento);
     }
     while(opcaoEvento < 1 || opcaoEvento > eventoMax);
 
