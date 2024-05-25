@@ -88,7 +88,7 @@ void criteriosOrdenacao() {
     int criterioOpcao;
     int ordemOpcao;
 
-    imprimirTituloCabecario("ESCOLHA O CRITERIO DE ORDENACAO",NULL);
+    imprimirTituloCabecarioDuplo("ESCOLHA O CRITERIO DE ORDENACAO",NULL);
     printf("|\t1. ID do Produto                                                                                           |\n");
     printf("|\t2. Quantidade de Produtos Vendidos                                                                         |\n");
     imprimirLinhaDivisoria();
@@ -105,7 +105,7 @@ void criteriosOrdenacao() {
         system("PAUSE");
     }
 
-    imprimirTituloCabecario("ESCOLHA A ORDEM DE ORDENACAO",NULL);
+    imprimirTituloCabecarioDuplo("ESCOLHA A ORDEM DE ORDENACAO",NULL);
     printf("|\t1. Crescente                                                                                               |\n");
     printf("|\t2. Decrescente                                                                                             |\n");
     imprimirLinhaDivisoria();
@@ -129,7 +129,7 @@ void relatorioVendasAux(){
     while(opcaoEvento != 0) {
     system("cls");
         imprimirUsuarioEData();
-        imprimirTituloCabecario("ESCOLHA UMA OPCAO DE RELATORIO", NULL);
+        imprimirTituloCabecarioDuplo("ESCOLHA UMA OPCAO DE RELATORIO", NULL);
         printf("| Opcao |   Descricao                                                                                              |\n");
         imprimirLinhaDivisoria();
         printf("|   1   |   Relatorio Geral                                                                                        |\n");
@@ -145,7 +145,7 @@ void relatorioVendasAux(){
             case 1:
                 system("cls");
                 criteriosOrdenacao();
-                system("PAUSE");
+                //system("PAUSE");
                 break;
             case 2: {
                 system("cls");
@@ -256,7 +256,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
     // Imprimir cabeçalho da tabela
     system("cls");
     imprimirUsuarioEData();
-    imprimirTituloCabecario("RELATORIO ESPECIFICO PARA CADA VENDA", NULL);
+    imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", NULL);
     printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
@@ -325,8 +325,8 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
 
     // Imprimir cabeçalho da tabela
     system("cls");
+    imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA EVENTO", nomeEvento);
     imprimirUsuarioEData();
-    imprimirTituloCabecario("RELATORIO ESPECIFICO PARA CADA EVENTO", nomeEvento);
     printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
@@ -361,8 +361,8 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
 
     if (file != NULL) {
         // Imprimir cabeçalho da tabela
+        imprimirTituloCabecarioDuplo("RELATORIO GERAL DAS VENDAS", NULL);
         imprimirUsuarioEData();
-        imprimirTituloCabecario("RELATORIO GERAL DAS VENDAS", NULL);
         printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
         imprimirLinhaDivisoria();
 
@@ -416,10 +416,10 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         }
 
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$    %6.2lf  |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
         // Opção para alterar a ordenação
-        //imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair ", NULL);
+        //imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair", NULL);
         int opcaoOrdenacao;
         opcaoOrdenacao = centralizarEObterValorInt("Digite 1 para alterar a ordenacao ou 0 para sair: ");
         //scanf("%d", &opcaoOrdenacao);

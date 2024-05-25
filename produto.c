@@ -10,7 +10,7 @@
 void criarProduto() {
     Produto produto;
 
-    imprimirTituloCabecario("TELA DE CADASTRO DE PRODUTOS",NULL);
+    imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE PRODUTOS",NULL);
 
     // Solicitar ao usuário que insira os dados do produto
     char *p_descricao = centralizarEObterValorChar("Digite a descricao do produto: ", 51);
@@ -53,10 +53,8 @@ int listarProdutos() {
     file = fopen(filename, "r");
 
     if (file != NULL) {
-        //printf("Arquivo foi aberto com sucesso.\n\n");
+        imprimirTituloCabecarioDuplo("LISTA DE PRODUTOS", NULL);
         imprimirUsuarioEData();
-        // Imprimir cabeçalho da tabela
-        imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
 
         printf("| %-3s | %-63s | %-10s | %-9s | %-15s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento");
         imprimirLinhaDivisoria();
@@ -103,6 +101,12 @@ int carregarUltimoProduto() {
 
     return contador_linhas+1;
 }
+
+
+void editarProduto(int idProduto, int idEvento){
+    //todo
+}
+
 
 void salvarProduto(Produto produto) {
     FILE *file;
@@ -177,7 +181,7 @@ void atualizarProduto(Produto produto) {
         remove(filename);
         rename(tempFilename, filename);
 
-        printf("Produto atualizado com sucesso.\n");
+        centralizarFrase("Produto atualizado com sucesso.");
     } else {
         if (file == NULL) {
             printf("Erro ao abrir o arquivo %s.\n", filename);
@@ -205,7 +209,6 @@ Produto carregarProdutoPorID(int id) {
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
-
     // Retornar um produto vazio caso não seja encontrado
     Produto produtoNaoEncontrado = {0, "", 0.0, 0, 0};
     return produtoNaoEncontrado;
@@ -215,7 +218,7 @@ void adicionarEstoque(int id, int quantidade) {
     Produto produto = carregarProdutoPorID(id);
     produto.estoque += quantidade;
     atualizarProduto(produto);
-    printf("Estoque atualizado com sucesso.\n");
+    centralizarFrase("Estoque atualizado com sucesso.");
 }
 
 void removerEstoque(int id, int quantidade) {
@@ -224,9 +227,9 @@ void removerEstoque(int id, int quantidade) {
     if (produto.estoque >= quantidade) {
         produto.estoque -= quantidade;
         atualizarProduto(produto);
-        printf("Estoque atualizado com sucesso.\n");
+        centralizarFrase("Estoque atualizado com sucesso.");
     } else {
-        printf("Quantidade insuficiente em estoque.\n");
+        centralizarFrase("Quantidade insuficiente em estoque.");
     }
 }
 

@@ -1,16 +1,8 @@
 #include "menu.h"
 #include "login.h"
 #include <windows.h>
-#include <stdio.h>
+//todo - preparar apresentação powerpoint e documentação (pode ser em .md - confirmar com Ana Celia) e guia de usuario(como usar em .md) para dia 8 de junho *******************************
 
-/**
- * @brief Ajusta o tamanho da janela do console.
- *
- * Esta função ajusta o tamanho da janela do console para as dimensões especificadas.
- *
- * @param largura A largura desejada da janela do console.
- * @param altura A altura desejada da janela do console.
- */
 void ajustarTamanhoJanela(int largura, int altura) {
     HWND hwnd = GetConsoleWindow(); // Obtém o identificador da janela do console
     RECT rect;
@@ -18,11 +10,6 @@ void ajustarTamanhoJanela(int largura, int altura) {
     MoveWindow(hwnd, rect.left, rect.top, largura, altura, TRUE); // Move e redimensiona a janela
 }
 
-/**
- * @brief Centraliza a janela do console na tela.
- *
- * Esta função centraliza a janela do console na tela.
- */
 void centralizarJanela() {
     HWND hwnd = GetConsoleWindow(); // Obtém o identificador da janela do console
     RECT rect;
@@ -36,21 +23,10 @@ void centralizarJanela() {
     MoveWindow(hwnd, posX, posY, windowWidth, windowHeight, TRUE); // Move a janela para as coordenadas centralizadas
 }
 
-
-/**
- * @brief Função principal do programa.
- *
- * Esta função configura o tamanho e a posição da janela do console e chama a função de login para iniciar o programa.
- *
- * @return Retorna 0 após a execução do programa.
- */
 int main() {
-
     ajustarTamanhoJanela(1000, 900); // Ajusta o tamanho da janela do console
     centralizarJanela(); // Centraliza a janela do console
-    //printf("Diferente :%d",strcmp("venda.formaPgto", "dinheiro"));
-    //printf("Igual: %d",strcmp("dinheiro", "dinheiro"));
-    //system("PAUSE");
+
     login(); // Chama a função de login
     return 0;
 }

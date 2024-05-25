@@ -3,10 +3,13 @@ project(projeto_gestao_de_eventos C)
 
 include_directories(cJSON)
 
-
 set(CMAKE_C_STANDARD 11)
 
-add_executable(projeto_gestao_de_eventos main.c
+# Adicione estas linhas para definir UNICODE e _UNICODE
+add_definitions(-DUNICODE -D_UNICODE)
+
+add_executable(projeto_gestao_de_eventos
+        main.c
         produto.c
         produto.h
         usuario.c

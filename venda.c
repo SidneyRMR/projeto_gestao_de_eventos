@@ -15,7 +15,6 @@
 
 double totalGeral = 0;
 int contProduto;
-//int itensPedido = 0;
 
 struct ResumoVendas {
     int id_produto;
@@ -26,11 +25,11 @@ struct ResumoVendas {
 struct ResumoVendas resumoVendas[MAX_PRODUTO];
 
 void menuVenda() {
+    imprimirTituloCabecarioDuplo("MENU DE VENDAS",NULL);
     listarProdutosVenda();
-    //if(itensPedido != 0) {
-        resumoVenda();
-    //}
+    resumoVenda();
     opcoesVenda();
+    //imprimirLinhaDivisoria();
 }
 
 void listarVendas() {
@@ -39,7 +38,7 @@ void listarVendas() {
     file = fopen(filename, "r");
 
     if (file != NULL) {
-        imprimirTituloCabecario("LISTA DE VENDAS", NULL);
+        imprimirTituloCabecarioDuplo("LISTA DE VENDAS", NULL);
 
         printf("| %-4s | %-10s | %-46s | %-25s | %-15s |\n", "Cod", "Data", "Evento", "Usuario", "Forma Pgto");
         imprimirLinhaDivisoria();
@@ -179,15 +178,15 @@ void opcoesVenda() {
 
     imprimirTituloCabecario("OPCOES",NULL);
 
-        printf("|\tDigite o codigo de um produto para adicionar ao pedido.                                                    |\n");
+        centralizarFrase(" Cod  |  Digite o codigo de um produto para adicionar ao pedido.  ");
     if (contProduto > 0) {
-        printf("|\tDigite '-' e o codigo um produto para remover do pedido.                                                   |\n");
+        centralizarFrase("-Cod  |  Digite '-' e o codigo um produto para remover do pedido. ");
         imprimirLinhaDivisoria();
-        printf("|\tDigite 100 e para gerar a venda.                                                                           |\n");
-        printf("|\tDigite 200 para limpar o pedido.                                                                           |\n");
+        centralizarFrase(" 100  |  Digite 100 e para gerar a venda.                         ");
+        centralizarFrase(" 200  |  Digite 200 para limpar o pedido.                         ");
     }
-        printf("|\tDigite 0 e para sair do programa.                                                                          |\n");
-
+        centralizarFrase("   0  |  Digite 0 e para sair do programa.                        ");
+    imprimirLinhaDivisoria();
     int opcao = centralizarEObterValorInt("Escolha uma opcao ou codigo do produto:");
 
     switch (opcao) {
@@ -204,10 +203,12 @@ void opcoesVenda() {
                 centralizarFrase("Logoff feito com sucesso!...");
                 login();
             }
+            system("PAUSE");
             break;
         case 100:
             system("cls");
             criarVenda();
+            system("PAUSE");
             menuVenda();
             break;
         default:
@@ -245,7 +246,6 @@ void resumoVenda() {
         // Verifica se o id_produto é zero, caso for nao adiciona mais produtos, so a quantidade
         if (resumoVendas[i].id_produto == 0)
             break;
-        //itensPedido++;
         detalhes_lidos++; // Incrementa detalhes_lidos para cada entrada
         totalGeral = resumoVendas[i].quantidade_produto * resumoVendas[i].valor_produto + totalGeral;
         totalQtde = totalQtde + resumoVendas[i].quantidade_produto;
@@ -259,9 +259,6 @@ void resumoVenda() {
         imprimirLinhaDivisoria();
     }
 
-    //if (detalhes_lidos == 0) { // Se nenhum detalhe de venda for lido
-    //    centralizarFrase("Ainda nao ha nada aqui");
-    //}
 }
 
 int verificaValorPago(double valorVenda) {
@@ -271,11 +268,16 @@ int verificaValorPago(double valorVenda) {
     valorPago = centralizarEObterValorDouble("Digite o valor que sera pago: ");
 
     if(valorPago < totalGeral) {
-        centralizarFrase("Valor a ser pago deve ser R$ %.2lf ou maior.");
+        double diferenca =  totalGeral - valorPago;
+        char diferencaStr[50];
+        sprintf(diferencaStr, "R$ %.2f", diferenca);
+        centralizarFrase("Valor a ser pago deve ser maior ou igual a: ");
+        imprimirTituloCabecario("Valor a ser pago deve ser maior ou igual a: ", diferencaStr);
         verificaValorPago(valorVenda);
     } else if((valorPago > totalGeral) && ((valorPago - totalGeral) < 100.00)) {
         centralizarFrase("Devolver o troco de:");
         double troco =  valorPago - totalGeral;
+
         char trocoStr[50];
         sprintf(trocoStr, "R$ %.2f", troco);
         imprimirTituloCabecario(trocoStr, NULL);
@@ -283,6 +285,7 @@ int verificaValorPago(double valorVenda) {
         centralizarFrase("Troco a voltar nao pode ser maior que R$ 100,00.");
         verificaValorPago(valorVenda);
     }
+    //system("PAUSE");
     return 0;
 }
 
@@ -401,7 +404,6 @@ void criarVenda() {
     for (int i = 0; i < count; i++) {
         fprintf(fileProdutos, "%d '%s' %.2f %d %d\n", produtos[i].id, produtos[i].descricao, produtos[i].preco, produtos[i].estoque, produtos[i].id_evento);
     }
-
     fclose(fileProdutos);
     limparResumo();
     system("cls");

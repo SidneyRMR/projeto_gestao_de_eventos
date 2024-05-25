@@ -11,7 +11,7 @@ void criarUsuario() {
     Usuario usuario;
     int opcaoTipo = 0;
 
-    imprimirTituloCabecario("TELA DE CADASTRO DE USUARIO",NULL);
+    imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE USUARIO",NULL);
 
     char *p_nome = centralizarEObterValorChar("Digite o nome: ", 51);
     strncpy(usuario.nome, p_nome, sizeof(usuario.nome) - 1);
@@ -52,9 +52,9 @@ int listarUsuarios() {
     if (file != NULL) {
         //printf("Arquivo foi aberto com sucesso.\n\n");
 
-        imprimirUsuarioEData();
         // Imprimir cabeçalho da tabela
-        imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
+        imprimirTituloCabecarioDuplo("LISTA DE USUARIOS",NULL);
+        imprimirUsuarioEData();
 
         printf("| %-3s | %-30s | %-15s | %-10s | %-13s | %-8s | %-15s |\n", "Cod", "Nome", "Login", "Senha", "Tipo", "Status", "Evento");
         imprimirLinhaDivisoria();
@@ -162,7 +162,7 @@ void alterarStatusUsuario() {
         system("cls");
         listarUsuarios();
         escolhaIdUsuario = centralizarEObterValorInt(
-                "Escolha o codigo da venda que deseja ver o relatorio (ou digite 0 para SAIR): ");
+                "Escolha o codigo do usuario que deseja alterar o status (ou digite 0 para SAIR): ");
         switch (escolhaIdUsuario) {
             case 0:
                 menuAdministrador();
@@ -173,6 +173,7 @@ void alterarStatusUsuario() {
                 } else {
                     alterarStatusDoUsuario(escolhaIdUsuario);
                 }
+                break;
         }
     } while (escolhaIdUsuario != 0 && (escolhaIdUsuario < 1 || escolhaIdUsuario >= idMax));
 }
@@ -192,7 +193,7 @@ void alterarStatusDoUsuario(int idUsuario) {
             fseek(arquivo, -sizeof(Usuario), SEEK_CUR);
             usuario.status = 0;
             fwrite(&usuario, sizeof(Usuario), 1, arquivo);
-            printf("Status do usuário com ID %d alterado para 0.\n", idUsuario);
+            printf("Status do usuário com ID %d alterado para 0 (Desativado).\n", idUsuario);
             fclose(arquivo);
             return;
         }

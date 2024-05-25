@@ -19,4 +19,6 @@ void salvarEvento(Evento evento);
 
 void listarEventosCadastro();
 
+Evento carregarEventoPorID(int id);
+
 #endif // EVENTO_H

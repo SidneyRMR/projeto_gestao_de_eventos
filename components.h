@@ -13,6 +13,10 @@
  * em uma interface de console.
  */
 void imprimirLinhaDivisoria();
+void imprimirLinhaDivisoriaLista();
+int imprimirTituloCabecarioLista(const char *titulo, const char *subtitulo);
+void imprimirLinhaLista();
+void imprimirCentralizadoLista(const char *texto);
 
 /**
  * @brief Imprime um título e, opcionalmente, um subtítulo, ambos centralizados,
@@ -28,6 +32,7 @@ void imprimirLinhaDivisoria();
  * apenas o título será impresso. Se o comprimento do título ou do subtítulo
  * for maior que a largura disponível, o texto será truncado.
  */
+
 int imprimirTituloCabecario(const char *titulo, const char *subtitulo);
 
 int imprimirUsuarioEData();
@@ -41,5 +46,14 @@ int centralizarEObterValorInt(const char *frase);
 double centralizarEObterValorDouble(const char *frase);
 
 char* centralizarEObterValorChar(const char *frase, int tamanho);
+
+int imprimirTituloCabecarioDuplo(const char *titulo, const char *subtitulo);
+
+int imprimirUsuarioEDataSemMoldura();
+
+void centralizarString(char *str, int largura);
+
+void centralizarFraseSemBorda(char *frase);
+
 
 #endif //PROJETO_GESTAO_DE_EVENTOS_COMPONENTS_H

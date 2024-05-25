@@ -10,8 +10,6 @@ typedef struct {
     int id_evento;
 } Produto;
 
-void criarProduto();
-
 int listarProdutos();
 
 int listarProdutosVenda();
@@ -23,5 +21,9 @@ void salvarProduto(Produto produto);
 Produto consultarProdutoPorID(int id);
 
 int ajustarEstoque();
+
+void criarProduto();
+void editarProduto(int idProduto, int idEvento);
+
 
 #endif // PRODUTO_H
