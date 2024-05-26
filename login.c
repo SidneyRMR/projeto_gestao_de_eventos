@@ -53,7 +53,7 @@ int loginAux() {
             centralizarFrase(fraseLogin);
             setUsuarioCompartilhado(&usuarios[i]);
             escolherMenu();
-            return 1;
+            return 0;
         }
     }
     centralizarFrase("Login invalido, tente novamente.");

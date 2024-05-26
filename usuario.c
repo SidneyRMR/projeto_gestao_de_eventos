@@ -9,40 +9,60 @@
 // Função para cadastro de usuário
 void criarUsuario() {
     Usuario usuario;
-    int opcaoTipo = 0;
 
-    imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE USUARIO",NULL);
+    imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE USUARIO", NULL);
 
     char *p_nome = centralizarEObterValorChar("Digite o nome: ", 51);
-    strncpy(usuario.nome, p_nome, sizeof(usuario.nome) - 1);
-
     char *p_login = centralizarEObterValorChar("Digite o login: ", 21);
-    strncpy(usuario.login, p_login, sizeof(usuario.login) - 1);
-
     char *p_senha = centralizarEObterValorChar("Digite a senha: ", 11);
-    strncpy(usuario.senha, p_senha, sizeof(usuario.senha) - 1);
-
-    imprimirLinhaDivisoria();
-
-    // Preencher a estrutura do usuário com os dados inseridos
-    usuario.id = carregarUltimoUsuario(); // Incrementar +1 a partir do ID do último usuário
-    usuario.status = 1; // Status 1 é referente a usuário ativo
-    strcpy(usuario.tipo, "vendedor"); // Todos os usuários novos que forem cadastrados serão vendedores
 
     listarEventosCadastro();
     int eventoMax = carregarUltimoEvento();
     int opcaoEvento = 0;
-
     do {
         opcaoEvento = centralizarEObterValorInt("Digite o codigo do evento para o usuario: ");
-        //printf("|\tDigite o codigo do evento para o usuario: ");
-        //scanf("%d", &opcaoEvento);
-    }
-    while(opcaoEvento < 1 || opcaoEvento > eventoMax);
+    } while(opcaoEvento < 1 || opcaoEvento > eventoMax);
+    char* nomeEvento = obterNomeEvento("eventos.txt", opcaoEvento);
 
+    imprimirLinhaDivisoria();
+
+    // Imprimir os valores lidos
+    imprimirTituloCabecarioLista("Valores lidos:", NULL);
+    centralizarFraseDoisValores("Nome:  ", p_nome);
+    centralizarFraseDoisValores("Login: ", p_login);
+    centralizarFraseDoisValores("Senha: ", p_senha);
+    centralizarFraseDoisValores("Evento: ", nomeEvento);
+    imprimirLinhaLista();
+
+    // Solicitar confirmação
+    char confirmacao[4];
+    do {
+        strcpy(confirmacao, centralizarEObterValorChar("Confirme se os valores estao corretos (sim/nao): ", 3));
+        getchar(); // Limpar o buffer do teclado
+
+        if (strcmp(confirmacao, "nao") == 0) {
+            system("cls");
+            criarUsuario(); // Chamada recursiva para inserir os valores novamente
+            return; // Retorna após a chamada recursiva para evitar continuar o loop
+        }
+
+    } while (strcmp(confirmacao, "sim") != 0);
+
+    // Preencher a estrutura do usuário com os dados inseridos
+    usuario.id = carregarUltimoUsuario() + 1; // Incrementar +1 a partir do ID do último usuário
+    usuario.status = 1; // Status 1 é referente a usuário ativo
+    strcpy(usuario.tipo, "vendedor"); // Todos os usuários novos que forem cadastrados serão vendedores
+    strncpy(usuario.nome, p_nome, sizeof(usuario.nome) - 1);
+    strncpy(usuario.login, p_login, sizeof(usuario.login) - 1);
+    strncpy(usuario.senha, p_senha, sizeof(usuario.senha) - 1);
     usuario.id_evento = opcaoEvento;
+
+    // Salvar o usuário
     salvarUsuario(usuario);
+
+    centralizarFrase("Usuário criado com sucesso.");
 }
+
 
 int listarUsuarios() {
     FILE *file;
@@ -53,7 +73,7 @@ int listarUsuarios() {
         //printf("Arquivo foi aberto com sucesso.\n\n");
 
         // Imprimir cabeçalho da tabela
-        imprimirTituloCabecarioDuplo("LISTA DE USUARIOS",NULL);
+        imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
         imprimirUsuarioEData();
 
         printf("| %-3s | %-30s | %-15s | %-10s | %-13s | %-8s | %-15s |\n", "Cod", "Nome", "Login", "Senha", "Tipo", "Status", "Evento");
@@ -154,51 +174,6 @@ char* obterNomeUsuario(const char *nomeArquivo, int idBusca) {
     return nomeEvento;
 }
 
-void alterarStatusUsuario() {
-    int escolhaIdUsuario;
-    int idMax = carregarUltimoUsuario();
-
-    do {
-        system("cls");
-        listarUsuarios();
-        escolhaIdUsuario = centralizarEObterValorInt(
-                "Escolha o codigo do usuario que deseja alterar o status (ou digite 0 para SAIR): ");
-        switch (escolhaIdUsuario) {
-            case 0:
-                menuAdministrador();
-                break;
-            default:
-                if (escolhaIdUsuario < 1 || escolhaIdUsuario >= idMax) {
-                    opcaoInvalida();
-                } else {
-                    alterarStatusDoUsuario(escolhaIdUsuario);
-                }
-                break;
-        }
-    } while (escolhaIdUsuario != 0 && (escolhaIdUsuario < 1 || escolhaIdUsuario >= idMax));
-}
-void alterarStatusDoUsuario(int idUsuario) {
-    FILE *arquivo;
-    arquivo = fopen("usuario.txt", "r+");
-
-    if (arquivo == NULL) {
-        printf("Erro ao abrir o arquivo.\n");
-        return;
-    }
-
-    Usuario usuario;
-
-    while (fread(&usuario, sizeof(Usuario), 1, arquivo)) {
-        if (usuario.id == idUsuario) {
-            fseek(arquivo, -sizeof(Usuario), SEEK_CUR);
-            usuario.status = 0;
-            fwrite(&usuario, sizeof(Usuario), 1, arquivo);
-            printf("Status do usuário com ID %d alterado para 0 (Desativado).\n", idUsuario);
-            fclose(arquivo);
-            return;
-        }
-    }
-
-    printf("Usuário com ID %d não encontrado.\n", idUsuario);
-    fclose(arquivo);
-}
+int EditarNomeUsuario(int idUsuario){}
+int EditarDescricaoUsuario(int idUsuario){}
+int DesativarUsuario(int idUsuario){}

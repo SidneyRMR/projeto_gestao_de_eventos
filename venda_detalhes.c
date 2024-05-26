@@ -128,8 +128,8 @@ void relatorioVendasAux(){
     int opcaoEvento = 999;
     while(opcaoEvento != 0) {
     system("cls");
-        imprimirUsuarioEData();
         imprimirTituloCabecarioDuplo("ESCOLHA UMA OPCAO DE RELATORIO", NULL);
+        imprimirUsuarioEData();
         printf("| Opcao |   Descricao                                                                                              |\n");
         imprimirLinhaDivisoria();
         printf("|   1   |   Relatorio Geral                                                                                        |\n");
@@ -145,7 +145,7 @@ void relatorioVendasAux(){
             case 1:
                 system("cls");
                 criteriosOrdenacao();
-                //system("PAUSE");
+                system("PAUSE");
                 break;
             case 2: {
                 system("cls");
@@ -161,7 +161,8 @@ void relatorioVendasAux(){
             }
             case 0:
                 system("cls");
-                printf("Saindo da tela de relatorio...\n");
+                centralizarFrase("Saindo da tela de relatorio!");
+                //system("PAUSE");
                 menuAdministrador();
             default:
                 opcaoInvalida();
@@ -255,14 +256,14 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
 
     // Imprimir cabeçalho da tabela
     system("cls");
-    imprimirUsuarioEData();
     imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", NULL);
+    imprimirUsuarioEData();
     printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
     if (produtosCount == 0) {
         imprimirLinhaDivisoria();
-        printf("| Nenhuma venda encontrada para o evento especificado.                                                   |\n");
+        centralizarFrase("Nenhuma venda encontrada para o evento especificado.");
         imprimirLinhaDivisoria();
     } else {
         for (int i = 0; i < produtosCount; i++) {
@@ -332,7 +333,7 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
 
     if (produtosCount == 0) {
         imprimirLinhaDivisoria();
-        printf("| Nenhuma venda encontrada para o evento especificado.                                                   |\n");
+        centralizarFrase(" Nenhuma venda encontrada para o evento especificado.");
         imprimirLinhaDivisoria();
     } else {
         for (int i = 0; i < produtosCount; i++) {
@@ -344,11 +345,13 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
                    produtos[i].valor_total);
         }
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$    %6.2lf  |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
 
     free(nomeEvento);
+    system("PAUSE");
+    relatorioEventoEspecificoAux();
     return 0;
 }
 
@@ -369,7 +372,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         fseek(file, 0, SEEK_END);
         if (ftell(file) == 0) {
             imprimirLinhaDivisoria();
-            printf("|\tNenhuma venda encontrada.                                                                         |\n");
+            centralizarFrase(" Nenhuma venda encontrada.");
             imprimirLinhaDivisoria();
             fclose(file);
             return 0;

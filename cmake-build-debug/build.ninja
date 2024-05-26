@@ -50,82 +50,62 @@ cmake_ninja_workdir = C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ S
 build cmake_object_order_depends_target_projeto_gestao_de_eventos: phony || CMakeFiles/projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/main.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/main.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\main.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/produto.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/produto.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\produto.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/usuario.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/usuario.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\usuario.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/venda.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/venda.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\venda.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/evento.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/evento.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\evento.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/menu.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/menu.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\menu.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/venda_detalhes.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/venda_detalhes.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\venda_detalhes.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/login.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/login.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\login.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/variaveis_compartilhadas.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/variaveis_compartilhadas.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\variaveis_compartilhadas.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/components.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/components.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEFINES = -DUNICODE -D_UNICODE
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\components.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  INCLUDES = -I"C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cJSON"
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 

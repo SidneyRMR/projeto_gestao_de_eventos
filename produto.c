@@ -10,41 +10,60 @@
 void criarProduto() {
     Produto produto;
 
-    imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE PRODUTOS",NULL);
+    imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE PRODUTOS", NULL);
 
     // Solicitar ao usuário que insira os dados do produto
     char *p_descricao = centralizarEObterValorChar("Digite a descricao do produto: ", 51);
-    strncpy(produto.descricao, p_descricao, sizeof(produto.descricao) - 1);
-
     double p_preco = centralizarEObterValorDouble("Digite o preco do produto: ");
-
     int p_estoque = centralizarEObterValorInt("Digite o estoque do produto: ");
-
-    imprimirLinhaDivisoria();
-
-    // Preencher a estrutura do produto com os dados inseridos
-    produto.id = carregarUltimoProduto() ; // Incrementar o ID do último produto
-    produto.preco = p_preco;
-    produto.estoque = p_estoque;
 
     listarEventosCadastro();
     int eventoMax = carregarUltimoEvento();
     int opcaoEvento = 0;
 
     do {
-        // TODO - TESTAR SE NAO DEU PROBLEMA
-        //printf("|\tDigite o codigo do evento para o usuario: ");
-        //scanf("%d", &opcaoEvento);
         opcaoEvento = centralizarEObterValorInt("Digite o codigo do evento para o usuario: ");
-    }
-    while(opcaoEvento < 1 || opcaoEvento > eventoMax);
+    } while(opcaoEvento < 1 || opcaoEvento >= eventoMax);
 
+
+// Convertendo valores para strings
+    char str_preco[20];
+    char str_estoque[20];
+    sprintf(str_preco, "%.2f", p_preco);
+    sprintf(str_estoque, "%d", p_estoque);
+    char* nomeEvento = obterNomeEvento("eventos.txt", opcaoEvento);
+
+// Imprimir os valores lidos
+    imprimirTituloCabecarioLista("Valores lidos:", NULL);
+    centralizarFraseDoisValores("Descricao: ", p_descricao);
+    centralizarFraseDoisValores("Preco:     ", str_preco);
+    centralizarFraseDoisValores("Estoque:   ", str_estoque);
+    centralizarFraseDoisValores("Evento:    ", nomeEvento);
+    imprimirLinhaLista();
+
+    // Preencher a estrutura do produto com os dados inseridos
+    produto.id = carregarUltimoProduto(); // Incrementar o ID do último produto
+    strncpy(produto.descricao, p_descricao, sizeof(produto.descricao) - 1);
+    produto.preco = p_preco;
+    produto.estoque = p_estoque;
     produto.id_evento = opcaoEvento;
+    // Solicitar confirmação
+    char confirmacao[4];
+    do {
+        strcpy(confirmacao, centralizarEObterValorChar("Confirme se os valores estao corretos (sim/nao): ", 3));
+        getchar(); // Limpar o buffer do teclado
 
+        if (strcmp(confirmacao, "nao") == 0) {
+            system("cls");
+            criarProduto(); // Chamada recursiva para inserir os valores novamente
+            return; // Retorna após a chamada recursiva para evitar continuar o loop
+        }
+
+    } while (strcmp(confirmacao, "sim") != 0);
     // Salvar o produto
     salvarProduto(produto);
 
-    printf("\tProduto criado com sucesso.\n");
+    centralizarFrase("Produto criado com sucesso.");
 }
 
 int listarProdutos() {
@@ -53,7 +72,7 @@ int listarProdutos() {
     file = fopen(filename, "r");
 
     if (file != NULL) {
-        imprimirTituloCabecarioDuplo("LISTA DE PRODUTOS", NULL);
+        imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
         imprimirUsuarioEData();
 
         printf("| %-3s | %-63s | %-10s | %-9s | %-15s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento");
@@ -262,3 +281,6 @@ int ajustarEstoque() {
     }
     return 0;
 }
+int EditarNomeProduto(int idProduto){}
+int EditarDescricaoProduto(int idProduto){}
+int DesativarProduto(int idProduto){}

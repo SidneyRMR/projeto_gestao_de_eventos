@@ -4,7 +4,32 @@
 
 #ifndef PROJETO_GESTAO_DE_EVENTOS_COMPONENTS_H
 #define PROJETO_GESTAO_DE_EVENTOS_COMPONENTS_H
+typedef enum {
+    BLACK = 0,
+    BLUE,
+    GREEN,
+    CYAN,
+    RED,
+    MAGENTA,
+    BROWN,
+    LIGHTGRAY,
+    DARKGRAY,
+    LIGHTBLUE,
+    LIGHTGREEN,
+    LIGHTCYAN,
+    LIGHTRED,
+    LIGHTMAGENTA,
+    YELLOW,
+    WHITE
+} Color;
 
+typedef struct {
+    Color textColor;
+    Color bgColor;
+} ColorScheme;
+
+void setColorScheme(ColorScheme scheme);
+ColorScheme getColorSchemeByName(const char* name);
 /**
  * @brief Imprime uma linha divisória com 100 caracteres de largura.
  *
@@ -12,12 +37,13 @@
  * utilizando o caractere '='. Ela é útil para separar seções de texto
  * em uma interface de console.
  */
+void imprimirLinhaDivisoriaAjustavel(int tamanho);
 void imprimirLinhaDivisoria();
 void imprimirLinhaDivisoriaLista();
 int imprimirTituloCabecarioLista(const char *titulo, const char *subtitulo);
 void imprimirLinhaLista();
 void imprimirCentralizadoLista(const char *texto);
-
+void centralizarFraseDoisValores(char *frase, char *frase2);
 /**
  * @brief Imprime um título e, opcionalmente, um subtítulo, ambos centralizados,
  * dentro de uma moldura de 100 caracteres de largura.
@@ -48,8 +74,6 @@ double centralizarEObterValorDouble(const char *frase);
 char* centralizarEObterValorChar(const char *frase, int tamanho);
 
 int imprimirTituloCabecarioDuplo(const char *titulo, const char *subtitulo);
-
-int imprimirUsuarioEDataSemMoldura();
 
 void centralizarString(char *str, int largura);
 

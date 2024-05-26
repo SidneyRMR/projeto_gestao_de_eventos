@@ -3,10 +3,35 @@
 #include <malloc.h>
 #include "variaveis_compartilhadas.h"
 #include "menu.h"
+#include "components.h"
+#include "produto.h"
+
 #define LARGURA 114
 #define LARGURALISTA 32
 void centralizarFrase(char *frase);
 void centralizarFraseSemBorda(char *frase);
+
+void setColorScheme(ColorScheme scheme) {
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleTextAttribute(hConsole, (WORD)((scheme.bgColor << 4) | scheme.textColor));
+}
+ColorScheme getColorSchemeByName(const char* name) {
+    if (strcmp(name, "default") == 0) {
+        return (ColorScheme){WHITE, BLACK}; // Texto branco, fundo preto
+    } else if (strcmp(name, "error") == 0) {
+        return (ColorScheme){RED, BLACK};   // Texto vermelho, fundo preto
+    } else if (strcmp(name, "success") == 0) {
+        return (ColorScheme){GREEN, BLACK}; // Texto verde, fundo preto
+    } else if (strcmp(name, "warning") == 0) {
+        return (ColorScheme){YELLOW, BLACK}; // Texto amarelo, fundo preto
+    } else if (strcmp(name, "info") == 0) {
+        return (ColorScheme){CYAN, BLACK};  // Texto ciano, fundo preto
+    }
+    // Adicione outras combinações de cores aqui conforme necessário
+
+    // Retorna a combinação padrão se não encontrar o nome
+    return (ColorScheme){WHITE, BLACK};
+}
 
 void imprimirLinhaDivisoria() {
     for (int i = 0; i < LARGURA+2; i++) {
@@ -20,7 +45,13 @@ void imprimirLinhaDivisoriaLista() {
     memset(linha, '-', LARGURALISTA);
     linha[LARGURALISTA] = '\0';  // Certifique-se de que a linha seja terminada com null
     centralizarFraseSemBorda(linha);
-    //printf("\n");
+}
+
+void imprimirLinhaDivisoriaAjustavel(int tamanho) {
+    char linha[tamanho+1];
+    memset(linha, '-', tamanho);
+    linha[tamanho] = '\0';  // Certifique-se de que a linha seja terminada com null
+    centralizarFraseSemBorda(linha);
 }
 
 void imprimirLinha() {
@@ -98,14 +129,12 @@ void centralizarString(char *str, int largura) {
     if ((largura - comprimento) % 2 != 0) {
         printf(" ");
     }
+    //printf("\n");
 }
 
 int imprimirTituloCabecarioDuplo(const char *titulo, const char *subtitulo) {
-    char dataAtual[11];
     char tituloComDecoracao[256];
-
-    obterDataAtual(dataAtual);
-
+    setColorScheme(getColorSchemeByName("success"));
     imprimirLinha();
     imprimirCentralizado("");
 
@@ -118,6 +147,7 @@ int imprimirTituloCabecarioDuplo(const char *titulo, const char *subtitulo) {
 
     imprimirCentralizado("");
     imprimirLinha();
+    setColorScheme(getColorSchemeByName("default"));
 
     return 0;
 }
@@ -146,7 +176,9 @@ int imprimirUsuarioEData() {
 }
 
 void opcaoInvalida() {
+    setColorScheme(getColorSchemeByName("error"));
     centralizarFraseSemBorda("Opcao invalida.");
+    setColorScheme(getColorSchemeByName("default"));
 }
 
 void centralizarFrase(char *frase) {
@@ -156,6 +188,24 @@ void centralizarFrase(char *frase) {
     espacos = (LARGURA - comprimento_frase) / 2;
     printf("|%*s%-*s%*s|\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
 }
+void centralizarFraseDoisValores(char *frase, char *frase2) {
+    int comprimento_frase = strlen(frase) + strlen(frase2);
+    int espacos = (LARGURALISTA+9);
+    int espacos_extra = LARGURALISTA - espacos - 4 - comprimento_frase;
+
+    for (int i = 0; i < espacos; i++) {
+        printf(" ");
+    }
+    printf("| ");
+    printf("%s%s", frase, frase2);
+    for (int i = 0; i < espacos + espacos_extra; i++) {
+        printf(" ");
+    }
+    printf(" |\n");
+}
+
+
+
 
 void centralizarFraseSemBorda(char *frase) {
     int espacos = 0;
@@ -164,6 +214,12 @@ void centralizarFraseSemBorda(char *frase) {
     espacos = (LARGURA - comprimento_frase) / 2;
     printf("%*s%-*s%*s\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
 }
+void limparBufferEntrada() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF) {
+        // Discarding characters until end of line or end of file
+    }
+}
 
 // Função para obter um valor int com entrada validada
 int centralizarEObterValorInt(const char *frase) {
@@ -171,57 +227,69 @@ int centralizarEObterValorInt(const char *frase) {
     int valor;
     int entradaValida;
 
-    //imprimirLinhaDivisoria();
     do {
         // Imprimindo os espaços à esquerda
         for (int i = 0; i < espacosEsquerda; i++) {
             printf(" ");
         }
 
+        setColorScheme(getColorSchemeByName("info"));
         // Imprimindo a frase
         printf("%s ", frase);
+
+        setColorScheme(getColorSchemeByName("default"));
 
         // Tentando ler o valor
         entradaValida = scanf("%d", &valor);
 
         // Limpar o buffer de entrada em caso de erro
         if (entradaValida != 1) {
-            while (getchar() != '\n');
-            centralizarString("Entrada invalida. Tente novamente.\n", LARGURA);
-            //centralizarString("Entrada invalida. Tente novamente.", LARGURA + strlen(frase) / 4);
+            limparBufferEntrada();
+
+            setColorScheme(getColorSchemeByName("error"));
+            centralizarString("Entrada invalida. Tente novamente.", LARGURA+6);
+            setColorScheme(getColorSchemeByName("default"));
+
             entradaValida = 0;  // Definir como 0 para continuar no loop
         }
     } while (entradaValida != 1);
-
+    limparBufferEntrada();
     return valor;
 }
 
-double centralizarEObterValorDouble(const char *frase) {
+double centralizarEObterValorDouble(const char* frase) {
     double valor;
     int entradaValida;
 
-    //imprimirLinhaDivisoria();
     do {
-    int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
+        int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
         // Imprimindo os espaços à esquerda
         for (int i = 0; i < espacosEsquerda; i++) {
             printf(" ");
         }
 
+        setColorScheme(getColorSchemeByName("info"));
         // Imprimindo a frase
         printf("%s ", frase);
+
+        setColorScheme(getColorSchemeByName("default"));
 
         // Tentando ler o valor
         entradaValida = scanf("%lf", &valor);
 
         // Limpar o buffer de entrada em caso de erro
         if (entradaValida != 1 || valor < 0) {
-            while (getchar() != '\n');
-            centralizarString("Entrada invalida. Tente novamente.\n", LARGURA + strlen(frase) / 4);
+            limparBufferEntrada();
+
+            setColorScheme(getColorSchemeByName("error"));
+            centralizarString("Entrada invalida. Tente novamente.", LARGURA+6);
+            setColorScheme(getColorSchemeByName("default"));
+
             entradaValida = 0;  // Definir como 0 para continuar no loop
         }
     } while (entradaValida != 1 || valor < 0);
 
+    limparBufferEntrada();
     return valor;
 }
 
@@ -245,9 +313,11 @@ char* centralizarEObterValorChar(const char *frase, int tamanho) {
     for (int i = 0; i < espacosEsquerda; i++) {
         printf(" ");
     }
-    //imprimirTituloCabecario(frase,NULL);
+    setColorScheme(getColorSchemeByName("info"));
     // Imprimindo a frase
     printf("%s ", frase);
+
+    setColorScheme(getColorSchemeByName("default"));
 
     // Lendo a entrada com scanf, garantindo que não exceda o tamanho máximo
     scanf(" %97[^\n]", valor); // lê no máximo 97 caracteres para garantir espaço para o terminador nulo

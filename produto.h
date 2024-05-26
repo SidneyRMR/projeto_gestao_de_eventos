@@ -10,6 +10,10 @@ typedef struct {
     int id_evento;
 } Produto;
 
+int EditarNomeProduto(int idProduto);
+int EditarDescricaoProduto(int idProduto);
+int DesativarProduto(int idProduto);
+
 int listarProdutos();
 
 int listarProdutosVenda();

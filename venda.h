@@ -22,4 +22,6 @@ void opcoesVenda();
 
 void resumoVenda();
 
+void limparResumo();
+
 #endif // VENDA_H

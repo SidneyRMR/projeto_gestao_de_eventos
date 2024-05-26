@@ -12,6 +12,11 @@ typedef struct Usuario {
     int id_evento;
 } Usuario;
 
+// TODO
+int EditarNomeUsuario(int idUsuario);
+int EditarDescricaoUsuario(int idUsuario);
+int DesativarUsuario(int idUsuario);
+
 void alterarStatusUsuario();
 
 void criarUsuario();

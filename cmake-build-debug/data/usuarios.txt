@@ -1,16 +1,7 @@
 1 'Rafa Adm' 1 1 administrador 1 0
 2 'Rafa Vend' 2 2 vendedor 1 1
-3 'tr]' ttr yt56 vendedor 1 2
-4 '1' 1 pp vendedor 1 1
-5 '5' 5 5 vendedor 1 11
-6 '0' 0 2 vendedor 1 5
-7 '5' 55 5 vendedor 1 6
-8 'qweq' ssdf sdfs vendedor 1 1
-9 'TY' TY TY vendedor 1 1
-10 '55' 55 55 vendedor 1 5
-11 '5' 5 5 vendedor 1 1
-12 '5' 5 5 vendedor 1 1
-13 '5' 5 5 vendedor 1 15
-14 '5' 5 5 vendedor 1 5
-15 '1' 6 6 vendedor 1 5
-16 '555' 555 555 vendedor 1 5
+3 'prod1' usuario1 usuario1 vendedor 1 5
+4 'usu2' usus2 usus2 vendedor 1 5
+5 'rtr' ere ytrr vendedor 1 2
+6 'rtr' rtrtr r vendedor 1 1
+8 'ty' ty ty vendedor 1 1

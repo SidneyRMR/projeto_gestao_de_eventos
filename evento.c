@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <string.h>
+#include <stdlib.h>
 #include "evento.h"
 #include "menu.h"
 #include "components.h"
@@ -7,27 +8,47 @@
 // Definição da estrutura para armazenar os dados do evento
 void criarEvento() {
     Evento evento;
-    char dataAtual[11];
-    int p_status = 1;
 
-    // Solicitar ao usuário que insira os dados do evento
-    imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE EVENTOS",NULL);
+    imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE EVENTOS", NULL);
 
     char *p_evento = centralizarEObterValorChar("Digite o nome do evento: ", 21);
     char *p_descricao = centralizarEObterValorChar("Digite uma descricao para o evento: ", 51);
 
     imprimirLinhaDivisoria();
 
-    // Preencher a estrutura do evento com os dados inseridos
-    evento.id = carregarUltimoEvento() ; // Incrementar o ID do último evento
-    strcpy(evento.evento, p_evento);
-    strcpy(evento.descricao, p_descricao);
-    obterDataAtual(dataAtual);
-    strcpy(evento.data, dataAtual);
-    evento.status = p_status;
+    // Imprimir os valores lidos
+    imprimirTituloCabecarioLista("Valores lidos:", NULL);
+    centralizarFraseDoisValores("Nome do Evento: ", p_evento);
+    centralizarFraseDoisValores("Descricao: ", p_descricao);
+    imprimirLinhaLista();
 
+    // Preencher a estrutura do evento com os dados inseridos
+    evento.id = carregarUltimoEvento() + 1; // Incrementar o ID do último evento
+    strncpy(evento.evento, p_evento, sizeof(evento.evento) - 1);
+    strncpy(evento.descricao, p_descricao, sizeof(evento.descricao) - 1);
+    obterDataAtual(evento.data);
+    evento.status = 1;
+
+    // Solicitar confirmação
+    char confirmacao[4];
+    do {
+        strcpy(confirmacao, centralizarEObterValorChar("Confirme se os valores estao corretos (sim/nao): ", 3));
+        getchar(); // Limpar o buffer do teclado
+
+        if (strcmp(confirmacao, "nao") == 0) {
+            system("cls");
+            criarEvento(); // Chamada recursiva para inserir os valores novamente
+            return; // Retorna após a chamada recursiva para evitar continuar o loop
+        }
+
+    } while (strcmp(confirmacao, "sim") != 0);
+
+    // Salvar o evento
     salvarEvento(evento);
+
+    centralizarFrase("Evento criado com sucesso.");
 }
+
 
 void listarEventos() {
     FILE *file;
@@ -36,7 +57,7 @@ void listarEventos() {
 
     if (file != NULL) {
 
-        imprimirTituloCabecarioDuplo("LISTA DE EVENTOS", NULL);
+        imprimirTituloCabecario("LISTA DE EVENTOS", NULL);
         imprimirUsuarioEData();
 
         printf("| %-3s | %-20s | %-57s | %-10s | %-10s |\n", "Cod", "Evento", "Descricao", "Data", "Status");
@@ -154,4 +175,60 @@ Evento carregarEventoPorID(int id) {
     // Retornar um produto vazio caso não seja encontrado
     Evento eventoNaoEncontrado = {0, "", "", "", 0};
     return eventoNaoEncontrado;
+}
+
+int EditarNomeEvento(int idEvento) {
+    FILE *arquivo = fopen("data/eventos.txt", "r+");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return -1;
+    }
+
+    Evento evento = carregarEventoPorID(idEvento);
+    if (evento.id == -1) {
+        printf("Evento não encontrado.\n");
+        fclose(arquivo);
+        return -1;
+    }
+    printf("%d", idEvento);
+    char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 21);
+
+    rewind(arquivo);
+
+    FILE *temp = fopen("temp.txt", "w");
+    if (temp == NULL) {
+        perror("Erro ao criar o arquivo temporário");
+        fclose(arquivo);
+        return -1;
+    }
+    printf("%d", idEvento);
+    // Converte idEvento para string
+    char idEventoStr[12]; // Tamanho suficiente para um int
+    sprintf(idEventoStr, "%d", idEvento);
+    centralizarFrase(idEventoStr);
+
+    Evento eventoAtual;
+    while (fscanf(arquivo, "%d '%20[^']' '%50[^']' %10s %d\n", &eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, &eventoAtual.status) != EOF) {
+        if (eventoAtual.id == idEvento) {
+            strcpy(eventoAtual.evento, novoNome);
+        }
+        fprintf(temp, "%d '%s' '%s' %s %d\n", eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, eventoAtual.status);
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    remove("data/eventos.txt");
+    rename("temp.txt", "data/eventos.txt");
+
+    centralizarFrase("Nome do evento atualizado com sucesso.");
+    return 0;
+}
+
+
+int EditarDescricaoEvento(int idEvento){
+
+}
+int DesativarEvento(int idEvento){
+
 }

@@ -18,7 +18,6 @@ void menuAdministrador() {
 
     system("cls");
     while(opcaoAdm != 0) {
-
     imprimirTituloCabecarioDuplo("MENU ADMINISTRATIVO",NULL);
     imprimirUsuarioEData();
     printf("| Opcao |     Listar                   | Opcao |     Criar                    | Opcao |     Desativar              |\n");
@@ -32,19 +31,22 @@ void menuAdministrador() {
 
     opcaoAdm = centralizarEObterValorInt("Escolha uma opcao:");
 
-        system("cls");
+    system("cls");
         switch (opcaoAdm) {
             case 1:
+                imprimirTituloCabecarioDuplo("LISTAGEM DE TODOS OS EVENTO", NULL);
                 listarEventos();
                 system("PAUSE");
                 system("cls");
                 break;
             case 2:
+                imprimirTituloCabecarioDuplo("LISTAGEM DE TODOS OS USUARIO", NULL);
                 listarUsuarios();
                 system("PAUSE");
                 system("cls");
                 break;
             case 3:
+                imprimirTituloCabecarioDuplo("LISTAGEM DE TODOS OS PRODUTOS", NULL);
                 listarProdutos();
                 system("PAUSE");
                 system("cls");
@@ -62,15 +64,15 @@ void menuAdministrador() {
                 system("cls");
                 break;
             case 7:
-                //desativarEvento();
+                menuEditarEvento();
                 system("cls");
                 break;
             case 8:
-                alterarStatusUsuario();
+                //menuEditarUsuario();
                 system("cls");
                 break;
             case 9:
-                //desativarProduto();
+                //menuEditarProduto();
                 system("cls");
                 break;
             case 20:
@@ -80,7 +82,6 @@ void menuAdministrador() {
                 break;
             case 21:
                 ajustarEstoque();
-                //system("PAUSE");
                 system("cls");
                 break;
             case 0:
@@ -89,202 +90,88 @@ void menuAdministrador() {
                 break;
             default:
                 opcaoInvalida();
+                break;
         }
     }
 }
-/*
-void menuAdministrador() {
-    int opcaoAdm = 999;
-    int idMaxEvento = carregarUltimoEvento();
-    system("cls");
-    while(opcaoAdm != 0) {
 
-    imprimirTituloCabecarioDuplo("MENU ADMINISTRATIVO ",NULL);
+int selecaoEvento() {
     listarEventos();
-        centralizarFrase("Cod  |  Para selecionar o evento que deseja gerenciar");
-        centralizarFrase("100  |  Para ver relatorios das vendas               ");
-        centralizarFrase("  0  |  Para fazer logoff                            ");
-        imprimirLinhaDivisoria();
-    opcaoAdm = centralizarEObterValorInt("Escolha uma opcao:");
+    int idMaxEvento = carregarUltimoEvento();
+    int idEvento;
 
-        system("cls");
-        switch (opcaoAdm) {
-            //case 4:
-            //    criarEvento();
-            //    system("cls");
-            //    break;
-            //case 5:
-            //    criarUsuario();
-            //    system("cls");
-            //    break;
-            //case 6:
-            //    criarProduto();
-            //    system("cls");
-            //    break;
+    // Verifica se o ID do evento está dentro do intervalo válido
+    do {
+        idEvento = centralizarEObterValorInt("Escolha o evento que deseja alterar:");
 
-            case 100:
-                relatorioVendasAux();
-                system("PAUSE");
-                system("cls");
-                break;
-            case 0:
-                centralizarFrase("Logoff feito com sucesso!...");
-                login();
-                break;
-            //case 21:
-            //    ajustarEstoque();
-            //    //system("PAUSE");
-            //    system("cls");
-            //    break;
-            default:
-                if (opcaoAdm > 0 && opcaoAdm <= idMaxEvento-1) {
-                    menuEvento(opcaoAdm);
-                    system("cls");
-                    menuVenda();
+    } while (idEvento <= 0 || idEvento >= idMaxEvento);
+    return idEvento;
+}
 
-                } else {
-                    system("cls");
-                    opcaoInvalida();
-                    menuVenda();
-                }
-        }
-    }
-}*/
-/*
-int menuEvento(int idEvento){
-    int opcaoAdmEvento;
-    char SubtituloEvento[21];
-    Evento evento = carregarEventoPorID(idEvento);
 
-    snprintf(SubtituloEvento, sizeof(SubtituloEvento), "Evento: %-21s", evento.evento);
-    imprimirTituloCabecarioDuplo("MENU ADMINISTRATIVO",SubtituloEvento);
+int menuEditarEvento() {
+    system("cls");
+    imprimirTituloCabecarioDuplo("MENU DE EDICAO DE EVENTO", NULL);
 
-    centralizarFrase("  1  |  Para ver e editar os produtos deste evento  ");
-    centralizarFrase("  2  |  Para ver e editar os vendedores deste evento");
-    centralizarFrase("  3  |  Para ver os relatorios deste evento         ");
-    centralizarFrase("  0  |  Para voltar ao menu principal               ");
-    imprimirLinhaDivisoria();
+    int idEventoAux;
+    idEventoAux = selecaoEvento();
+    int opcaoAdmEvento = 0;
+
+
+    printf("opcao adm %d \n", opcaoAdmEvento);
+    printf("idEvento %d \n", idEventoAux);
+
+    imprimirLinhaDivisoriaAjustavel(48);
+    imprimirCentralizadoLista(" Cod |  Descricao                           ");
+    imprimirLinhaDivisoriaAjustavel(48);
+    imprimirCentralizadoLista("  1  |  Para editar o nome deste evento     ");
+    imprimirCentralizadoLista("  2  |  Para editar a descricao deste evento");
+    imprimirCentralizadoLista("  3  |  Para desativar este evento          ");
+    imprimirLinhaDivisoriaAjustavel(48);
+    imprimirCentralizadoLista("  0  |  Para voltar ao menu principal       ");
+    imprimirLinhaDivisoriaAjustavel(48);
+
+    printf("opcao adm %d \n", opcaoAdmEvento);
+    printf("idEvento %d \n", idEventoAux);
+
     opcaoAdmEvento = centralizarEObterValorInt("Escolha uma opcao:");
 
-    system("cls");
+    printf("opcao adm %d \n", opcaoAdmEvento);
+    printf("idEvento %d \n", idEventoAux);
+    system("PAUSE");
+
     switch (opcaoAdmEvento) {
         case 1:
-            menuProdutos(idEvento);
-            system("PAUSE");
-            system("cls");
-            menuEvento(idEvento);
+            EditarNomeEvento(idEventoAux);
             break;
         case 2:
-            menuVendedores(idEvento);
-            system("PAUSE");
-            system("cls");
-            menuEvento(idEvento);
+            EditarDescricaoEvento(idEventoAux);
             break;
         case 3:
-            relatorioEventoEspecifico("vendas_detalhes.txt", idEvento);
-            system("PAUSE");
-            system("cls");
-            menuEvento(idEvento);
+            DesativarEvento(idEventoAux);
             break;
         case 0:
             menuAdministrador();
-            break;
+            return 0;
         default:
             opcaoInvalida();
             break;
     }
+    system("PAUSE");
+    menuEditarEvento();
+
     return 0;
 }
-int menuProdutos(int idEvento){
-    int opcao;
-    imprimirTituloCabecarioDuplo("MENU ADMINISTRATIVO","PRODUTOS");
-    listarProdutos();
 
-    centralizarFrase("  1  |  Para adicionar um novo produto                   ");
-    centralizarFrase("  2  |  Para selecionar um produto para editar           ");
-    centralizarFrase("  3  |  Para selecionar um produto para ajustar o estoque");
-    centralizarFrase("  0  |  Para voltar ao menu do evento                    ");
-    imprimirLinhaDivisoria();
-    opcao = centralizarEObterValorInt("Escolha uma opcao:");
 
-    system("cls");
-    switch (opcao) {
-        case 1:
-            criarProduto(idEvento);
-            system("PAUSE");
-            system("cls");
-            menuProdutos(idEvento);
-            break;
-        case 2: {
-            int codProdEditar = centralizarEObterValorInt("Qual o codigo do produto que deseja editar: ");
-            editarProduto(codProdEditar, idEvento); // todo - fazer verificação se existe este produto neste evento
-            system("PAUSE");
-            system("cls");
-            menuProdutos(idEvento);
-            break;
-        }
-        case 3: {
-            int codProdAjustarEstoque = centralizarEObterValorInt("Qual o codigo do produto que deseja ajustar o estoque: ");
-            ajustarEstoque(codProdAjustarEstoque); //todo - ajustar a funcao para funcionar bem com este menu
-            system("PAUSE");
-            system("cls");
-            menuProdutos(idEvento);
-            break;
-        }
-        case 0:
-            menuEvento(idEvento);
-            break;
-        default:
-            opcaoInvalida();
-            break;
-    }
-    return 0;
+
+int menuEditarUsuario() {
+    // todo - a fazer
 }
-int menuVendedores(int idEvento){
-    int opcao;
-    imprimirTituloCabecarioDuplo("MENU ADMINISTRATIVO","VENDEDORES");
-    listarUsuarios();
 
-    centralizarFrase("  1  |  Para adicionar um novo vendedor                ");
-    centralizarFrase("  2  |  Para selecionar um vendedor para editar        ");
-    centralizarFrase("  3  |  Para ver os relatorios de vendas deste vendedor");
-    centralizarFrase("  0  |  Para voltar ao menu do evento                  ");
-    imprimirLinhaDivisoria();
-    opcao = centralizarEObterValorInt("Escolha uma opcao:");
-
-    system("cls");
-    switch (opcao) {
-        case 1:
-            criarProduto(idEvento);
-            system("PAUSE");
-            system("cls");
-            menuVendedores(idEvento);
-            break;
-        case 2: {
-            int codProdEditar = centralizarEObterValorInt("Qual o codigo do produto que deseja editar: ");
-            editarProduto(codProdEditar, idEvento); // todo - fazer verificação se existe este produto neste evento
-            system("PAUSE");
-            system("cls");
-            menuVendedores(idEvento);
-            break;
-        }
-        case 3:
-            relatorioVendaEspecifico("vendas_detalhes.txt", idEvento);
-            system("PAUSE");
-            system("cls");
-            menuVendedores(idEvento);
-            break;
-        case 0:
-            menuEvento(idEvento);
-            break;
-        default:
-            opcaoInvalida();
-            break;
-    }
-    return 0;
-}*/
-
-
+int menuEditarProduto() {
+    // todo - a fazer
+}
 
 int escolherMenu() {
     char dataAtual[11];
@@ -298,6 +185,7 @@ int escolherMenu() {
     system("cls");
 
     if(strcmp(tipoUsuario, "administrador")) {
+        limparResumo();
         menuVenda();
     } else {
         menuAdministrador();

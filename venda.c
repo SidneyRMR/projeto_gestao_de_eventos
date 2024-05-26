@@ -13,6 +13,8 @@
 #define MAX_PRODUTO 100
 #define MAX_RESUMO_VENDA 100
 
+void limparResumo();
+
 double totalGeral = 0;
 int contProduto;
 
@@ -25,6 +27,7 @@ struct ResumoVendas {
 struct ResumoVendas resumoVendas[MAX_PRODUTO];
 
 void menuVenda() {
+
     imprimirTituloCabecarioDuplo("MENU DE VENDAS",NULL);
     listarProdutosVenda();
     resumoVenda();
@@ -59,7 +62,7 @@ void listarVendas() {
     } else {
         printf("Não foi possível abrir o arquivo %s.\n\n", filename);
     }
-}
+    }
 
 // Função para carregar o último ID do arquivo vendas.txt
 int carregarUltimaVenda() {
@@ -118,7 +121,6 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 //system("PAUSE");
             } else {
                 centralizarFrase("---------      Limite de produtos atingido!      ---------");
-                //printf("|\tLimite de produtos atingido!\n");
             }
         }
     }
@@ -419,8 +421,8 @@ int listarProdutosVenda() {
         return -1;
     }
 
-    imprimirUsuarioEData();
     imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
+    imprimirUsuarioEData();
     printf("| %-3s | %-75s | %-10s | %-15s |\n", "Cod", "Descricao", "Preco", "Estoque");
     imprimirLinhaDivisoria();
 
