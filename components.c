@@ -49,8 +49,14 @@ void imprimirLinhaDivisoriaLista() {
 }
 
 void imprimirLinhaDivisoriaAjustavel(int tamanho) {
-    char linha[tamanho+1];
-    memset(linha, '-', tamanho);
+    char linha[tamanho + 1];  // +1 para o caractere nulo
+    int i;
+
+    // Preenchendo manualmente cada elemento do array com '-'
+    for (i = 0; i < tamanho; i++) {
+        linha[i] = '-';
+    }
+
     linha[tamanho] = '\0';  // Certifique-se de que a linha seja terminada com null
     centralizarFraseSemBorda(linha);
 }
@@ -82,7 +88,7 @@ void imprimirCentralizado(const char *texto) {
 void imprimirCentralizadoLista(const char *frase) {
     int comprimento_frase = strlen(frase);
     int espacos = (LARGURALISTA - comprimento_frase) / 2;
-    int espacos_restantes = LARGURALISTA - comprimento_frase - espacos;
+    int espacos_restantes = LARGURALISTA - comprimento_frase - espacos ;
 
     if (espacos < 0) {
         espacos = 0;
@@ -90,11 +96,20 @@ void imprimirCentralizadoLista(const char *frase) {
     if (espacos_restantes < 0) {
         espacos_restantes = 0;
     }
-    char buffer[LARGURALISTA + 3]; // LARGURALISTA + 2 para as bordas '|' e +1 para o caractere nulo
-    sprintf(buffer, "|%*s%s%*s|", espacos-1, "", frase, espacos_restantes-1, "");
-    centralizarFraseSemBorda(buffer);
-}
 
+    char linha[LARGURALISTA + 3]; // LARGURALISTA + 2 para as bordas '|' e +1 para o caractere nulo
+    strcpy(linha, "|");
+    for (int i = 0; i < espacos-1; ++i) {
+        strcat(linha, " ");
+    }
+    strcat(linha, frase);
+    for (int i = 0; i < espacos_restantes-1; ++i) {
+        strcat(linha, " ");
+    }
+    strcat(linha, "|");
+
+    centralizarFraseSemBorda(linha);
+}
 int imprimirTituloCabecario(const char *titulo, const char *subtitulo) {
     imprimirLinha();
     imprimirCentralizado(titulo);
@@ -253,7 +268,7 @@ int centralizarEObterValorInt(const char *frase) {
 
         // Limpar o buffer de entrada em caso de erro
         if (entradaValida != 1) {
-            limparBufferEntrada();
+            //limparBufferEntrada();
 
             setColorScheme(getColorSchemeByName("error"));
             centralizarString("Entrada invalida. Tente novamente.", LARGURA+6);
@@ -262,7 +277,7 @@ int centralizarEObterValorInt(const char *frase) {
             entradaValida = 0;  // Definir como 0 para continuar no loop
         }
     } while (entradaValida != 1);
-    limparBufferEntrada();
+    //limparBufferEntrada();
     return valor;
 }
 

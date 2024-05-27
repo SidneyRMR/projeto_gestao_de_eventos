@@ -8,9 +8,7 @@ typedef struct {
     char data[11];
     int status;
 } Evento;
-int EditarNomeEvento(int idEvento);
-int EditarDescricaoEvento(int idEvento);
-int DesativarEvento(int idEvento);
+
 void criarEvento();
 
 void listarEventos();
@@ -22,5 +20,7 @@ void salvarEvento(Evento evento);
 void listarEventosCadastro();
 
 Evento carregarEventoPorID(int id);
+
+void atualizarEvento(Evento evento);
 
 #endif // EVENTO_H

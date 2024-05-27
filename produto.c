@@ -34,7 +34,7 @@ void criarProduto() {
     char* nomeEvento = obterNomeEvento("eventos.txt", opcaoEvento);
 
 // Imprimir os valores lidos
-    imprimirTituloCabecarioLista("Valores lidos:", NULL);
+    imprimirTituloCabecarioLista("Valores lidos", NULL);
     centralizarFraseDoisValores("Descricao: ", p_descricao);
     centralizarFraseDoisValores("Preco:     ", str_preco);
     centralizarFraseDoisValores("Estoque:   ", str_estoque);

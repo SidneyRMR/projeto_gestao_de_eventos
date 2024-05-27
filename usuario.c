@@ -27,7 +27,7 @@ void criarUsuario() {
     imprimirLinhaDivisoria();
 
     // Imprimir os valores lidos
-    imprimirTituloCabecarioLista("Valores lidos:", NULL);
+    imprimirTituloCabecarioLista("Valores lidos", NULL);
     centralizarFraseDoisValores("Nome:  ", p_nome);
     centralizarFraseDoisValores("Login: ", p_login);
     centralizarFraseDoisValores("Senha: ", p_senha);

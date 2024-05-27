@@ -118,44 +118,47 @@ int selecaoEvento() {
 
 
 int menuEditarEvento() {
-    system("cls");
+    //system("cls");
     imprimirTituloCabecarioDuplo("MENU DE EDICAO DE EVENTO", NULL);
 
-    int idEventoAux;
-    idEventoAux = selecaoEvento();
-    int opcaoAdmEvento = 0;
+    int idEventoAux = selecaoEvento();
+    Evento evento = carregarEventoPorID(idEventoAux);
 
-    printf("opcao adm %d \n", opcaoAdmEvento);
-    printf("idEvento %d \n", idEventoAux);
+    printf("nome evento: %s \n", evento.evento);
 
-    imprimirLinhaDivisoriaAjustavel(48);
+    imprimirLinhaDivisoriaAjustavel(46);
     imprimirCentralizadoLista(" Cod |  Descricao                           ");
-    imprimirLinhaDivisoriaAjustavel(48);
+    imprimirLinhaDivisoriaAjustavel(46);
     imprimirCentralizadoLista("  1  |  Para editar o nome deste evento     ");
     imprimirCentralizadoLista("  2  |  Para editar a descricao deste evento");
-    imprimirCentralizadoLista("  3  |  Para desativar este evento          ");
-    imprimirLinhaDivisoriaAjustavel(48);
+    imprimirCentralizadoLista("  3  |  Para ativar/desativar este evento   ");
+    imprimirLinhaDivisoriaAjustavel(46);
     imprimirCentralizadoLista("  0  |  Para voltar ao menu principal       ");
-    imprimirLinhaDivisoriaAjustavel(48);
+    imprimirLinhaDivisoriaAjustavel(46);
 
+    printf("nome evento: %s \n", evento.evento);
+
+    int opcaoAdmEvento = centralizarEObterValorInt("Escolha uma opcao:");
+
+    printf("nome evento: %s \n", evento.evento);
+    printf("id evento: %d \n", evento.id);
     printf("opcao adm %d \n", opcaoAdmEvento);
-    printf("idEvento %d \n", idEventoAux);
-
-    opcaoAdmEvento = centralizarEObterValorInt("Escolha uma opcao:");
-
-    printf("opcao adm %d \n", opcaoAdmEvento);
-    printf("idEvento %d \n", idEventoAux);
-    system("PAUSE");
 
     switch (opcaoAdmEvento) {
         case 1:
-            EditarNomeEvento(idEventoAux);
+            char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 21);
+            strcpy(evento.evento, novoNome);
+            atualizarEvento(evento);
             break;
         case 2:
-            EditarDescricaoEvento(idEventoAux);
+            char *novaDescricao = centralizarEObterValorChar("Digite o novo nome do evento: ", 51);
+            strcpy(evento.descricao, novaDescricao);
+            atualizarEvento(evento);
             break;
         case 3:
-            DesativarEvento(idEventoAux);
+            int eventoStatus = 0;
+            evento.status = 0;
+            atualizarEvento(evento);
             break;
         case 0:
             menuAdministrador();
@@ -165,6 +168,7 @@ int menuEditarEvento() {
             break;
     }
     system("PAUSE");
+    system("cls");
     menuEditarEvento();
 
     return 0;
