@@ -89,7 +89,7 @@ int carregarUltimaVenda() {
 }
 
 void adicionarProdutoResumo(int codigoProd, int qtde) {
-    Produto produto = consultarProdutoPorID(codigoProd);
+    Produto produto = BuscarProdutoPorID(codigoProd);
     int produtoExistente = 0;
     if(qtde <= 0 ) {
         printf("|\tDigite uma quantidade acima de ZERO!\n");
@@ -216,16 +216,34 @@ void opcoesVenda() {
         default:
             if (opcao > 0 && opcao <= idMax-1) {
                 int quantidade;
-                quantidade = centralizarEObterValorInt("Digite quantos produtos deseja ADICIONAR:");
-                adicionarProdutoResumo(opcao, quantidade);
-                system("cls");
-                menuVenda();
+                Produto produto = BuscarProdutoPorID(opcao);
+                //printf("Evento %d",produto.id_evento);
+                //printf("Usuario %d",getUsuarioCompartilhado().id_evento);
+                if(produto.id_evento == getUsuarioCompartilhado().id_evento) {
+                    quantidade = centralizarEObterValorInt("Digite quantos produtos deseja ADICIONAR:");
+                    adicionarProdutoResumo(opcao, quantidade);
+                    system("cls");
+                    menuVenda();
+                } else {
+                    system("cls");
+                    opcaoInvalida();
+                    menuVenda();
+                }
             } else if(opcao < 0 && opcao >= -idMax+1 && contProduto > 0) {
                 int quantidade;
-                quantidade = centralizarEObterValorInt("Digite quantos produtos deseja REMOVER:");
-                removerProdutoResumo(opcao, quantidade);
-                system("cls");
-                menuVenda();
+                Produto produto = BuscarProdutoPorID(opcao);
+                //printf("Evento %d",produto.id_evento);
+                //printf("Usuario %d",getUsuarioCompartilhado().id);
+                if(produto.id_evento == getUsuarioCompartilhado().id) {
+                    quantidade = centralizarEObterValorInt("Digite quantos produtos deseja REMOVER:");
+                    removerProdutoResumo(opcao, quantidade);
+                    system("cls");
+                    menuVenda();
+                } else {
+                    system("cls");
+                    opcaoInvalida();
+                    menuVenda();
+                }
             } else {
                 system("cls");
                 opcaoInvalida();

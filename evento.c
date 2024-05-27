@@ -176,7 +176,7 @@ Evento carregarEventoPorID(int id) {
     Evento eventoNaoEncontrado = {0, "", "", "", 0};
     return eventoNaoEncontrado;
 }
-
+/*
 int EditarNomeEvento(int idEvento) {
     FILE *arquivo = fopen("data/eventos.txt", "r+");
     if (arquivo == NULL) {
@@ -202,10 +202,6 @@ int EditarNomeEvento(int idEvento) {
         return -1;
     }
     printf("%d", idEvento);
-    // Converte idEvento para string
-    char idEventoStr[12]; // Tamanho suficiente para um int
-    sprintf(idEventoStr, "%d", idEvento);
-    centralizarFrase(idEventoStr);
 
     Evento eventoAtual;
     while (fscanf(arquivo, "%d '%20[^']' '%50[^']' %10s %d\n", &eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, &eventoAtual.status) != EOF) {
@@ -223,12 +219,164 @@ int EditarNomeEvento(int idEvento) {
 
     centralizarFrase("Nome do evento atualizado com sucesso.");
     return 0;
-}
+}*/
+void atualizarEvento(Evento evento) {
+    FILE *file;
+    char filename[] = "data/eventos.txt";
+    FILE *tempFile;
+    char tempFilename[] = "data/tempEvento.txt";
+    Evento tempEvento;
 
+    file = fopen(filename, "r");
+    tempFile = fopen(tempFilename, "w");
+
+    if (file != NULL && tempFile != NULL) {
+        while (fscanf(file, "%d '%20[^']' '%50[^']' %10s %d\n", &tempEvento.id, tempEvento.evento, tempEvento.descricao, tempEvento.data, &tempEvento.status) != EOF) {
+            if (tempEvento.id == evento.id) {
+                fprintf(tempFile, "%d '%s' '%s' %s %d\n", tempEvento.id, tempEvento.evento, tempEvento.descricao, tempEvento.data, tempEvento.status);
+            } else {
+                fprintf(tempFile, "%d '%s' '%s' %s %d\n", tempEvento.id, tempEvento.evento, tempEvento.descricao, tempEvento.data, tempEvento.status);
+            }
+        }
+        fclose(file);
+        fclose(tempFile);
+
+        // Remover o arquivo original e renomear o arquivo temporário
+        remove(filename);
+        rename(tempFilename, filename);
+
+        centralizarFrase("Evento atualizado com sucesso.");
+    } else {
+        if (file == NULL) {
+            printf("Erro ao abrir o arquivo %s.\n", filename);
+        }
+        if (tempFile == NULL) {
+            printf("Erro ao criar o arquivo temporário %s.\n", tempFilename);
+        }
+    }
+}
+int EditarNomeEvento(int idEvento) {
+    FILE *arquivo = fopen("data/eventos.txt", "r+");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return -1;
+    }
+
+    Evento evento = carregarEventoPorID(idEvento);
+    if (evento.id == -1) {
+        printf("Evento não encontrado.\n");
+        fclose(arquivo);
+        return -1;
+    }
+
+    char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 21);
+
+    FILE *temp = fopen("data/temp.txt", "w");
+    if (temp == NULL) {
+        perror("Erro ao criar o arquivo temporário");
+        fclose(arquivo);
+        return -1;
+    }
+
+    Evento eventoAtual;
+    while (fscanf(arquivo, "%d '%20[^']' '%50[^']' %10s %d\n", &eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, &eventoAtual.status) != EOF) {
+        if (eventoAtual.id == idEvento) {
+            strcpy(eventoAtual.evento, novoNome);
+        }
+        fprintf(temp, "%d '%s' '%s' %s %d\n", eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, eventoAtual.status);
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    remove("data/eventos.txt");
+    rename("data/temp.txt", "data/eventos.txt");
+
+    centralizarFrase("Nome do evento atualizado com sucesso.");
+    return 0;
+}
 
 int EditarDescricaoEvento(int idEvento){
+    FILE *arquivo = fopen("data/eventos.txt", "r+");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return -1;
+    }
 
+    Evento evento = carregarEventoPorID(idEvento);
+    if (evento.id == -1) {
+        printf("Evento não encontrado.\n");
+        fclose(arquivo);
+        return -1;
+    }
+    printf("%d", idEvento);
+    char *novaDescricao = centralizarEObterValorChar("Digite o novo nome do evento: ", 51);
+
+    rewind(arquivo);
+
+    FILE *temp = fopen("temp.txt", "w");
+    if (temp == NULL) {
+        perror("Erro ao criar o arquivo temporário");
+        fclose(arquivo);
+        return -1;
+    }
+    printf("%d", idEvento);
+
+    Evento eventoAtual;
+    while (fscanf(arquivo, "%d '%20[^']' '%50[^']' %10s %d\n", &eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, &eventoAtual.status) != EOF) {
+        if (eventoAtual.id == idEvento) {
+            strcpy(eventoAtual.descricao, novaDescricao);
+        }
+        fprintf(temp, "%d '%s' '%s' %s %d\n", eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, eventoAtual.status);
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    remove("data/eventos.txt");
+    rename("temp.txt", "data/eventos.txt");
+
+    centralizarFrase("Descricao do evento atualizada com sucesso.");
+    return 0;
 }
 int DesativarEvento(int idEvento){
+    FILE *arquivo = fopen("data/eventos.txt", "r+");
+    if (arquivo == NULL) {
+        perror("Erro ao abrir o arquivo");
+        return -1;
+    }
 
+    Evento evento = carregarEventoPorID(idEvento);
+    if (evento.id == -1) {
+        printf("Evento não encontrado.\n");
+        fclose(arquivo);
+        return -1;
+    }
+
+    rewind(arquivo);
+
+    FILE *temp = fopen("temp.txt", "w");
+    if (temp == NULL) {
+        perror("Erro ao criar o arquivo temporário");
+        fclose(arquivo);
+        return -1;
+    }
+    printf("%d", idEvento);
+
+    Evento eventoAtual;
+    while (fscanf(arquivo, "%d '%20[^']' '%50[^']' %10s %d\n", &eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, &eventoAtual.status) != EOF) {
+        if (eventoAtual.id == idEvento) {
+            eventoAtual.status = 0;
+        }
+        fprintf(temp, "%d '%s' '%s' %s %d\n", eventoAtual.id, eventoAtual.evento, eventoAtual.descricao, eventoAtual.data, eventoAtual.status);
+    }
+
+    fclose(arquivo);
+    fclose(temp);
+
+    remove("data/eventos.txt");
+    rename("temp.txt", "data/eventos.txt");
+
+    centralizarFrase("Evento desativado com sucesso.");
+    return 0;
 }

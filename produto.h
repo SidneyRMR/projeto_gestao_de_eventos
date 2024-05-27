@@ -22,7 +22,7 @@ int carregarUltimoProduto();
 
 void salvarProduto(Produto produto);
 
-Produto consultarProdutoPorID(int id);
+Produto BuscarProdutoPorID(int id);
 
 int ajustarEstoque();
 

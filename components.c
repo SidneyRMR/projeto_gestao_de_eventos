@@ -5,6 +5,7 @@
 #include "menu.h"
 #include "components.h"
 #include "produto.h"
+#include "evento.h"
 
 #define LARGURA 114
 #define LARGURALISTA 32
@@ -161,12 +162,20 @@ int imprimirUsuarioEData() {
     // Centraliza "USUARIO: nomeUsuario" na outra metade da linha
     char usuarioStr[21];
     snprintf(usuarioStr, sizeof(usuarioStr), "USUARIO: %-21s ", getUsuarioCompartilhado().nome);
-    centralizarString(usuarioStr, (LARGURA / 2) );
+    centralizarString(usuarioStr, (LARGURA / 3) );
+
+    int idEvento = getUsuarioCompartilhado().id_evento;
+    Evento evento =  carregarEventoPorID(idEvento);
+
+    // Centraliza "USUARIO: nomeUsuario" na outra metade da linha
+    char eventoStr[21];
+    snprintf(eventoStr, sizeof(eventoStr), "EVENTO: %-21s ", evento.evento);
+    centralizarString(eventoStr, (LARGURA / 3) );
 
     // Centraliza "DATA: ddata" em metade da linha
     char dataStr[20];
     snprintf(dataStr, sizeof(dataStr), "DATA: %-11s", dataAtual);
-    centralizarString(dataStr, (LARGURA / 2) );
+    centralizarString(dataStr, (LARGURA / 3) );
     printf("|\n");
 
 

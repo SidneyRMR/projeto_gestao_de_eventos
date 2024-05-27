@@ -13,7 +13,7 @@
 #include "login.h"
 
 
-void menuAdministrador() {
+int menuAdministrador() {
     int opcaoAdm = 999;
 
     system("cls");
@@ -93,10 +93,13 @@ void menuAdministrador() {
                 break;
         }
     }
+    return 0;
 }
 
 int selecaoEvento() {
     listarEventos();
+    centralizarFrase("Digite 0 para sair.");
+    imprimirLinhaDivisoria();
     int idMaxEvento = carregarUltimoEvento();
     int idEvento;
 
@@ -104,8 +107,13 @@ int selecaoEvento() {
     do {
         idEvento = centralizarEObterValorInt("Escolha o evento que deseja alterar:");
 
-    } while (idEvento <= 0 || idEvento >= idMaxEvento);
-    return idEvento;
+    } while (idEvento < 0 || idEvento >= idMaxEvento);
+    if (idEvento == 0) {
+        return menuAdministrador();
+    } else {
+        return idEvento;
+    }
+
 }
 
 
@@ -116,7 +124,6 @@ int menuEditarEvento() {
     int idEventoAux;
     idEventoAux = selecaoEvento();
     int opcaoAdmEvento = 0;
-
 
     printf("opcao adm %d \n", opcaoAdmEvento);
     printf("idEvento %d \n", idEventoAux);

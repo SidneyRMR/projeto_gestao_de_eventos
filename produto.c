@@ -144,7 +144,7 @@ void salvarProduto(Produto produto) {
 
 
 
-Produto consultarProdutoPorID(int id) {
+Produto BuscarProdutoPorID(int id) {
     FILE *file;
     char filename[] = "data/produtos.txt";
     file = fopen(filename, "r"); // Abrir o arquivo em modo de leitura
