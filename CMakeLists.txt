@@ -2,7 +2,13 @@ cmake_minimum_required(VERSION 3.27)
 project(projeto_gestao_de_eventos C)
 
 
+set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_C_STANDARD 11)
+
+
+
+add_executable(CreatePDF main.c)
+target_link_libraries(CreatePDF hpdf)
 
 add_executable(projeto_gestao_de_eventos
         main.c

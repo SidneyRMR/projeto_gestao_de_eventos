@@ -23,7 +23,7 @@ void criarEvento() {
     imprimirLinhaLista();
 
     // Preencher a estrutura do evento com os dados inseridos
-    evento.id = carregarUltimoEvento() + 1; // Incrementar o ID do último evento
+    evento.id = carregarUltimoEvento() ; // Incrementar o ID do último evento
     strncpy(evento.evento, p_evento, sizeof(evento.evento) - 1);
     strncpy(evento.descricao, p_descricao, sizeof(evento.descricao) - 1);
     obterDataAtual(evento.data);
@@ -46,7 +46,7 @@ void criarEvento() {
     // Salvar o evento
     salvarEvento(evento);
 
-    centralizarFrase("Evento criado com sucesso.");
+    centralizarFrase("Evento criado com sucesso.", "success");
 }
 
 
@@ -148,13 +148,13 @@ void salvarEvento(Evento evento) {
     if (file != NULL) {
         fprintf(file, "%d '%s' '%s' %s %d\n", evento.id, evento.evento, evento.descricao, evento.data, evento.status);
         fclose(file);
-        centralizarFrase("Evento salvo com sucesso!");
+        centralizarFrase("Evento salvo com sucesso!", "success");
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
 }
 
-Evento carregarEventoPorID(int id) {
+Evento buscarEventoPorID(int id) {
     FILE *file;
     char filename[] = "data/eventos.txt";
     Evento evento;
@@ -188,10 +188,12 @@ void atualizarEvento(Evento evento) {
     tempFile = fopen(tempFilename, "w");
 
     if (file != NULL && tempFile != NULL) {
-        while (fscanf(file, "%d '%20[^']' '%50[^']' %10s %d\n", &tempEvento.id, tempEvento.evento, tempEvento.descricao, tempEvento.data, &tempEvento.status) != EOF) {
+        while (fscanf(file, "%d '%[^']' '%[^']' %s %d", &tempEvento.id, tempEvento.evento, tempEvento.descricao, tempEvento.data, &tempEvento.status) != EOF) {
             if (tempEvento.id == evento.id) {
-                fprintf(tempFile, "%d '%s' '%s' %s %d\n", tempEvento.id, tempEvento.evento, tempEvento.descricao, tempEvento.data, tempEvento.status);
+                // Escrever o evento atualizado no arquivo temporário
+                fprintf(tempFile, "%d '%s' '%s' %s %d\n", evento.id, evento.evento, evento.descricao, evento.data, evento.status);
             } else {
+                // Escrever o evento sem modificação no arquivo temporário
                 fprintf(tempFile, "%d '%s' '%s' %s %d\n", tempEvento.id, tempEvento.evento, tempEvento.descricao, tempEvento.data, tempEvento.status);
             }
         }
@@ -202,7 +204,7 @@ void atualizarEvento(Evento evento) {
         remove(filename);
         rename(tempFilename, filename);
 
-        centralizarFrase("Evento atualizado com sucesso.");
+        centralizarFrase("Evento atualizado com sucesso.", "success");
     } else {
         if (file == NULL) {
             printf("Erro ao abrir o arquivo %s.\n", filename);
@@ -212,4 +214,5 @@ void atualizarEvento(Evento evento) {
         }
     }
 }
+
 

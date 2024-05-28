@@ -6,34 +6,35 @@
 #include "components.h"
 #include "produto.h"
 #include "evento.h"
+//
 
 #define LARGURA 114
 #define LARGURALISTA 32
-void centralizarFrase(char *frase);
-void centralizarFraseSemBorda(char *frase);
+
+
 
 void setColorScheme(ColorScheme scheme) {
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleTextAttribute(hConsole, (WORD)((scheme.bgColor << 4) | scheme.textColor));
 }
+
 ColorScheme getColorSchemeByName(const char* name) {
     if (strcmp(name, "default") == 0) {
-        return (ColorScheme){WHITE, BLACK}; // Texto branco, fundo preto
+        return (ColorScheme){FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE, 0}; // Texto branco, fundo preto
     } else if (strcmp(name, "error") == 0) {
-        return (ColorScheme){RED, BLACK};   // Texto vermelho, fundo preto
+        return (ColorScheme){FOREGROUND_RED, 0};   // Texto vermelho, fundo preto
     } else if (strcmp(name, "success") == 0) {
-        return (ColorScheme){GREEN, BLACK}; // Texto verde, fundo preto
+        return (ColorScheme){FOREGROUND_GREEN, 0}; // Texto verde, fundo preto
     } else if (strcmp(name, "warning") == 0) {
-        return (ColorScheme){YELLOW, BLACK}; // Texto amarelo, fundo preto
+        return (ColorScheme){FOREGROUND_RED | FOREGROUND_GREEN, 0}; // Texto amarelo, fundo preto
     } else if (strcmp(name, "info") == 0) {
-        return (ColorScheme){CYAN, BLACK};  // Texto ciano, fundo preto
+        return (ColorScheme){FOREGROUND_GREEN | FOREGROUND_BLUE, 0};  // Texto ciano, fundo preto
     }
     // Adicione outras combinações de cores aqui conforme necessário
 
     // Retorna a combinação padrão se não encontrar o nome
-    return (ColorScheme){WHITE, BLACK};
+    return (ColorScheme){FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE, 0};
 }
-
 void imprimirLinhaDivisoria() {
     for (int i = 0; i < LARGURA+2; i++) {
         printf("-");
@@ -180,7 +181,7 @@ int imprimirUsuarioEData() {
     centralizarString(usuarioStr, (LARGURA / 3) );
 
     int idEvento = getUsuarioCompartilhado().id_evento;
-    Evento evento =  carregarEventoPorID(idEvento);
+    Evento evento = buscarEventoPorID(idEvento);
 
     // Centraliza "USUARIO: nomeUsuario" na outra metade da linha
     char eventoStr[21];
@@ -205,12 +206,24 @@ void opcaoInvalida() {
     setColorScheme(getColorSchemeByName("default"));
 }
 
-void centralizarFrase(char *frase) {
+void centralizarFrase(char *frase, const char *cor) {
     int espacos = 0;
-    int comprimento_frase= 0;
+    int comprimento_frase = 0;
     comprimento_frase = strlen(frase);
     espacos = (LARGURA - comprimento_frase) / 2;
+
+    // Obter o esquema de cores
+    ColorScheme scheme = getColorSchemeByName(cor);
+
+    // Definir o esquema de cores
+    setColorScheme(scheme);
+
+    // Imprimir a frase centralizada
     printf("|%*s%-*s%*s|\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
+
+    // Restaurar a cor padrão
+    setColorScheme(getColorSchemeByName("default"));
+    Sleep(500);
 }
 void centralizarFraseDoisValores(char *frase, char *frase2) {
     int comprimento_frase = strlen(frase) + strlen(frase2);
@@ -319,7 +332,7 @@ double centralizarEObterValorDouble(const char* frase) {
 
 char* centralizarEObterValorChar(const char *frase, int tamanho) {
     if (strlen(frase) > LARGURA) {
-        centralizarFrase("Erro: O valor excede a largura máxima permitida.");
+        centralizarFrase("Erro: O valor excede a largura máxima permitida.", "error");
         return NULL; // Saída em caso de erro
     }
 
@@ -329,7 +342,7 @@ char* centralizarEObterValorChar(const char *frase, int tamanho) {
             malloc((tamanho + 1) * sizeof(char)); // Alocando memória dinamicamente
 
     if (valor == NULL) {
-        centralizarFrase("Erro: Falha na alocação de memória.\n");
+        centralizarFrase("Erro: Falha na alocação de memória.", "error");
         return NULL; // Saída em caso de erro de alocação de memória
     }
 

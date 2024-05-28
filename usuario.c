@@ -60,7 +60,7 @@ void criarUsuario() {
     // Salvar o usuário
     salvarUsuario(usuario);
 
-    centralizarFrase("Usuário criado com sucesso.");
+    centralizarFrase("Usuario criado com sucesso.", "success");
 }
 
 
@@ -174,6 +174,64 @@ char* obterNomeUsuario(const char *nomeArquivo, int idBusca) {
     return nomeEvento;
 }
 
-int EditarNomeUsuario(int idUsuario){}
-int EditarDescricaoUsuario(int idUsuario){}
-int DesativarUsuario(int idUsuario){}
+Usuario buscarUsuarioPorId(int id) {
+    FILE *file;
+    char filename[] = "data/usuarios.txt";
+    Usuario usuario;
+
+    file = fopen(filename, "r");
+    if (file != NULL) {
+        while (fscanf(file, "%d '%[^']' '%[^']' '%[^']' '%[^']' %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
+            if (usuario.id == id) {
+                fclose(file);
+                return usuario;
+            }
+        }
+        fclose(file);
+    } else {
+        printf("Erro ao abrir o arquivo %s.\n", filename);
+    }
+
+    // Retornar um usuário vazio caso não seja encontrado
+    Usuario usuarioNaoEncontrado = {0, "", "", "", "", 0, 0};
+    return usuarioNaoEncontrado;
+}
+
+
+void atualizarUsuario(Usuario usuario) {
+    FILE *file;
+    char filename[] = "data/usuarios.txt";
+    FILE *tempFile;
+    char tempFilename[] = "data/tempUsuarios.txt";
+    Usuario tempUsuario;
+
+    file = fopen(filename, "r");
+    tempFile = fopen(tempFilename, "w");
+
+    if (file != NULL && tempFile != NULL) {
+        while (fscanf(file, "%d '%[^']' '%[^']' '%[^']' '%[^']' %d %d", &tempUsuario.id, tempUsuario.nome, tempUsuario.login, tempUsuario.senha, tempUsuario.tipo, &tempUsuario.status, &tempUsuario.id_evento) != EOF) {
+            if (tempUsuario.id == usuario.id) {
+                // Escrever o usuário atualizado no arquivo temporário
+                fprintf(tempFile, "%d '%s' '%s' '%s' '%s' %d %d\n", usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.status, usuario.id_evento);
+            } else {
+                // Escrever o usuário sem modificação no arquivo temporário
+                fprintf(tempFile, "%d '%s' '%s' '%s' '%s' %d %d\n", tempUsuario.id, tempUsuario.nome, tempUsuario.login, tempUsuario.senha, tempUsuario.tipo, tempUsuario.status, tempUsuario.id_evento);
+            }
+        }
+        fclose(file);
+        fclose(tempFile);
+
+        // Remover o arquivo original e renomear o arquivo temporário
+        remove(filename);
+        rename(tempFilename, filename);
+
+        centralizarFrase("Usuário atualizado com sucesso.", "success");
+    } else {
+        if (file == NULL) {
+            printf("Erro ao abrir o arquivo %s.\n", filename);
+        }
+        if (tempFile == NULL) {
+            printf("Erro ao criar o arquivo temporário %s.\n", tempFilename);
+        }
+    }
+}

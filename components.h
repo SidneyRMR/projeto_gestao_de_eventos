@@ -65,7 +65,7 @@ int imprimirUsuarioEData();
 
 void opcaoInvalida();
 
-void centralizarFrase(char *frase);
+void centralizarFrase(char *frase, const char *cor);
 
 int centralizarEObterValorInt(const char *frase);
 

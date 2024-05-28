@@ -89,7 +89,7 @@ int carregarUltimaVenda() {
 }
 
 void adicionarProdutoResumo(int codigoProd, int qtde) {
-    Produto produto = BuscarProdutoPorID(codigoProd);
+    Produto produto = buscarProdutoPorID(codigoProd);
     int produtoExistente = 0;
     if(qtde <= 0 ) {
         printf("|\tDigite uma quantidade acima de ZERO!\n");
@@ -102,9 +102,7 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 // Se o produto já existe, atualiza apenas a quantidade
                 resumoVendas[i].quantidade_produto += qtde;
                 produtoExistente = 1;
-                centralizarFrase("---------      Adicionando um item      ---------");
-                //printf("|         ---------      Adicionando o item %-10s     ---------       |\n",produto.descricao);
-                //system("PAUSE");
+                centralizarFrase("---------      Adicionando um item      ---------", "success");
                 break; // Sai do loop após encontrar o produto
             }
         }
@@ -116,11 +114,9 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[contProduto].quantidade_produto = qtde;
                 resumoVendas[contProduto].valor_produto = produto.preco;
                 contProduto++;
-                centralizarFrase("---------      Adicionando um item       ---------");
-                //printf("|        ---------      Adicionando o item %-10s      ---------        |\n",produto.descricao);
-                //system("PAUSE");
+                centralizarFrase("---------      Adicionando um item       ---------", "success");
             } else {
-                centralizarFrase("---------      Limite de produtos atingido!      ---------");
+                centralizarFrase("---------      Limite de produtos atingido!      ---------", "error");
             }
         }
     }
@@ -132,7 +128,7 @@ void removerProdutoResumo(int codigoProd, int qtde) {
         if (resumoVendas[i].id_produto == codigoProd) {
             if (resumoVendas[i].quantidade_produto > qtde) {
                 resumoVendas[i].quantidade_produto -= qtde;
-                centralizarFrase("Removendo items da venda!");
+                centralizarFrase("Removendo items da venda!", "success");
                 //printf("|       --------      Removendo %d item(s) de %s!      --------       |\n", qtde, resumoVendas[i].descricao_produto);
                 //system("PAUSE");
                 break; // Sai do loop após atualizar a quantidade do produto
@@ -142,12 +138,12 @@ void removerProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[i].quantidade_produto = 0; // Limpa a quantidade do produto
                 resumoVendas[i].valor_produto = 0.0; // Limpa o valor do produto
                 contProduto = contProduto -1;
-                centralizarFrase("Removendo um item da venda!");
+                centralizarFrase("Removendo um item da venda!", "success");
                 //printf("|        ---------      Removendo um item da venda!      ---------        |\n");
                 //system("PAUSE");
                 break; // Sai do loop após atualizar a quantidade do produto
             } else {
-                centralizarFrase("Digite uma quantidade valida!");
+                centralizarFrase("Digite uma quantidade valida!", "warning");
                 system("PAUSE");
                 break; // Sai do loop
             }
@@ -165,12 +161,12 @@ void limparResumo() {
         resumoVendas[i].valor_produto = 0.0; // Limpa o valor do produto
     }
     totalGeral = 0.00;
-    centralizarFrase("-------            Limpando todos os itens da venda!           -------");
+    centralizarFrase("-------            Limpando todos os itens da venda!           -------", "success");
     //system("PAUSE");
     contProduto = 0; // Redefine o contador de produtos para zero
     //itensPedido = 0;
     } else {
-        centralizarFrase("-------            Nao possui itens na venda ainda!           -------");
+        centralizarFrase("-------            Nao possui itens na venda ainda!           -------", "error");
     }
 }
 
@@ -180,14 +176,14 @@ void opcoesVenda() {
 
     imprimirTituloCabecario("OPCOES",NULL);
 
-        centralizarFrase(" Cod  |  Digite o codigo de um produto para adicionar ao pedido.  ");
+        centralizarFrase(" Cod  |  Digite o codigo de um produto para adicionar ao pedido.  ", "default");
     if (contProduto > 0) {
-        centralizarFrase("-Cod  |  Digite '-' e o codigo um produto para remover do pedido. ");
+        centralizarFrase("-Cod  |  Digite '-' e o codigo um produto para remover do pedido. ", "default");
         imprimirLinhaDivisoria();
-        centralizarFrase(" 100  |  Digite 100 e para gerar a venda.                         ");
-        centralizarFrase(" 200  |  Digite 200 para limpar o pedido.                         ");
+        centralizarFrase(" 100  |  Digite 100 e para gerar a venda.                         ", "default");
+        centralizarFrase(" 200  |  Digite 200 para limpar o pedido.                         ", "default");
     }
-        centralizarFrase("   0  |  Digite 0 e para sair do programa.                        ");
+        centralizarFrase("   0  |  Digite 0 e para sair do programa.                        ", "default");
     imprimirLinhaDivisoria();
     int opcao = centralizarEObterValorInt("Escolha uma opcao ou codigo do produto:");
 
@@ -202,7 +198,7 @@ void opcoesVenda() {
             if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
                 escolherMenu();
             } else {
-                centralizarFrase("Logoff feito com sucesso!...");
+                centralizarFrase("Logoff feito com sucesso!...", "success");
                 login();
             }
             system("PAUSE");
@@ -216,7 +212,7 @@ void opcoesVenda() {
         default:
             if (opcao > 0 && opcao <= idMax-1) {
                 int quantidade;
-                Produto produto = BuscarProdutoPorID(opcao);
+                Produto produto = buscarProdutoPorID(opcao);
                 //printf("Evento %d",produto.id_evento);
                 //printf("Usuario %d",getUsuarioCompartilhado().id_evento);
                 if(produto.id_evento == getUsuarioCompartilhado().id_evento) {
@@ -231,7 +227,7 @@ void opcoesVenda() {
                 }
             } else if(opcao < 0 && opcao >= -idMax+1 && contProduto > 0) {
                 int quantidade;
-                Produto produto = BuscarProdutoPorID(opcao);
+                Produto produto = buscarProdutoPorID(opcao);
                 //printf("Evento %d",produto.id_evento);
                 //printf("Usuario %d",getUsuarioCompartilhado().id);
                 if(produto.id_evento == getUsuarioCompartilhado().id) {
@@ -291,18 +287,18 @@ int verificaValorPago(double valorVenda) {
         double diferenca =  totalGeral - valorPago;
         char diferencaStr[50];
         sprintf(diferencaStr, "R$ %.2f", diferenca);
-        centralizarFrase("Valor a ser pago deve ser maior ou igual a: ");
+        centralizarFrase("Valor a ser pago deve ser maior ou igual a: ", "warning");
         imprimirTituloCabecario("Valor a ser pago deve ser maior ou igual a: ", diferencaStr);
         verificaValorPago(valorVenda);
     } else if((valorPago > totalGeral) && ((valorPago - totalGeral) < 100.00)) {
-        centralizarFrase("Devolver o troco de:");
+        centralizarFrase("Devolver o troco de:", "warning");
         double troco =  valorPago - totalGeral;
 
         char trocoStr[50];
         sprintf(trocoStr, "R$ %.2f", troco);
         imprimirTituloCabecario(trocoStr, NULL);
     } else if((valorPago > totalGeral) && ((valorPago - totalGeral) > 100.00)) {
-        centralizarFrase("Troco a voltar nao pode ser maior que R$ 100,00.");
+        centralizarFrase("Troco a voltar nao pode ser maior que R$ 100,00.", "error");
         verificaValorPago(valorVenda);
     }
     //system("PAUSE");
@@ -313,7 +309,7 @@ int verificaValorPago(double valorVenda) {
 void criarVenda() {
     Venda venda;
     if (contProduto == 0) {
-        centralizarFrase("Nao ha itens para criar a venda.");
+        centralizarFrase("Nao ha itens para criar a venda.", "error");
         //system("PAUSE");
         return;
     }
@@ -368,7 +364,7 @@ void criarVenda() {
     if (file != NULL) {
         fprintf(file, "%d %s %d %d '%s'\n", venda.id, venda.data, venda.id_evento, venda.id_usuario, venda.formaPgto);
         fclose(file);
-        centralizarFrase("--------        Venda salva com sucesso!        --------");
+        centralizarFrase("--------        Venda salva com sucesso!        --------", "success");
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
@@ -405,7 +401,7 @@ void criarVenda() {
     int count = 0;
 
     // Ler os produtos do arquivo para a memória
-    while (fscanf(fileProdutos, "%d '%[^']' %lf %d %d", &produtos[count].id, produtos[count].descricao, &produtos[count].preco, &produtos[count].estoque, &produtos[count].id_evento) != EOF) {
+    while (fscanf(fileProdutos, "%d '%[^']' %lf %d %d %d", &produtos[count].id, produtos[count].descricao, &produtos[count].preco, &produtos[count].estoque, &produtos[count].id_evento, &produtos[count].status) != EOF) {
         count++;
     }
 
@@ -422,7 +418,7 @@ void criarVenda() {
     // Reescrever o arquivo com os novos estoques
     freopen(filenameProdutos, "w", fileProdutos);
     for (int i = 0; i < count; i++) {
-        fprintf(fileProdutos, "%d '%s' %.2f %d %d\n", produtos[i].id, produtos[i].descricao, produtos[i].preco, produtos[i].estoque, produtos[i].id_evento);
+        fprintf(fileProdutos, "%d '%s' %.2f %d %d %d\n", produtos[i].id, produtos[i].descricao, produtos[i].preco, produtos[i].estoque, produtos[i].id_evento, produtos[i].status);
     }
     fclose(fileProdutos);
     limparResumo();
@@ -446,12 +442,19 @@ int listarProdutosVenda() {
 
     for (int i = 0; i < MAX_PRODUTO; i++) {
         Produto produto;
-        if (fscanf(file, "%d '%[^']' %lf %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento) != EOF) {
-            if (produto.id_evento != getUsuarioCompartilhado().id_evento) continue;
+        char prodAtivado;
+        if (produto.status == 1 ) {
+            strcpy(&prodAtivado, "Ativo");
+        } else {
+            strcpy(&prodAtivado, "Desativado");
+        }
+
+        if (fscanf(file, "%d '%[^']' %lf %d %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
+            if (produto.id_evento != getUsuarioCompartilhado().id_evento && produto.status == 0) continue;
 
             int quantidade_vendida = 0;
             for (int j = 0; j < MAX_RESUMO_VENDA; j++) {
-                if (resumoVendas[j].id_produto == produto.id) {
+                if (resumoVendas[j].id_produto == produto.id ) {
                     quantidade_vendida += resumoVendas[j].quantidade_produto;
                 }
             }

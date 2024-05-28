@@ -1,11 +1,15 @@
-1 'Cerveja' 5 100 1
-2 'Cuba' 20 30 1
-3 'Coca-Cola' 5 200 1
-4 'Fanta' 5 80 1
-5 'Pastel' 10 100 1
-6 'Cachorro-Quente' 10 150 1
-7 'X-Salada' 15 120 1
-8 'teste' 11.00 200 1
-9 'teste' 11.00 200 1
-10 'Sopa' 10.00 100 1
-11 'Canja' 15.00 20 1
+1 'Cerveja' 15.00 50 1 1
+2 'Cuba' 20.00 100 1 1
+3 'Coca-Cola' 5.00 100 1 1
+4 'Fanta' 5.00 100 1 1
+5 'Pastel' 10.00 95 1 1
+6 'Cachorro-Quente' 10.00 100 1 1
+7 'X-Salada' 15.00 100 1 1
+8 'prod1' 1.00 85 2 1
+9 'prod2' 4.00 100 4 1
+10 'po' 5.00 5 2 1
+11 '1' 1.00 1 1 1
+12 'prod5' 5.00 5 2 1
+13 'qwe' 5.00 5 4 1
+14 'qwe qwe' 4.00 94 4 1
+15 'prod10' 55.00 40 1 1

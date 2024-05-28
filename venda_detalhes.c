@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <windows.h>
 #include <stdio.h>
 #include <string.h>
 #include "venda_detalhes.h"
@@ -23,7 +24,7 @@ void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
         fprintf(file, "%d %d %d %d '%s' %d %f\n", venda_detalhes.id, venda_detalhes.id_venda, venda_detalhes.id_produto, venda_detalhes.id_evento,
                 venda_detalhes.descricao_produto, venda_detalhes.quantidade_produto, venda_detalhes.valor_produto);
         fclose(file);
-        centralizarFrase("--------        Produto da venda salvos com sucesso!        --------");
+        centralizarFrase("--------        Produto da venda salvos com sucesso!        --------", "success");
     } else {
         printf("Erro ao abrir o arquivo %s.\n", filename);
     }
@@ -161,7 +162,7 @@ void relatorioVendasAux(){
             }
             case 0:
                 system("cls");
-                centralizarFrase("Saindo da tela de relatorio!");
+                centralizarFrase("Saindo da tela de relatorio!", "warning");
                 //system("PAUSE");
                 menuAdministrador();
             default:
@@ -263,7 +264,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
 
     if (produtosCount == 0) {
         imprimirLinhaDivisoria();
-        centralizarFrase("Nenhuma venda encontrada para o evento especificado.");
+        centralizarFrase("Nenhuma venda encontrada para o evento especificado.", "warning");
         imprimirLinhaDivisoria();
     } else {
         for (int i = 0; i < produtosCount; i++) {
@@ -333,7 +334,7 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
 
     if (produtosCount == 0) {
         imprimirLinhaDivisoria();
-        centralizarFrase(" Nenhuma venda encontrada para o evento especificado.");
+        centralizarFrase(" Nenhuma venda encontrada para o evento especificado.", "warning");
         imprimirLinhaDivisoria();
     } else {
         for (int i = 0; i < produtosCount; i++) {
@@ -372,7 +373,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         fseek(file, 0, SEEK_END);
         if (ftell(file) == 0) {
             imprimirLinhaDivisoria();
-            centralizarFrase(" Nenhuma venda encontrada.");
+            centralizarFrase(" Nenhuma venda encontrada.", "warning");
             imprimirLinhaDivisoria();
             fclose(file);
             return 0;
@@ -425,7 +426,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         //imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair", NULL);
         int opcaoOrdenacao;
         opcaoOrdenacao = centralizarEObterValorInt("Digite 1 para alterar a ordenacao ou 0 para sair: ");
-        //scanf("%d", &opcaoOrdenacao);
+        Sleep(1000);
         if (opcaoOrdenacao == 1) {
             system("cls");
             criteriosOrdenacao();

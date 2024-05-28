@@ -8,11 +8,12 @@ typedef struct {
     double preco;
     int estoque;
     int id_evento;
+    int status;
 } Produto;
 
-int EditarNomeProduto(int idProduto);
-int EditarDescricaoProduto(int idProduto);
-int DesativarProduto(int idProduto);
+int ajustarEstoqueSelecionado(int idProd);
+
+void atualizarProduto(Produto produto);
 
 int listarProdutos();
 
@@ -22,12 +23,11 @@ int carregarUltimoProduto();
 
 void salvarProduto(Produto produto);
 
-Produto BuscarProdutoPorID(int id);
+Produto buscarProdutoPorID(int id);
 
 int ajustarEstoque();
 
 void criarProduto();
-void editarProduto(int idProduto, int idEvento);
 
 
 #endif // PRODUTO_H

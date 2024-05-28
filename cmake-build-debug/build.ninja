@@ -41,6 +41,39 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/cmake-build-debug/
 # =============================================================================
+# Object build statements for EXECUTABLE target CreatePDF
+
+
+#############################################
+# Order-only phony target for CreatePDF
+
+build cmake_object_order_depends_target_CreatePDF: phony || CMakeFiles/CreatePDF.dir
+
+build CMakeFiles/CreatePDF.dir/main.c.obj: C_COMPILER__CreatePDF_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/main.c || cmake_object_order_depends_target_CreatePDF
+  DEP_FILE = CMakeFiles\CreatePDF.dir\main.c.obj.d
+  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
+  OBJECT_DIR = CMakeFiles\CreatePDF.dir
+  OBJECT_FILE_DIR = CMakeFiles\CreatePDF.dir
+
+
+# =============================================================================
+# Link build statements for EXECUTABLE target CreatePDF
+
+
+#############################################
+# Link the executable CreatePDF.exe
+
+build CreatePDF.exe: C_EXECUTABLE_LINKER__CreatePDF_Debug CMakeFiles/CreatePDF.dir/main.c.obj
+  FLAGS = -g
+  LINK_LIBRARIES = -lhpdf  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
+  OBJECT_DIR = CMakeFiles\CreatePDF.dir
+  POST_BUILD = cd .
+  PRE_LINK = cd .
+  TARGET_FILE = CreatePDF.exe
+  TARGET_IMPLIB = libCreatePDF.dll.a
+  TARGET_PDB = CreatePDF.exe.dbg
+
+# =============================================================================
 # Object build statements for EXECUTABLE target projeto_gestao_de_eventos
 
 
@@ -153,6 +186,8 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
+build CreatePDF: phony CreatePDF.exe
+
 build projeto_gestao_de_eventos: phony projeto_gestao_de_eventos.exe
 
 # =============================================================================
@@ -163,7 +198,7 @@ build projeto_gestao_de_eventos: phony projeto_gestao_de_eventos.exe
 #############################################
 # Folder: C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cmake-build-debug
 
-build all: phony projeto_gestao_de_eventos.exe
+build all: phony CreatePDF.exe projeto_gestao_de_eventos.exe
 
 # =============================================================================
 # Built-in targets

@@ -19,7 +19,7 @@ void salvarEvento(Evento evento);
 
 void listarEventosCadastro();
 
-Evento carregarEventoPorID(int id);
+Evento buscarEventoPorID(int id);
 
 void atualizarEvento(Evento evento);
 

@@ -63,7 +63,7 @@ void criarProduto() {
     // Salvar o produto
     salvarProduto(produto);
 
-    centralizarFrase("Produto criado com sucesso.");
+    centralizarFrase("Produto criado com sucesso.", "success");
 }
 
 int listarProdutos() {
@@ -75,17 +75,25 @@ int listarProdutos() {
         imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
         imprimirUsuarioEData();
 
-        printf("| %-3s | %-63s | %-10s | %-9s | %-15s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento");
+        printf("| %-3s | %-51s | %-10s | %-9s | %-15s | %-9s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento", "Status");
         imprimirLinhaDivisoria();
 
         Produto produto;
 
-        // Ler e exibir cada linha do arquivo
-        while (fscanf(file, "%d '%[^']' %lf %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento ) != EOF) {
-            char evento[10];
+        while (fscanf(file, "%d '%[^']' %lf %d %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
             char* nomeEvento = obterNomeEvento("eventos.txt", produto.id_evento);
+            char prodAtivado[11];
 
-            printf("| %-3d | %-63s | %-10.2f | %-9d | %-15s |\n", produto.id, produto.descricao, produto.preco, produto.estoque, nomeEvento);
+            if (produto.status == 1) {
+                strcpy(prodAtivado, "Ativo");
+            } else {
+                strcpy(prodAtivado, "Desativado");
+            }
+
+            printf("| %-3d | %-51s | %-10.2f | %-9d | %-15s | %-9s |\n",
+                   produto.id, produto.descricao, produto.preco, produto.estoque, nomeEvento, prodAtivado);
+
+            free(nomeEvento);  // Liberar memória alocada para o nome do evento
         }
 
         imprimirLinhaDivisoria();
@@ -144,7 +152,7 @@ void salvarProduto(Produto produto) {
 
 
 
-Produto BuscarProdutoPorID(int id) {
+Produto buscarProdutoPorID(int id) {
     FILE *file;
     char filename[] = "data/produtos.txt";
     file = fopen(filename, "r"); // Abrir o arquivo em modo de leitura
@@ -154,8 +162,8 @@ Produto BuscarProdutoPorID(int id) {
         int encontrado = 0;
 
         // Lê cada produto do arquivo até encontrar o produto com o ID correspondente
-        while (fscanf(file, "%d '%50[^']' %lf %d %d\n", &produto.id, produto.descricao, &produto.preco,
-                      &produto.estoque, &produto.id_evento) != EOF) {
+        while (fscanf(file, "%d '%50[^']' %lf %d %d %d\n", &produto.id, produto.descricao, &produto.preco,
+                      &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
             if (produto.id == id) {
                 encontrado = 1;
                 fclose(file);
@@ -179,18 +187,18 @@ void atualizarProduto(Produto produto) {
     FILE *file;
     char filename[] = "data/produtos.txt";
     FILE *tempFile;
-    char tempFilename[] = "data/temp.txt";
+    char tempFilename[] = "data/tempProduto.txt";
     Produto tempProduto;
 
     file = fopen(filename, "r");
     tempFile = fopen(tempFilename, "w");
 
     if (file != NULL && tempFile != NULL) {
-        while (fscanf(file, "%d '%99[^']' %lf %d %d\n", &tempProduto.id, tempProduto.descricao, &tempProduto.preco, &tempProduto.estoque, &tempProduto.id_evento) != EOF) {
+        while (fscanf(file, "%d '%49[^']' %lf %d %d %d\n", &tempProduto.id, tempProduto.descricao, &tempProduto.preco, &tempProduto.estoque, &tempProduto.id_evento, &tempProduto.status) != EOF) {
             if (tempProduto.id == produto.id) {
-                fprintf(tempFile, "%d '%s' %.2lf %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento);
+                fprintf(tempFile, "%d '%s' %.2lf %d %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento, produto.status);
             } else {
-                fprintf(tempFile, "%d '%s' %.2lf %d %d\n", tempProduto.id, tempProduto.descricao, tempProduto.preco, tempProduto.estoque, tempProduto.id_evento);
+                fprintf(tempFile, "%d '%s' %.2lf %d %d %d\n", tempProduto.id, tempProduto.descricao, tempProduto.preco, tempProduto.estoque, tempProduto.id_evento, tempProduto.status);
             }
         }
         fclose(file);
@@ -200,7 +208,7 @@ void atualizarProduto(Produto produto) {
         remove(filename);
         rename(tempFilename, filename);
 
-        centralizarFrase("Produto atualizado com sucesso.");
+        centralizarFrase("Produto atualizado com sucesso.", "success");
     } else {
         if (file == NULL) {
             printf("Erro ao abrir o arquivo %s.\n", filename);
@@ -237,50 +245,76 @@ void adicionarEstoque(int id, int quantidade) {
     Produto produto = carregarProdutoPorID(id);
     produto.estoque += quantidade;
     atualizarProduto(produto);
-    centralizarFrase("Estoque atualizado com sucesso.");
+    centralizarFrase("Estoque atualizado com sucesso.", "success");
 }
 
 void removerEstoque(int id, int quantidade) {
-    id = id * -1;
+    //id = id * -1;
     Produto produto = carregarProdutoPorID(id);
     if (produto.estoque >= quantidade) {
         produto.estoque -= quantidade;
         atualizarProduto(produto);
-        centralizarFrase("Estoque atualizado com sucesso.");
+        centralizarFrase("Estoque atualizado com sucesso.", "success");
     } else {
-        centralizarFrase("Quantidade insuficiente em estoque.");
+        centralizarFrase("Quantidade insuficiente em estoque.","warning");
     }
 }
 
-int ajustarEstoque() {
+//int ajustarEstoque() {
+//    int opcaoProdutoEstoque;
+//    int idMax = carregarUltimoProduto();
+//    int quantidade;
+//
+//    imprimirLinhaDivisoria();
+//    listarProdutos();
+//    centralizarFrase("Digite o codigo de um produto para adicionar ao estoque (0 - Sair)");
+//    centralizarFrase("Digite o '-'e codigo do produto para remover do estoque (0 - Sair)");
+//    imprimirLinhaDivisoria();
+//    opcaoProdutoEstoque = centralizarEObterValorInt("Escolha uma opcao: ");
+//
+//    if (opcaoProdutoEstoque > 0 && opcaoProdutoEstoque <= idMax-1) {
+//        quantidade = centralizarEObterValorInt("Digite quantos produtos deseja ADICIONAR:");
+//        adicionarEstoque(opcaoProdutoEstoque, quantidade);
+//        system("cls");
+//        ajustarEstoque();
+//    } else if(opcaoProdutoEstoque < 0 && opcaoProdutoEstoque >= -idMax+1) {
+//        quantidade = centralizarEObterValorInt("Digite quantos produtos deseja REMOVER:");
+//        removerEstoque(opcaoProdutoEstoque, quantidade);
+//        system("cls");
+//        ajustarEstoque();
+//    } else if ((opcaoProdutoEstoque > 0 && opcaoProdutoEstoque > idMax-1) || (opcaoProdutoEstoque < 0 && opcaoProdutoEstoque < -idMax+1)){
+//        system("cls");
+//        opcaoInvalida();
+//        ajustarEstoque();
+//    }
+//    return 0;
+//}
+int ajustarEstoqueSelecionado(int idProd) {
     int opcaoProdutoEstoque;
-    int idMax = carregarUltimoProduto();
     int quantidade;
 
-    imprimirLinhaDivisoria();
-    listarProdutos();
-    centralizarFrase("Digite o codigo de um produto para adicionar ao estoque (0 - Sair)");
-    centralizarFrase("Digite o '-'e codigo do produto para remover do estoque (0 - Sair)");
-    imprimirLinhaDivisoria();
-    opcaoProdutoEstoque = centralizarEObterValorInt("Escolha uma opcao: ");
+    //imprimirLinhaDivisoria();
+    opcaoProdutoEstoque = centralizarEObterValorInt("Digite 1 para adicionar ou 2 para remover  (0 - Sair)");
+    //imprimirLinhaDivisoria();
 
-    if (opcaoProdutoEstoque > 0 && opcaoProdutoEstoque <= idMax-1) {
+    if (opcaoProdutoEstoque == 1) {
         quantidade = centralizarEObterValorInt("Digite quantos produtos deseja ADICIONAR:");
-        adicionarEstoque(opcaoProdutoEstoque, quantidade);
+        adicionarEstoque(idProd, quantidade);
         system("cls");
-        ajustarEstoque();
-    } else if(opcaoProdutoEstoque < 0 && opcaoProdutoEstoque >= -idMax+1) {
+        menuEditarProduto();
+    } else if(opcaoProdutoEstoque == 2) {
         quantidade = centralizarEObterValorInt("Digite quantos produtos deseja REMOVER:");
-        removerEstoque(opcaoProdutoEstoque, quantidade);
+        removerEstoque(idProd, quantidade);
         system("cls");
-        ajustarEstoque();
-    } else if ((opcaoProdutoEstoque > 0 && opcaoProdutoEstoque > idMax-1) || (opcaoProdutoEstoque < 0 && opcaoProdutoEstoque < -idMax+1)){
+        menuEditarProduto();
+    } else if(opcaoProdutoEstoque == 0) {
+
+        menuEditarProduto();
+    } else {
         system("cls");
         opcaoInvalida();
-        ajustarEstoque();
+        menuEditarProduto();
     }
+    system("cls");
     return 0;
 }
-int EditarNomeProduto(int idProduto){}
-int EditarDescricaoProduto(int idProduto){}
-int DesativarProduto(int idProduto){}

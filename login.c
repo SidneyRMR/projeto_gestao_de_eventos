@@ -50,13 +50,13 @@ int loginAux() {
         if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
             char fraseLogin[114];
             sprintf(fraseLogin, "Login efetuado com sucesso como %s ", usuarioo);
-            centralizarFrase(fraseLogin);
+            centralizarFrase(fraseLogin, "success");
             setUsuarioCompartilhado(&usuarios[i]);
             escolherMenu();
             return 0;
         }
     }
-    centralizarFrase("Login invalido, tente novamente.");
+    centralizarFrase("Login invalido, tente novamente.", "error");
     system("cls");
     return 0;
 }
@@ -73,10 +73,10 @@ void login() {
             tentativas--;
             char fraseTentativas[114];
             sprintf(fraseTentativas, "Voce tem %d tentativas restantes.", tentativas);
-            centralizarFrase(fraseTentativas);
+            centralizarFrase(fraseTentativas, "warning");
         }
     }
-    centralizarFrase("Numero maximo de tentativas excedido. Saindo...");
+    centralizarFrase("Numero maximo de tentativas excedido. Saindo...", "error");
     system("PAUSE");
     exit(1);
 }
