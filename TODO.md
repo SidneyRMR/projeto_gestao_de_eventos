@@ -1,7 +1,8 @@
 ### TODO's para aprimorar e finalizar o programa
 
-- **Funções de ativação/desativação**
-    - Criar funções para ativar ou desativar Usuários, Eventos e Produtos
+- **Telas de cadastro devem ter opcao 0 para sair**
+- **Usar lib para imprimir pedidos e relatorios em pdf**
+- **ListaProdutosVenda devem mostrar somente os produtos do idEvento do usuario**
 
 
 

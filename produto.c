@@ -75,7 +75,7 @@ int listarProdutos() {
         imprimirTituloCabecario("LISTA DE PRODUTOS", NULL);
         imprimirUsuarioEData();
 
-        printf("| %-3s | %-51s | %-10s | %-9s | %-15s | %-9s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento", "Status");
+        printf("| %-3s | %-50s | %-10s | %-9s | %-15s | %-10s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento", "Status");
         imprimirLinhaDivisoria();
 
         Produto produto;
@@ -90,7 +90,7 @@ int listarProdutos() {
                 strcpy(prodAtivado, "Desativado");
             }
 
-            printf("| %-3d | %-51s | %-10.2f | %-9d | %-15s | %-9s |\n",
+            printf("| %-3d | %-50s | %-10.2f | %-9d | %-15s | %-10s |\n",
                    produto.id, produto.descricao, produto.preco, produto.estoque, nomeEvento, prodAtivado);
 
             free(nomeEvento);  // Liberar memória alocada para o nome do evento

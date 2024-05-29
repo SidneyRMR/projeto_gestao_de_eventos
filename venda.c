@@ -10,6 +10,7 @@
 #include "variaveis_compartilhadas.h"
 #include "components.h"
 
+
 #define MAX_PRODUTO 100
 #define MAX_RESUMO_VENDA 100
 
@@ -25,15 +26,6 @@ struct ResumoVendas {
     double valor_produto;
 };
 struct ResumoVendas resumoVendas[MAX_PRODUTO];
-
-void menuVenda() {
-
-    imprimirTituloCabecarioDuplo("MENU DE VENDAS",NULL);
-    listarProdutosVenda();
-    resumoVenda();
-    opcoesVenda();
-    //imprimirLinhaDivisoria();
-}
 
 void listarVendas() {
     FILE *file;
@@ -62,7 +54,35 @@ void listarVendas() {
     } else {
         printf("Não foi possível abrir o arquivo %s.\n\n", filename);
     }
+}
+void listarVendasComFiltro() {
+    FILE *file;
+    char filename[] = "data/vendas.txt";
+    file = fopen(filename, "r");
+
+    if (file != NULL) {
+        imprimirTituloCabecarioDuplo("LISTA DE VENDAS", NULL);
+
+        printf("| %-4s | %-10s | %-46s | %-25s | %-15s |\n", "Cod", "Data", "Evento", "Usuario", "Forma Pgto");
+        imprimirLinhaDivisoria();
+
+        Venda venda;
+
+        while (fscanf(file, "%d %10s %d %d '%15[^']'", &venda.id, venda.data, &venda.id_evento, &venda.id_usuario, venda.formaPgto) != EOF) {
+            // Suponha que você tenha uma função para obter o nome do evento com base no id do evento
+            char evento[10];
+            char* nomeEvento = obterNomeEvento("eventos.txt", venda.id_evento);
+            char* nomeUsuario = obterNomeUsuario("usuarios.txt", venda.id_usuario);
+
+            printf("| %-4d | %-10s | %-46s | %-25s | %-15s |\n", venda.id, venda.data, nomeEvento, nomeUsuario, venda.formaPgto);
+        }
+
+        imprimirLinhaDivisoria();
+        fclose(file);
+    } else {
+        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
     }
+}
 
 // Função para carregar o último ID do arquivo vendas.txt
 int carregarUltimaVenda() {
@@ -431,7 +451,7 @@ int listarProdutosVenda() {
     file = fopen(filename, "r");
 
     if (file == NULL) {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
         return -1;
     }
 
@@ -442,15 +462,18 @@ int listarProdutosVenda() {
 
     for (int i = 0; i < MAX_PRODUTO; i++) {
         Produto produto;
-        char prodAtivado;
+        /*
+        char prodAtivado[10];
         if (produto.status == 1 ) {
-            strcpy(&prodAtivado, "Ativo");
+            strcpy(prodAtivado, "Ativo");
         } else {
-            strcpy(&prodAtivado, "Desativado");
+            strcpy(prodAtivado, "Desativado");
         }
-
+        */
         if (fscanf(file, "%d '%[^']' %lf %d %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
-            if (produto.id_evento != getUsuarioCompartilhado().id_evento && produto.status == 0) continue;
+            if (produto.id_evento != getUsuarioCompartilhado().id_evento && produto.status == 0 || produto.status == 0) {
+                continue;
+            };
 
             int quantidade_vendida = 0;
             for (int j = 0; j < MAX_RESUMO_VENDA; j++) {

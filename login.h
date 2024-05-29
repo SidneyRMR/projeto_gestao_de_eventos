@@ -3,7 +3,6 @@
 
 void login();
 
-void carregarUsuarios();
 
 int loginAux();
 

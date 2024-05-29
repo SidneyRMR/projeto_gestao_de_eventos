@@ -13,10 +13,8 @@ typedef struct {
 void criarVenda();
 
 void listarVendas();
-
+void listarVendasComFiltro();
 int carregarUltimaVenda();
-
-void menuVenda();
 
 void opcoesVenda();
 

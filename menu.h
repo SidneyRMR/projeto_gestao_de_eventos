@@ -1,7 +1,8 @@
-int menuAdministrador();
 int escolherMenu();
-void obterDataAtual(char *dataAtual);
-char* obterNomeEvento(const char *nomeArquivo, int idEventoBusca);
+int menuAdministrador();
+void menuVenda();
 int menuEditarEvento();
 int menuEditarUsuario();
 int menuEditarProduto();
+void obterDataAtual(char *dataAtual);
+char* obterNomeEvento(const char *nomeArquivo, int idEventoBusca);

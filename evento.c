@@ -150,7 +150,7 @@ void salvarEvento(Evento evento) {
         fclose(file);
         centralizarFrase("Evento salvo com sucesso!", "success");
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Erro ao abrir o arquivo","error");
     }
 }
 

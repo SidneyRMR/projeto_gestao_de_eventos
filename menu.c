@@ -112,14 +112,14 @@ int menuAdministrador() {
 
 int selecaoEvento() {
     listarEventos();
-    centralizarFrase("Digite 0 para sair.", "info");
-    imprimirLinhaDivisoria();
+    //centralizarFrase("Digite 0 para sair.", "info");
+    //imprimirLinhaDivisoria();
     int idMaxEvento = carregarUltimoEvento();
     int idEvento;
 
     // Verifica se o ID do evento está dentro do intervalo válido
     do {
-        idEvento = centralizarEObterValorInt("Escolha o evento que deseja alterar:");
+        idEvento = centralizarEObterValorInt("Escolha o evento que deseja alterar ( 0 - Sair):");
 
     } while (idEvento < 0 || idEvento >= idMaxEvento);
     if (idEvento == 0) {
@@ -128,16 +128,15 @@ int selecaoEvento() {
         return idEvento;
     }
 }
+
 int selecaoUsuario() {
     listarUsuarios();
-    centralizarFrase("Digite 0 para sair.", "info");
-    imprimirLinhaDivisoria();
     int idMaxUsuario = carregarUltimoUsuario();
     int idUsuario;
 
     // Verifica se o ID do usuário está dentro do intervalo válido
     do {
-        idUsuario = centralizarEObterValorInt("Escolha o usuario que deseja alterar:");
+        idUsuario = centralizarEObterValorInt("Escolha o usuario que deseja alterar ( 0 - Sair):");
 
     } while (idUsuario < 0 || idUsuario >= idMaxUsuario);
     if (idUsuario == 0) {
@@ -147,16 +146,15 @@ int selecaoUsuario() {
         return idUsuario;
     }
 }
+
 int selecaoProduto() {
     listarProdutos();
-    centralizarFrase("Digite 0 para sair.", "info");
-    imprimirLinhaDivisoria();
     int idMaxProduto = carregarUltimoProduto();
     int idProduto;
 
     // Verifica se o ID do usuário está dentro do intervalo válido
     do {
-        idProduto = centralizarEObterValorInt("Escolha o produto que deseja alterar:");
+        idProduto = centralizarEObterValorInt("Escolha o produto que deseja alterar ( 0 - Sair):");
 
     } while (idProduto < 0 || idProduto >= idMaxProduto);
     if (idProduto == 0) {
@@ -173,27 +171,19 @@ int menuEditarProduto() {
     int idProdutoAux = selecaoProduto();
     Produto produto = buscarProdutoPorID(idProdutoAux);
 
-    //printf("nome evento: %s \n", evento.evento);
-
-    imprimirLinhaDivisoriaAjustavel(46);
-    imprimirCentralizadoLista(" COD |  ALTERAR                             ");
-    imprimirLinhaDivisoriaAjustavel(46);
-    imprimirCentralizadoLista("  1  |  NOME do produto                     ");
-    imprimirCentralizadoLista("  2  |  PRECO do produto                    ");
-    imprimirCentralizadoLista("  3  |  ESTOQUE do produto                  ");
-    imprimirCentralizadoLista("  4  |  EVENTO do produto                   ");
-    imprimirCentralizadoLista("  5  |  ATIVAR / DESATIVAR produto          ");
-    imprimirLinhaDivisoriaAjustavel(46);
-    imprimirCentralizadoLista("  0  |  SAIR                                ");
-    imprimirLinhaDivisoriaAjustavel(46);
-
-    //printf("nome evento: %s \n", evento.evento);
+    imprimirLinhaDivisoriaAjustavel(47);
+    imprimirCentralizadoLista(" COD |  ALTERAR                              ");
+    imprimirLinhaDivisoriaAjustavel(47);
+    imprimirCentralizadoLista("  1  |  NOME do produto                      ");
+    imprimirCentralizadoLista("  2  |  PRECO do produto                     ");
+    imprimirCentralizadoLista("  3  |  ESTOQUE do produto                   ");
+    imprimirCentralizadoLista("  4  |  EVENTO do produto                    ");
+    imprimirCentralizadoLista("  5  |  ATIVAR / DESATIVAR produto           ");
+    imprimirLinhaDivisoriaAjustavel(47);
+    imprimirCentralizadoLista("  0  |  SAIR                                 ");
+    imprimirLinhaDivisoriaAjustavel(47);
 
     int opcaoAdmProduto = centralizarEObterValorInt("Escolha uma opcao:");
-
-    //printf("nome evento: %s \n", evento.evento);
-    //printf("id evento: %d \n", evento.id);
-    //printf("opcao adm %d \n", opcaoAdmEvento);
 
     switch (opcaoAdmProduto) {
         case 1:
@@ -247,7 +237,6 @@ int menuEditarProduto() {
     return 0;
 }
 
-// todo - ajustar as opcoes abaixo para ficar igual ao menu de cima
 int menuEditarEvento() {
     imprimirTituloCabecarioDuplo("MENU DE EDICAO DE EVENTO", NULL);
 
@@ -256,23 +245,17 @@ int menuEditarEvento() {
 
     //printf("nome evento: %s \n", evento.evento);
 
-    imprimirLinhaDivisoriaAjustavel(46);
-    imprimirCentralizadoLista(" Cod |  Descricao                           ");
-    imprimirLinhaDivisoriaAjustavel(46);
-    imprimirCentralizadoLista("  1  |  Para editar o nome deste evento     ");
-    imprimirCentralizadoLista("  2  |  Para editar a descricao deste evento");
-    imprimirCentralizadoLista("  3  |  Para ativar/desativar este evento   ");
-    imprimirLinhaDivisoriaAjustavel(46);
-    imprimirCentralizadoLista("  0  |  Para voltar ao menu principal       ");
-    imprimirLinhaDivisoriaAjustavel(46);
-
-    //printf("nome evento: %s \n", evento.evento);
+    imprimirLinhaDivisoriaAjustavel(47);
+    imprimirCentralizadoLista(" COD |  ALTERAR                              ");
+    imprimirLinhaDivisoriaAjustavel(47);
+    imprimirCentralizadoLista("  1  |  NOME do evento                       ");
+    imprimirCentralizadoLista("  2  |  DESCRICAO do evento                  ");
+    imprimirCentralizadoLista("  3  |  ATIVAR / DESATIVAR evento            ");
+    imprimirLinhaDivisoriaAjustavel(47);
+    imprimirCentralizadoLista("  0  |  SAIR                                 ");
+    imprimirLinhaDivisoriaAjustavel(47);
 
     int opcaoAdmEvento = centralizarEObterValorInt("Escolha uma opcao:");
-
-    //printf("nome evento: %s \n", evento.evento);
-    //printf("id evento: %d \n", evento.id);
-    //printf("opcao adm %d \n", opcaoAdmEvento);
 
     switch (opcaoAdmEvento) {
         case 1:
@@ -294,8 +277,8 @@ int menuEditarEvento() {
             atualizarEvento(evento);
             break;
         case 0:
-            menuAdministrador();
-            return 0;
+            menuEditarEvento();
+            break;
         default:
             opcaoInvalida();
             break;
@@ -307,9 +290,6 @@ int menuEditarEvento() {
     return 0;
 }
 
-
-
-// todo - ajustar as opcoes abaixo para ficar igual ao menu de cima
 int menuEditarUsuario() {
     imprimirTituloCabecarioDuplo("MENU DE EDICAO DE USUARIO", NULL);
 
@@ -318,27 +298,18 @@ int menuEditarUsuario() {
     printf("%d",idUsuarioAux);
     Usuario usuario = buscarUsuarioPorId(idUsuarioAux);
 
-    printf("Id %d",usuario.id);
-    printf("Status %d",usuario.status);
-    printf("IDEvento%d",usuario.id_evento);
-    printf("Login %s",usuario.login);
 
     imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista(" Cod |                Descricao              ");
+    imprimirCentralizadoLista(" COD |  ALTERAR                              ");
     imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista("  1  |  Para editar o nome deste usuario     ");
-    imprimirCentralizadoLista("  2  |  Para editar o login deste usuario    ");
-    imprimirCentralizadoLista("  3  |  Para editar a senha deste usuario    ");
-    imprimirCentralizadoLista("  4  |  Para ativar/desativar este usuario   ");
-    imprimirCentralizadoLista("  5  |  Para mudar o evento deste usuario    ");
+    imprimirCentralizadoLista("  1  |  NOME do usuario                      ");
+    imprimirCentralizadoLista("  2  |  LOGIN do usuario                     ");
+    imprimirCentralizadoLista("  3  |  SENHA do usuario                     ");
+    imprimirCentralizadoLista("  4  |  EVENTO DO usuario                    ");
+    imprimirCentralizadoLista("  5  |  ATIVAR / DESATIVAR usuario           ");
     imprimirLinhaDivisoriaAjustavel(47);
     imprimirCentralizadoLista("  0  |  Para voltar ao menu principal        ");
     imprimirLinhaDivisoriaAjustavel(47);
-
-    printf("Id %d",usuario.id);
-    printf("Status %d",usuario.status);
-    printf("IDEvento%d",usuario.id_evento);
-    printf("Login %s",usuario.login);
 
     int opcaoAdmUsuario = centralizarEObterValorInt("Escolha uma opcao:");
 
@@ -359,10 +330,10 @@ int menuEditarUsuario() {
         }
         case 3:
         {
-            char *novaSenha = centralizarEObterValorChar("Digite a nova senha do usuário: ", 11);
-            if (usuario.id == 1) {
-                char *senhaAcesso = centralizarEObterValorChar("Digite a senha administrativa para alterar: ", 11);
+            char *senhaAcesso = centralizarEObterValorChar("Senha de autorizacao: ", 11);
+            //if (usuario.id == 1) {
                 if (senhaAcesso != NULL && strcmp(senhaAcesso, getUsuarioCompartilhado().senha) == 0) {
+                    char *novaSenha = centralizarEObterValorChar("Digite a nova senha do usuário: ", 11);
                     strcpy(usuario.senha, novaSenha);
                     atualizarUsuario(usuario);
 
@@ -371,23 +342,12 @@ int menuEditarUsuario() {
                 }
                 // Liberar a memória alocada para senhaAcesso
                 free(senhaAcesso);
-            } else {
-                printf("Usuário não tem permissão para alterar a senha.\n");
-            }
+            //} else {
+            //    printf("Usuario nao tem permissão para alterar a senha.\n");
+            //}
         }
-
-
-        case 4:
-        {
-            if (usuario.status == 0) {
-                usuario.status = 1;
-            } else {
-                usuario.status = 0;
-            }
-            atualizarUsuario(usuario);
             break;
-        }
-        case 5:
+        case 4:
         {
             listarEventosCadastro();
             int eventoMax = carregarUltimoEvento();
@@ -397,6 +357,16 @@ int menuEditarUsuario() {
                 idEvento = centralizarEObterValorInt("Digite o novo evento para o usuario: ");
             } while(idEvento < 1 || idEvento >= eventoMax);
             usuario.id_evento = idEvento;
+            atualizarUsuario(usuario);
+            break;
+        }
+        case 5:
+        {
+            if (usuario.status == 0) {
+                usuario.status = 1;
+            } else {
+                usuario.status = 0;
+            }
             atualizarUsuario(usuario);
             break;
         }
@@ -467,4 +437,10 @@ char* obterNomeEvento(const char *nomeArquivo, int idEventoBusca) {
 
     fclose(file);
     return nomeEvento;
+}
+void menuVenda() {
+    imprimirTituloCabecarioDuplo("MENU DE VENDAS",NULL);
+    listarProdutosVenda();
+    resumoVenda();
+    opcoesVenda();
 }

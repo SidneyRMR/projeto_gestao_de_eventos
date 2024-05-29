@@ -1,7 +1,6 @@
 #ifndef PRODUTO_H
 #define PRODUTO_H
 
-// Definição da estrutura para armazenar as informações de produto
 typedef struct {
     int id;
     char descricao[51];
@@ -11,23 +10,13 @@ typedef struct {
     int status;
 } Produto;
 
-int ajustarEstoqueSelecionado(int idProd);
-
-void atualizarProduto(Produto produto);
-
-int listarProdutos();
-
-int listarProdutosVenda();
-
-int carregarUltimoProduto();
-
-void salvarProduto(Produto produto);
-
-Produto buscarProdutoPorID(int id);
-
-int ajustarEstoque();
-
 void criarProduto();
-
+int listarProdutos();
+int listarProdutosVenda();
+int carregarUltimoProduto();
+void salvarProduto(Produto produto);
+void atualizarProduto(Produto produto);
+Produto buscarProdutoPorID(int id);
+int ajustarEstoqueSelecionado(int idProd);
 
 #endif // PRODUTO_H

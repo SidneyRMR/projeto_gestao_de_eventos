@@ -1,4 +1,3 @@
-1 'Rafa Adm' 1 1 administrador 1 0
-2 'Rafa Vend' 2 2 vendedor 1 1
-3 'rafa' rafa rafa vendedor 1 2
-5 'sidney rafael' sid sid vendedor 1 4
+1 'Administrador' '1' '1' administrador 1 0
+2 'vendedor1' '2' '2' vendedor 1 1
+3 'vendedor2' '3' '3' vendedor 1 1

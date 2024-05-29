@@ -1,15 +1,25 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <windows.h>
 #include "login.h"
-#include "usuario.h"
 #include "menu.h"
 #include "variaveis_compartilhadas.h"
 #include "components.h"
 
 #define MAX_USUARIOS 100 // Defina o número máximo de usuários
 
-struct Usuario usuarios[MAX_USUARIOS]; // Declaração do array de usuários
+typedef struct UsuarioLogin {
+    int id;
+    char nome[51];
+    char login[21];
+    char senha[11];
+    char tipo[15];
+    int status;
+    int id_evento;
+} UsuarioLogin;
+
+struct UsuarioLogin usuarios[MAX_USUARIOS]; // Declaração do array de usuários
 int numUsuarios = 0; // Variável para rastrear o número atual de usuários
 
 // Função para carregar os usuários do arquivo usuarios.txt
@@ -19,7 +29,7 @@ void carregarUsuarios() {
     file = fopen(filename, "r");
 
     if (file != NULL) {
-        while (fscanf(file, "%d '%49[^']' %19s %19s %19s %d %d",
+        while (fscanf(file, "%d '%50[^']' '%20[^']' '%10[^']' %16s %d %d",
                       &usuarios[numUsuarios].id,
                       usuarios[numUsuarios].nome,
                       usuarios[numUsuarios].login,
@@ -38,7 +48,6 @@ void carregarUsuarios() {
         exit(1);
     }
 }
-
 int loginAux() {
     imprimirTituloCabecarioDuplo("TELA DE LOGIN - GESTAO DE EVENTOS",NULL);
     char *usuarioo = centralizarEObterValorChar("Digite seu usuario: ", 21);
@@ -56,7 +65,7 @@ int loginAux() {
             return 0;
         }
     }
-    centralizarFrase("Login invalido, tente novamente.", "error");
+    centralizarFrase("Login invalido, tente novamente.","warning");
     system("cls");
     return 0;
 }
@@ -76,8 +85,7 @@ void login() {
             centralizarFrase(fraseTentativas, "warning");
         }
     }
-    centralizarFrase("Numero maximo de tentativas excedido. Saindo...", "error");
+    centralizarFrase("Numero maximo de tentativas excedido. Saindo...","error");
     system("PAUSE");
     exit(1);
 }
-

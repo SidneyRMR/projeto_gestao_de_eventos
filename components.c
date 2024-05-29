@@ -4,7 +4,6 @@
 #include "variaveis_compartilhadas.h"
 #include "menu.h"
 #include "components.h"
-#include "produto.h"
 #include "evento.h"
 //
 
@@ -204,6 +203,7 @@ void opcaoInvalida() {
     setColorScheme(getColorSchemeByName("error"));
     centralizarFraseSemBorda("Opcao invalida.");
     setColorScheme(getColorSchemeByName("default"));
+    Sleep(500);
 }
 
 void centralizarFrase(char *frase, const char *cor) {
@@ -214,16 +214,20 @@ void centralizarFrase(char *frase, const char *cor) {
 
     // Obter o esquema de cores
     ColorScheme scheme = getColorSchemeByName(cor);
-
     // Definir o esquema de cores
     setColorScheme(scheme);
 
     // Imprimir a frase centralizada
-    printf("|%*s%-*s%*s|\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
+    printf("%*s%-*s%*s\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
 
     // Restaurar a cor padrão
     setColorScheme(getColorSchemeByName("default"));
-    Sleep(500);
+    if (strcmp(cor, "default") == 0 || strcmp(cor, "warning") == 0) {
+        Sleep(0);
+    } else {
+        Sleep(500);
+    }
+
 }
 void centralizarFraseDoisValores(char *frase, char *frase2) {
     int comprimento_frase = strlen(frase) + strlen(frase2);
