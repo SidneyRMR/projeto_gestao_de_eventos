@@ -52,7 +52,7 @@ void listarVendas() {
         imprimirLinhaDivisoria();
         fclose(file);
     } else {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 void listarVendasComFiltro() {
@@ -80,7 +80,7 @@ void listarVendasComFiltro() {
         imprimirLinhaDivisoria();
         fclose(file);
     } else {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -102,7 +102,7 @@ int carregarUltimaVenda() {
         }
         fclose(file);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     return contador_linhas+1;
@@ -149,8 +149,6 @@ void removerProdutoResumo(int codigoProd, int qtde) {
             if (resumoVendas[i].quantidade_produto > qtde) {
                 resumoVendas[i].quantidade_produto -= qtde;
                 centralizarFrase("Removendo items da venda!", "success");
-                //printf("|       --------      Removendo %d item(s) de %s!      --------       |\n", qtde, resumoVendas[i].descricao_produto);
-                //system("PAUSE");
                 break; // Sai do loop após atualizar a quantidade do produto
             } else if (resumoVendas[i].quantidade_produto <= qtde) {
                 resumoVendas[i].id_produto = 0; // Limpa o id do produto
@@ -159,12 +157,9 @@ void removerProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[i].valor_produto = 0.0; // Limpa o valor do produto
                 contProduto = contProduto -1;
                 centralizarFrase("Removendo um item da venda!", "success");
-                //printf("|        ---------      Removendo um item da venda!      ---------        |\n");
-                //system("PAUSE");
                 break; // Sai do loop após atualizar a quantidade do produto
             } else {
                 centralizarFrase("Digite uma quantidade valida!", "warning");
-                system("PAUSE");
                 break; // Sai do loop
             }
         }
@@ -185,9 +180,10 @@ void limparResumo() {
     //system("PAUSE");
     contProduto = 0; // Redefine o contador de produtos para zero
     //itensPedido = 0;
-    } else {
-        centralizarFrase("-------            Nao possui itens na venda ainda!           -------", "error");
     }
+    //else {
+    //    centralizarFrase("-------            Nao possui itens na venda ainda!           -------", "error");
+    //}
 }
 
 
@@ -210,58 +206,44 @@ void opcoesVenda() {
     switch (opcao) {
         case 200 :
             limparResumo();
-            system("cls");
             menuVenda();
             break;
         case 0:
-            system("cls");
             if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
                 escolherMenu();
             } else {
                 centralizarFrase("Logoff feito com sucesso!...", "success");
                 login();
             }
-            system("PAUSE");
             break;
         case 100:
-            system("cls");
             criarVenda();
-            system("PAUSE");
             menuVenda();
             break;
         default:
             if (opcao > 0 && opcao <= idMax-1) {
                 int quantidade;
                 Produto produto = buscarProdutoPorID(opcao);
-                //printf("Evento %d",produto.id_evento);
-                //printf("Usuario %d",getUsuarioCompartilhado().id_evento);
                 if(produto.id_evento == getUsuarioCompartilhado().id_evento) {
                     quantidade = centralizarEObterValorInt("Digite quantos produtos deseja ADICIONAR:");
                     adicionarProdutoResumo(opcao, quantidade);
-                    system("cls");
                     menuVenda();
                 } else {
-                    system("cls");
                     opcaoInvalida();
                     menuVenda();
                 }
             } else if(opcao < 0 && opcao >= -idMax+1 && contProduto > 0) {
                 int quantidade;
                 Produto produto = buscarProdutoPorID(opcao);
-                //printf("Evento %d",produto.id_evento);
-                //printf("Usuario %d",getUsuarioCompartilhado().id);
                 if(produto.id_evento == getUsuarioCompartilhado().id) {
                     quantidade = centralizarEObterValorInt("Digite quantos produtos deseja REMOVER:");
                     removerProdutoResumo(opcao, quantidade);
-                    system("cls");
                     menuVenda();
                 } else {
-                    system("cls");
                     opcaoInvalida();
                     menuVenda();
                 }
             } else {
-                system("cls");
                 opcaoInvalida();
                 menuVenda();
             }
@@ -299,8 +281,6 @@ void resumoVenda() {
 
 int verificaValorPago(double valorVenda) {
     double valorPago = 0;
-    //centralizarFrase("Digite o valor que sera pago: ");
-    //scanf("%lf", &valorPago);
     valorPago = centralizarEObterValorDouble("Digite o valor que sera pago: ");
 
     if(valorPago < totalGeral) {
@@ -321,7 +301,6 @@ int verificaValorPago(double valorVenda) {
         centralizarFrase("Troco a voltar nao pode ser maior que R$ 100,00.", "error");
         verificaValorPago(valorVenda);
     }
-    //system("PAUSE");
     return 0;
 }
 
@@ -330,7 +309,6 @@ void criarVenda() {
     Venda venda;
     if (contProduto == 0) {
         centralizarFrase("Nao ha itens para criar a venda.", "error");
-        //system("PAUSE");
         return;
     }
 
@@ -386,7 +364,7 @@ void criarVenda() {
         fclose(file);
         centralizarFrase("--------        Venda salva com sucesso!        --------", "success");
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     int idUltimaVenda = carregarUltimaVenda();
@@ -413,7 +391,7 @@ void criarVenda() {
     fileProdutos = fopen(filenameProdutos, "r+");
 
     if (fileProdutos == NULL) {
-        printf("Erro ao abrir o arquivo %s para atualização de estoque.\n", filenameProdutos);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
         return;
     }
 
@@ -462,34 +440,22 @@ int listarProdutosVenda() {
 
     for (int i = 0; i < MAX_PRODUTO; i++) {
         Produto produto;
-        /*
-        char prodAtivado[10];
-        if (produto.status == 1 ) {
-            strcpy(prodAtivado, "Ativo");
-        } else {
-            strcpy(prodAtivado, "Desativado");
-        }
-        */
         if (fscanf(file, "%d '%[^']' %lf %d %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
             if (produto.id_evento != getUsuarioCompartilhado().id_evento && produto.status == 0 || produto.status == 0) {
                 continue;
             };
-
             int quantidade_vendida = 0;
             for (int j = 0; j < MAX_RESUMO_VENDA; j++) {
                 if (resumoVendas[j].id_produto == produto.id ) {
                     quantidade_vendida += resumoVendas[j].quantidade_produto;
                 }
             }
-
             printf("| %-3d | %-75s | %-10.2f | %-15d |\n", produto.id, produto.descricao, produto.preco, produto.estoque - quantidade_vendida);
         } else {
             break; // Se não houver mais produtos no arquivo, termina o loop
         }
     }
-
     imprimirLinhaDivisoria();
     fclose(file);
-
     return 0;
 }

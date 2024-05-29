@@ -31,7 +31,7 @@ int menuAdministrador() {
     imprimirLinhaDivisoria();
 
     opcaoAdm = centralizarEObterValorInt("Escolha uma opcao:");
-
+    int opcaoSair;
 
 
         switch (opcaoAdm) {
@@ -39,57 +39,66 @@ int menuAdministrador() {
                 system("cls");
                 imprimirTituloCabecarioDuplo("LISTAGEM DE TODOS OS EVENTO", NULL);
                 listarEventos();
-                system("PAUSE");
-                system("cls");
+                opcaoSair = 1;
+                while (opcaoSair != 0) {
+                    opcaoSair = centralizarEObterValorInt("Digite 0 para sair.");
+                }
+                //system("cls");
                 break;
             case 2:
                 system("cls");
                 imprimirTituloCabecarioDuplo("LISTAGEM DE TODOS OS USUARIO", NULL);
                 listarUsuarios();
-                system("PAUSE");
-                system("cls");
+                opcaoSair = 1;
+                while (opcaoSair != 0) {
+                    opcaoSair = centralizarEObterValorInt("Digite 0 para sair.");
+                }
+                //system("cls");
                 break;
             case 3:
                 system("cls");
                 imprimirTituloCabecarioDuplo("LISTAGEM DE TODOS OS PRODUTOS", NULL);
                 listarProdutos();
-                system("PAUSE");
-                system("cls");
+                opcaoSair = 1;
+                while (opcaoSair != 0) {
+                    opcaoSair = centralizarEObterValorInt("Digite 0 para sair.");
+                }
+                //system("cls");
                 break;
             case 4:
                 system("cls");
                 criarEvento();
-                system("cls");
+                //system("cls");
                 break;
             case 5:
                 system("cls");
                 criarUsuario();
-                system("cls");
+                //system("cls");
                 break;
             case 6:
                 system("cls");
                 criarProduto();
-                system("cls");
+                //system("cls");
                 break;
             case 7:
                 system("cls");
                 menuEditarEvento();
-                system("cls");
+                //system("cls");
                 break;
             case 8:
                 system("cls");
                 menuEditarUsuario();
-                system("cls");
+                //system("cls");
                 break;
             case 9:
                 system("cls");
                 menuEditarProduto();
-                system("cls");
+                //system("cls");
                 break;
             case 20:
                 system("cls");
                 relatorioVendasAux();
-                system("cls");
+                //system("cls");
                 break;
             case -1:
                 centralizarFrase("Saindo do programa!...", "info");
@@ -97,16 +106,18 @@ int menuAdministrador() {
                 exit(1);
             case 0:
                 centralizarFrase("Logoff feito com sucesso!...", "info");
-                system("cls");
+                //system("cls");
                 login();
                 break;
             default:
                 opcaoInvalida();
-                system("cls");
+                //system("cls");
                 break;
         }
-    }
+        menuAdministrador();
     system("cls");
+    }
+
     return 0;
 }
 
@@ -230,7 +241,6 @@ int menuEditarProduto() {
             opcaoInvalida();
             break;
     }
-    //system("PAUSE");
     system("cls");
     menuEditarProduto();
 
@@ -330,10 +340,9 @@ int menuEditarUsuario() {
         }
         case 3:
         {
-            char *senhaAcesso = centralizarEObterValorChar("Senha de autorizacao: ", 11);
-            //if (usuario.id == 1) {
+            char *senhaAcesso = centralizarEObterValorSenha("Senha de autorizacao: ", 11);
                 if (senhaAcesso != NULL && strcmp(senhaAcesso, getUsuarioCompartilhado().senha) == 0) {
-                    char *novaSenha = centralizarEObterValorChar("Digite a nova senha do usuário: ", 11);
+                    char *novaSenha = centralizarEObterValorSenha("Digite a nova senha do usuario: ", 11);
                     strcpy(usuario.senha, novaSenha);
                     atualizarUsuario(usuario);
 
@@ -342,9 +351,6 @@ int menuEditarUsuario() {
                 }
                 // Liberar a memória alocada para senhaAcesso
                 free(senhaAcesso);
-            //} else {
-            //    printf("Usuario nao tem permissão para alterar a senha.\n");
-            //}
         }
             break;
         case 4:
@@ -439,6 +445,7 @@ char* obterNomeEvento(const char *nomeArquivo, int idEventoBusca) {
     return nomeEvento;
 }
 void menuVenda() {
+    system("cls");
     imprimirTituloCabecarioDuplo("MENU DE VENDAS",NULL);
     listarProdutosVenda();
     resumoVenda();

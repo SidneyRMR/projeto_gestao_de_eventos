@@ -98,7 +98,7 @@ int listarUsuarios() {
         imprimirLinhaDivisoria();
         fclose(file);
     } else {
-        perror("Não foi possível abrir o arquivo %s.\n\n");
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
     return 0;
 }
@@ -121,7 +121,7 @@ int carregarUltimoUsuario() {
         fclose(file);
         //printf("Registro %d\n", contador_linhas);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
     return contador_linhas+1;
 }
@@ -140,7 +140,7 @@ void salvarUsuario(Usuario usuario) {
         centralizarFrase("Usuario salvo com sucesso!","success");
     } else {
         // Exibe uma mensagem de erro se o arquivo não pôde ser aberto
-        centralizarFrase("Erro ao abrir o arquivo","error");
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -151,7 +151,7 @@ char* obterNomeUsuario(const char *nomeArquivo, int idBusca) {
     FILE *file = fopen(caminhoArquivo, "r");
 
     if (file == NULL) {
-        centralizarFrase("Erro ao abrir o arquivo","error");
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
         return NULL;
     }
 
@@ -189,7 +189,7 @@ Usuario buscarUsuarioPorId(int id) {
         }
         fclose(file);
     } else {
-        centralizarFrase("Erro ao abrir o arquivo","error");
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     // Retornar um usuário vazio caso não seja encontrado
@@ -229,10 +229,10 @@ void atualizarUsuario(Usuario usuario) {
         centralizarFrase("Usuario atualizado com sucesso.", "success");
     } else {
         if (file == NULL) {
-            centralizarFrase("Erro ao abrir o arquivo.", "error");
+            centralizarFrase("Não foi possível abrir o arquivo.","error");
         }
         if (tempFile == NULL) {
-            centralizarFrase("Erro ao criar o arquivo temporário", "error");
+            centralizarFrase("Não foi possível abrir o arquivo temporario.","error");
         }
     }
 }

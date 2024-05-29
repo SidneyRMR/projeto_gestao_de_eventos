@@ -37,6 +37,7 @@ ColorScheme getColorSchemeByName(const char* name);
  * utilizando o caractere '='. Ela é útil para separar seções de texto
  * em uma interface de console.
  */
+char* centralizarEObterValorSenha(const char *frase, int tamanho);
 void imprimirLinhaDivisoriaAjustavel(int tamanho);
 void imprimirLinhaDivisoria();
 void imprimirLinhaDivisoriaLista();

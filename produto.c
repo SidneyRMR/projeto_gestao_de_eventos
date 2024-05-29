@@ -99,7 +99,7 @@ int listarProdutos() {
         imprimirLinhaDivisoria();
         fclose(file);
     } else {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     return 0;
@@ -121,9 +121,8 @@ int carregarUltimoProduto() {
             }
         }
         fclose(file);
-        //printf("|\tRegistro %d\n", contador_linhas);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     return contador_linhas+1;
@@ -146,7 +145,7 @@ void salvarProduto(Produto produto) {
         fclose(file);
         printf("Produto salvo com sucesso.\n");
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -173,10 +172,10 @@ Produto buscarProdutoPorID(int id) {
 
         fclose(file);
         if (!encontrado) {
-            printf("Produto com ID %d não encontrado.\n", id);
+            centralizarFrase("Produto com não encontrado.", "warning");
         }
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
     Produto produto_vazio; // Retorna um produto vazio se não encontrar
     produto_vazio.id = -1; // Ou outro valor que você considerar adequado
@@ -211,10 +210,10 @@ void atualizarProduto(Produto produto) {
         centralizarFrase("Produto atualizado com sucesso.", "success");
     } else {
         if (file == NULL) {
-            printf("Erro ao abrir o arquivo %s.\n", filename);
+            centralizarFrase("Não foi possível abrir o arquivo.","error");
         }
         if (tempFile == NULL) {
-            printf("Erro ao criar o arquivo temporário %s.\n", tempFilename);
+            centralizarFrase("Não foi possível abrir o arquivo temporario.","error");
         }
     }
 }
@@ -234,7 +233,7 @@ Produto carregarProdutoPorID(int id) {
         }
         fclose(file);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
     // Retornar um produto vazio caso não seja encontrado
     Produto produtoNaoEncontrado = {0, "", 0.0, 0, 0};

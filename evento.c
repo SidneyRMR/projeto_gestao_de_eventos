@@ -79,8 +79,12 @@ void listarEventos() {
         }
         imprimirLinhaDivisoria();
         fclose(file);
+
+
+
+
     } else {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -112,7 +116,7 @@ void listarEventosCadastro() {
         imprimirLinhaDivisoriaLista();
         fclose(file);
     } else {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -132,9 +136,8 @@ int carregarUltimoEvento() {
             }
         }
         fclose(file);
-        //printf("|\tRegistro(s): %d\n", contador_linhas);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     return contador_linhas;
@@ -150,7 +153,7 @@ void salvarEvento(Evento evento) {
         fclose(file);
         centralizarFrase("Evento salvo com sucesso!", "success");
     } else {
-        centralizarFrase("Erro ao abrir o arquivo","error");
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -169,7 +172,7 @@ Evento buscarEventoPorID(int id) {
         }
         fclose(file);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     // Retornar um produto vazio caso não seja encontrado
@@ -207,10 +210,10 @@ void atualizarEvento(Evento evento) {
         centralizarFrase("Evento atualizado com sucesso.", "success");
     } else {
         if (file == NULL) {
-            printf("Erro ao abrir o arquivo %s.\n", filename);
+            centralizarFrase("Não foi possível abrir o arquivo.","error");
         }
         if (tempFile == NULL) {
-            printf("Erro ao criar o arquivo temporário %s.\n", tempFilename);
+            centralizarFrase("Não foi possível abrir o arquivo temporario.","error");
         }
     }
 }

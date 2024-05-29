@@ -26,7 +26,7 @@ void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
         fclose(file);
         centralizarFrase("--------        Produto da venda salvos com sucesso!        --------", "success");
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -53,7 +53,6 @@ int relatorioVendaEspecificoAux() {
         }
     } while (escolhaIdVenda != 0 && (escolhaIdVenda < 1 || escolhaIdVenda >= idMax));
     relatorioVendaEspecificoAux();
-    system("PAUSE");
     return 0;
 }
 
@@ -90,8 +89,8 @@ void criteriosOrdenacao() {
     int ordemOpcao;
 
     imprimirTituloCabecarioDuplo("ESCOLHA O CRITERIO DE ORDENACAO",NULL);
-    printf("|\t1. ID do Produto                                                                                           |\n");
-    printf("|\t2. Quantidade de Produtos Vendidos                                                                         |\n");
+    centralizarFrase("1. ID do Produto                   ", "default");
+    centralizarFrase("2. Quantidade de Produtos Vendidos ", "default");
     imprimirLinhaDivisoria();
     criterioOpcao = centralizarEObterValorInt("Escolha uma opcao: ");
     imprimirLinhaDivisoria();
@@ -101,14 +100,13 @@ void criteriosOrdenacao() {
     } else if (criterioOpcao == 2) {
         strcpy(criterio, "quantidade");
     } else {
-        printf("Opcao invalida. Usando 'id' como padrao.\n");
+        centralizarFrase("Opcao invalida. Usando 'id' como padrao.","warning");
         strcpy(criterio, "id");
-        system("PAUSE");
     }
 
     imprimirTituloCabecarioDuplo("ESCOLHA A ORDEM DE ORDENACAO",NULL);
-    printf("|\t1. Crescente                                                                                               |\n");
-    printf("|\t2. Decrescente                                                                                             |\n");
+    centralizarFrase("1. Crescente                       ", "default");
+    centralizarFrase("2. Decrescente                     ", "default");
     imprimirLinhaDivisoria();
     ordemOpcao = centralizarEObterValorInt("Escolha uma opcao: ");
     imprimirLinhaDivisoria();
@@ -117,11 +115,10 @@ void criteriosOrdenacao() {
     } else if (ordemOpcao == 2) {
         strcpy(ordem, "decrescente");
     } else {
-        printf("Opcao invalida. Usando 'crescente' como padrao.\n");
+        centralizarFrase("Opcao invalida. Usando 'crescente' como padrao.","warning");
         strcpy(ordem, "crescente");
-        system("PAUSE");
     }
-    system("cls");
+    //system("cls");
     relatorioVendasGeral(criterio, ordem);
 }
 
@@ -140,30 +137,24 @@ void relatorioVendasAux(){
         printf("|   0   |   Menu administrativo                                                                                    |\n");
         imprimirLinhaDivisoria();
         opcaoEvento = centralizarEObterValorInt("Escolha uma opcao: ");
-        //printf("|\tEscolha uma opcao:");
-        //scanf("%d", &opcaoEvento);
         switch (opcaoEvento) {
             case 1:
                 system("cls");
                 criteriosOrdenacao();
-                system("PAUSE");
                 break;
             case 2: {
                 system("cls");
                 relatorioEventoEspecificoAux();
-                system("PAUSE");
                 break;
             }
             case 3: {
                 system("cls");
                 relatorioVendaEspecificoAux();
-                system("PAUSE");
                 break;
             }
             case 0:
                 system("cls");
                 centralizarFrase("Saindo da tela de relatorio!", "warning");
-                //system("PAUSE");
                 menuAdministrador();
             default:
                 opcaoInvalida();
@@ -279,7 +270,6 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
         printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
-    system("PAUSE");
     free(nomeEvento);
     return 0;
 }
@@ -351,7 +341,6 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
     }
 
     free(nomeEvento);
-    system("PAUSE");
     relatorioEventoEspecificoAux();
     return 0;
 }
@@ -432,7 +421,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
             criteriosOrdenacao();
         }
     } else {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
     return 0;
 }
@@ -454,9 +443,8 @@ int carregarUltimaVendaDetalhes() {
             }
         }
         fclose(file);
-        //printf("\tRegisto %d\n", contador_linhas);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     return contador_linhas+1;

@@ -44,16 +44,15 @@ void carregarUsuarios() {
         }
         fclose(file);
     } else {
-        perror("Erro ao abrir o arquivo de usuários");
+        centralizarFrase("Erro ao abrir o arquivo de usuários", "error");
         exit(1);
     }
 }
 int loginAux() {
+    system("cls");
     imprimirTituloCabecarioDuplo("TELA DE LOGIN - GESTAO DE EVENTOS",NULL);
     char *usuarioo = centralizarEObterValorChar("Digite seu usuario: ", 21);
-    char *senha = centralizarEObterValorChar("Digite sua senha: ",21);
-
-    imprimirLinhaDivisoria();
+    char *senha = centralizarEObterValorSenha("Digite sua senha: ",11);
 
     for (int i = 0; i < numUsuarios; i++) {
         if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
@@ -86,6 +85,5 @@ void login() {
         }
     }
     centralizarFrase("Numero maximo de tentativas excedido. Saindo...","error");
-    system("PAUSE");
     exit(1);
 }
