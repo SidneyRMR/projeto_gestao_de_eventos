@@ -78,7 +78,7 @@ int imprimirTituloCabecarioDuplo(const char *titulo, const char *subtitulo);
 
 void centralizarString(char *str, int largura);
 
-void centralizarFraseSemBorda(char *frase);
+//void centralizarFraseSemBorda(char *frase);
 
 
 #endif //PROJETO_GESTAO_DE_EVENTOS_COMPONENTS_H

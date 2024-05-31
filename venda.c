@@ -204,10 +204,6 @@ void opcoesVenda() {
     int opcao = centralizarEObterValorInt("Escolha uma opcao ou codigo do produto:");
 
     switch (opcao) {
-        case 200 :
-            limparResumo();
-            menuVenda();
-            break;
         case 0:
             if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
                 escolherMenu();
@@ -218,6 +214,10 @@ void opcoesVenda() {
             break;
         case 100:
             criarVenda();
+            menuVenda();
+            break;
+        case 200 :
+            limparResumo();
             menuVenda();
             break;
         default:
@@ -427,6 +427,7 @@ int listarProdutosVenda() {
     FILE *file;
     char filename[] = "data/produtos.txt";
     file = fopen(filename, "r");
+    Produto produto;
 
     if (file == NULL) {
         centralizarFrase("Não foi possível abrir o arquivo.","error");
@@ -439,18 +440,17 @@ int listarProdutosVenda() {
     imprimirLinhaDivisoria();
 
     for (int i = 0; i < MAX_PRODUTO; i++) {
-        Produto produto;
         if (fscanf(file, "%d '%[^']' %lf %d %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
-            if (produto.id_evento != getUsuarioCompartilhado().id_evento && produto.status == 0 || produto.status == 0) {
-                continue;
-            };
             int quantidade_vendida = 0;
+            if (produto.id_evento == getUsuarioCompartilhado().id_evento && produto.status == 1) {
+
             for (int j = 0; j < MAX_RESUMO_VENDA; j++) {
                 if (resumoVendas[j].id_produto == produto.id ) {
                     quantidade_vendida += resumoVendas[j].quantidade_produto;
                 }
             }
             printf("| %-3d | %-75s | %-10.2f | %-15d |\n", produto.id, produto.descricao, produto.preco, produto.estoque - quantidade_vendida);
+            };
         } else {
             break; // Se não houver mais produtos no arquivo, termina o loop
         }

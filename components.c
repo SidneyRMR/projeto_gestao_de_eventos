@@ -177,16 +177,16 @@ int imprimirUsuarioEData() {
 
     printf("|");
     // Centraliza "USUARIO: nomeUsuario" na outra metade da linha
-    char usuarioStr[21];
-    snprintf(usuarioStr, sizeof(usuarioStr), "USUARIO: %-21s ", getUsuarioCompartilhado().nome);
+    char usuarioStr[31];
+    snprintf(usuarioStr, sizeof(usuarioStr), "USUARIO: %-31s ", getUsuarioCompartilhado().nome);
     centralizarString(usuarioStr, (LARGURA / 3) );
 
     int idEvento = getUsuarioCompartilhado().id_evento;
     Evento evento = buscarEventoPorID(idEvento);
 
     // Centraliza "USUARIO: nomeUsuario" na outra metade da linha
-    char eventoStr[21];
-    snprintf(eventoStr, sizeof(eventoStr), "EVENTO: %-21s ", evento.evento);
+    char eventoStr[31];
+    snprintf(eventoStr, sizeof(eventoStr), "EVENTO: %-31s ", evento.evento);
     centralizarString(eventoStr, (LARGURA / 3) );
 
     // Centraliza "DATA: ddata" em metade da linha
@@ -203,7 +203,7 @@ int imprimirUsuarioEData() {
 
 void opcaoInvalida() {
     setColorScheme(getColorSchemeByName("error"));
-    centralizarFraseSemBorda("Opcao invalida.");
+    centralizarFrase("Opcao invalida.");
     setColorScheme(getColorSchemeByName("default"));
     Sleep(500);
 }
@@ -246,7 +246,7 @@ void centralizarFraseDoisValores(char *frase, char *frase2) {
     }
     printf(" |\n");
 }
-
+/*
 void centralizarFraseSemBorda(char *frase) {
     int espacos = 0;
     int comprimento_frase= 0;
@@ -254,6 +254,7 @@ void centralizarFraseSemBorda(char *frase) {
     espacos = (LARGURA - comprimento_frase) / 2;
     printf("%*s%-*s%*s\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
 }
+ */
 void limparBufferEntrada() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {
