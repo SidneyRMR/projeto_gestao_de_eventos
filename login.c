@@ -55,16 +55,18 @@ int loginAux() {
     char *senha = centralizarEObterValorSenha("Digite sua senha: ",11);
 
     for (int i = 0; i < numUsuarios; i++) {
-        if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0) {
+        if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0 && usuarios[i].status == 1) {
             char fraseLogin[114];
             sprintf(fraseLogin, "Login efetuado com sucesso como %s ", usuarioo);
             centralizarFrase(fraseLogin, "success");
+
             setUsuarioCompartilhado(&usuarios[i]);
             escolherMenu();
             return 0;
         }
     }
     centralizarFrase("Login invalido, tente novamente.","warning");
+    Sleep(500);
     system("cls");
     return 0;
 }

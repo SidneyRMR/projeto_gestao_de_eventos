@@ -97,7 +97,7 @@ void listarEventosCadastro() {
         imprimirTituloCabecarioLista("LISTA DE EVENTOS", NULL);
         char linha[80];  // Buffer para armazenar a linha completa
         snprintf(linha, sizeof(linha), "| %-4s | %-21s |", "Cod", "Evento");
-        centralizarFraseSemBorda(linha);
+        centralizarFrase(linha,"default");
         imprimirLinhaDivisoriaLista();
 
         // Variável para armazenar cada registro lido do arquivo
@@ -110,7 +110,7 @@ void listarEventosCadastro() {
             }
               // Buffer para armazenar a linha completa
             snprintf(linha, sizeof(linha), "| %-4d | %-21s |", evento.id, evento.evento);
-            centralizarFraseSemBorda(linha);
+            centralizarFrase(linha,"default");
         }
 
         imprimirLinhaDivisoriaLista();

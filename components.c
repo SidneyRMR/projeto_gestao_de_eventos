@@ -47,7 +47,7 @@ void imprimirLinhaDivisoriaLista() {
     char linha[LARGURALISTA+1];
     memset(linha, '-', LARGURALISTA);
     linha[LARGURALISTA] = '\0';  // Certifique-se de que a linha seja terminada com null
-    centralizarFraseSemBorda(linha);
+    centralizarFrase(linha, "default");
 }
 
 void imprimirLinhaDivisoriaAjustavel(int tamanho) {
@@ -60,7 +60,7 @@ void imprimirLinhaDivisoriaAjustavel(int tamanho) {
     }
 
     linha[tamanho] = '\0';  // Certifique-se de que a linha seja terminada com null
-    centralizarFraseSemBorda(linha);
+    centralizarFrase(linha, "default");
 }
 
 void imprimirLinha() {
@@ -73,7 +73,7 @@ void imprimirLinhaLista() {
     char linha[LARGURALISTA+1];
     memset(linha, '=', LARGURALISTA);
     linha[LARGURALISTA] = '\0';  // Certifique-se de que a linha seja terminada com null
-    centralizarFraseSemBorda(linha);
+    centralizarFrase(linha, "default");
 }
 
 void imprimirCentralizado(const char *texto) {
@@ -110,7 +110,7 @@ void imprimirCentralizadoLista(const char *frase) {
     }
     strcat(linha, "|");
 
-    centralizarFraseSemBorda(linha);
+    centralizarFrase(linha, "default");
 }
 int imprimirTituloCabecario(const char *titulo, const char *subtitulo) {
     imprimirLinha();
@@ -202,9 +202,8 @@ int imprimirUsuarioEData() {
 }
 
 void opcaoInvalida() {
-    setColorScheme(getColorSchemeByName("error"));
-    centralizarFrase("Opcao invalida.");
-    setColorScheme(getColorSchemeByName("default"));
+
+    centralizarFrase("Opcao invalida.", "error");
     Sleep(500);
 }
 

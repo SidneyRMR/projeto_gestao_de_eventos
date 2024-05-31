@@ -52,7 +52,7 @@ int relatorioVendaEspecificoAux() {
                 }
         }
     } while (escolhaIdVenda != 0 && (escolhaIdVenda < 1 || escolhaIdVenda >= idMax));
-    relatorioVendaEspecificoAux();
+    //relatorioVendaEspecificoAux();
     return 0;
 }
 
@@ -118,7 +118,7 @@ void criteriosOrdenacao() {
         centralizarFrase("Opcao invalida. Usando 'crescente' como padrao.","warning");
         strcpy(ordem, "crescente");
     }
-    //system("cls");
+    system("cls");
     relatorioVendasGeral(criterio, ordem);
 }
 
@@ -250,7 +250,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
     system("cls");
     imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", NULL);
     imprimirUsuarioEData();
-    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
+    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
     if (produtosCount == 0) {
@@ -267,10 +267,15 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
                    produtos[i].valor_total);
         }
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------                      |  QTD   %-3d |  R$      %6.2lf  |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
     free(nomeEvento);
+    int sair;
+    while (sair != 0) {
+        sair = centralizarEObterValorInt("Digite 0 para sair: ");
+    }
+    relatorioVendaEspecificoAux();
     return 0;
 }
 
@@ -319,7 +324,7 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
     system("cls");
     imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA EVENTO", nomeEvento);
     imprimirUsuarioEData();
-    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
+    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
     if (produtosCount == 0) {
@@ -336,11 +341,13 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
                    produtos[i].valor_total);
         }
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$    %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
-
-    free(nomeEvento);
+    int sair;
+    while (sair != 0) {
+        sair = centralizarEObterValorInt("Digite 0 para sair: ");
+    }
     relatorioEventoEspecificoAux();
     return 0;
 }
@@ -356,7 +363,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         // Imprimir cabeçalho da tabela
         imprimirTituloCabecarioDuplo("RELATORIO GERAL DAS VENDAS", NULL);
         imprimirUsuarioEData();
-        printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
+        printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
         imprimirLinhaDivisoria();
 
         fseek(file, 0, SEEK_END);
@@ -409,13 +416,13 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         }
 
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$    %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
         // Opção para alterar a ordenação
         //imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair", NULL);
         int opcaoOrdenacao;
         opcaoOrdenacao = centralizarEObterValorInt("Digite 1 para alterar a ordenacao ou 0 para sair: ");
-        Sleep(1000);
+        //Sleep(1000);
         if (opcaoOrdenacao == 1) {
             system("cls");
             criteriosOrdenacao();
@@ -423,6 +430,8 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
     } else {
         centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
+    centralizarFrase("Retornando ao menu anterior","warning");
+    system("cls");
     return 0;
 }
 

@@ -76,7 +76,7 @@ int listarUsuarios() {
         imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
         imprimirUsuarioEData();
 
-        printf("| %-3s | %-30s | %-15s | %-10s | %-13s | %-8s | %-15s |\n", "Cod", "Nome", "Login", "Senha", "Tipo", "Evento", "Status");
+        printf("| %-3s | %-30s | %-15s | %-10s | %-13s | %-15s | %-8s |\n", "Cod", "Nome", "Login", "Senha", "Tipo", "Evento", "Status");
         imprimirLinhaDivisoria();
 
         Usuario usuario;
