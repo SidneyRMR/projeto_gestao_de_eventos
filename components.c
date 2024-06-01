@@ -284,7 +284,7 @@ int centralizarEObterValorInt(const char *frase) {
 
         // Limpar o buffer de entrada em caso de erro
         if (entradaValida != 1) {
-            //limparBufferEntrada();
+            limparBufferEntrada();
 
             setColorScheme(getColorSchemeByName("error"));
             centralizarString("Entrada invalida. Tente novamente.", LARGURA+6);
@@ -401,7 +401,6 @@ char* centralizarEObterValorSenha(const char *frase, int tamanho) {
         return NULL; // Saída em caso de erro
     }
 
-    //imprimirLinhaDivisoria();
     int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
     char *valor = (char *)
             malloc((tamanho + 1) * sizeof(char)); // Alocando memória dinamicamente
@@ -425,8 +424,6 @@ char* centralizarEObterValorSenha(const char *frase, int tamanho) {
     //printf("Enter password: ");
     getPassword(valor, tamanho);
     printf("\n");
-    // Lendo a entrada com scanf, garantindo que não exceda o tamanho máximo
-    //scanf(" %97[^\n]", valor); // lê no máximo 97 caracteres para garantir espaço para o terminador nulo
 
     // Verificando se a entrada excede o tamanho permitido
     if (strlen(valor) > tamanho) {
@@ -434,7 +431,6 @@ char* centralizarEObterValorSenha(const char *frase, int tamanho) {
         free(valor); // Liberando a memória alocada
         return NULL; // Saída em caso de erro
     }
-
     // Retornando a entrada lida
     return valor;
 }

@@ -47,6 +47,7 @@ void criarProduto() {
     produto.preco = p_preco;
     produto.estoque = p_estoque;
     produto.id_evento = opcaoEvento;
+
     // Solicitar confirmação
     char confirmacao[4];
     do {

@@ -57,7 +57,7 @@ int loginAux() {
     for (int i = 0; i < numUsuarios; i++) {
         if(strcmp(usuarioo, usuarios[i].login) == 0 && strcmp(senha, usuarios[i].senha) == 0 && usuarios[i].status == 1) {
             char fraseLogin[114];
-            sprintf(fraseLogin, "Login efetuado com sucesso como %s ", usuarioo);
+            sprintf(fraseLogin, "Login efetuado com sucesso como %s ", usuarios[i].nome);
             centralizarFrase(fraseLogin, "success");
 
             setUsuarioCompartilhado(&usuarios[i]);

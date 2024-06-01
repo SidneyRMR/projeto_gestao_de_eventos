@@ -63,7 +63,6 @@ int menuAdministrador() {
                 while (opcaoSair != 0) {
                     opcaoSair = centralizarEObterValorInt("Digite 0 para sair.");
                 }
-                //system("cls");
                 break;
             case 4:
                 system("cls");
@@ -123,8 +122,6 @@ int menuAdministrador() {
 
 int selecaoEvento() {
     listarEventos();
-    //centralizarFrase("Digite 0 para sair.", "info");
-    //imprimirLinhaDivisoria();
     int idMaxEvento = carregarUltimoEvento();
     int idEvento;
 
@@ -177,75 +174,76 @@ int selecaoProduto() {
 }
 
 int menuEditarProduto() {
-    imprimirTituloCabecarioDuplo("MENU DE EDICAO DE EVENTO", NULL);
+        imprimirTituloCabecarioDuplo("MENU DE EDICAO DE PRODUTO", NULL);
 
-    int idProdutoAux = selecaoProduto();
-    Produto produto = buscarProdutoPorID(idProdutoAux);
+        int idProdutoAux = selecaoProduto();
+        Produto produto = buscarProdutoPorID(idProdutoAux);
 
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista(" COD |  ALTERAR                              ");
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista("  1  |  NOME do produto                      ");
-    imprimirCentralizadoLista("  2  |  PRECO do produto                     ");
-    imprimirCentralizadoLista("  3  |  ESTOQUE do produto                   ");
-    imprimirCentralizadoLista("  4  |  EVENTO do produto                    ");
-    imprimirCentralizadoLista("  5  |  ATIVAR / DESATIVAR produto           ");
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista("  0  |  SAIR                                 ");
-    imprimirLinhaDivisoriaAjustavel(47);
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista(" COD |  ALTERAR                              ");
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista("  1  |  NOME do produto                      ");
+        imprimirCentralizadoLista("  2  |  PRECO do produto                     ");
+        imprimirCentralizadoLista("  3  |  ESTOQUE do produto                   ");
+        imprimirCentralizadoLista("  4  |  EVENTO do produto                    ");
+        imprimirCentralizadoLista("  5  |  ATIVAR / DESATIVAR produto           ");
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista("  0  |  SAIR                                 ");
+        imprimirLinhaDivisoriaAjustavel(47);
 
-    int opcaoAdmProduto = centralizarEObterValorInt("Escolha uma opcao:");
+    while (1) {
+        int opcaoAdmProduto = centralizarEObterValorInt("Escolha uma opcao (0 para selecionar outro produto):");
 
-    switch (opcaoAdmProduto) {
-        case 1:
-            char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 51);
-            strcpy(produto.descricao, novoNome);
-            atualizarProduto(produto);
-            break;
-        case 2:
-            double novopreco = centralizarEObterValorDouble("Digite o novo preco do produto: ");
-            produto.preco = novopreco;
-            atualizarProduto(produto);
-            break;
-        case 3:
-            ajustarEstoqueSelecionado(produto.id);
-            atualizarProduto(produto);
-            break;
-        case 4:
-        {
-            listarEventosCadastro();
-            int eventoMax = carregarUltimoEvento();
-            int idEvento = 0;
-
-            do {
-                idEvento = centralizarEObterValorInt("Digite o novo evento para o produto: ");
-            } while(idEvento < 1 || idEvento >= eventoMax);
-            produto.id_evento = idEvento;
-            atualizarProduto(produto);
-            break;
-        }
-        case 5:
-            if (produto.status == 0) {
-                produto.status = 1;
+        switch (opcaoAdmProduto) {
+            case 1: {
+                char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 51);
+                strcpy(produto.descricao, novoNome);
                 atualizarProduto(produto);
-            } else {
-                produto.status = 0;
-                atualizarProduto(produto);
+                break;
             }
-            break;
-        case 0:
-            menuEditarProduto();
-            break;
+            case 2: {
+                double novopreco = centralizarEObterValorDouble("Digite o novo preco do produto: ");
+                produto.preco = novopreco;
+                atualizarProduto(produto);
+                break;
+            }
+            case 3:
+                ajustarEstoqueSelecionado(produto.id);
+                atualizarProduto(produto);
+                break;
+            case 4: {
+                listarEventosCadastro();
+                int eventoMax = carregarUltimoEvento();
+                int idEvento = 0;
 
-        default:
-            opcaoInvalida();
-            break;
+                do {
+                    idEvento = centralizarEObterValorInt("Digite o novo evento para o produto: ");
+                } while(idEvento < 1 || idEvento >= eventoMax);
+                produto.id_evento = idEvento;
+                atualizarProduto(produto);
+                break;
+            }
+            case 5:
+                if (produto.status == 0) {
+                    produto.status = 1;
+                    atualizarProduto(produto);
+                } else {
+                    produto.status = 0;
+                    atualizarProduto(produto);
+                }
+                break;
+            case 0:
+                system("cls");
+                return 0;
+
+            default:
+                opcaoInvalida();
+                break;
+        }
+        //system("cls");
     }
-    system("cls");
-    menuEditarProduto();
-
-    return 0;
 }
+
 
 int menuEditarEvento() {
     imprimirTituloCabecarioDuplo("MENU DE EDICAO DE EVENTO", NULL);
@@ -287,6 +285,7 @@ int menuEditarEvento() {
             atualizarEvento(evento);
             break;
         case 0:
+            system("cls");
             menuEditarEvento();
             break;
         default:
@@ -377,6 +376,7 @@ int menuEditarUsuario() {
             break;
         }
         case 0:
+            system("cls");
             menuAdministrador();
             return 0;
         default:
