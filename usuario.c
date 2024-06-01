@@ -11,16 +11,30 @@ void criarUsuario() {
     Usuario usuario;
 
     imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE USUARIO", NULL);
+    centralizarFrase("Digite 0 a qualquer momento para sair","warning");
+    imprimirLinhaDivisoria();
 
     char *p_nome = centralizarEObterValorChar("Digite o nome: ", 51);
+    if (strcmp(p_nome, "0") == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
     char *p_login = centralizarEObterValorChar("Digite o login: ", 21);
+    if (strcmp(p_login, "0") == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
     char *p_senha = centralizarEObterValorChar("Digite a senha: ", 11);
+    if (strcmp(p_senha, "0") == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
 
     listarEventosCadastro();
     int eventoMax = carregarUltimoEvento();
     int opcaoEvento = 0;
     do {
         opcaoEvento = centralizarEObterValorInt("Digite o codigo do evento para o usuario: ");
+        if (opcaoEvento == 0) {
+            return; // Sai da função se o usuário digitar 0
+        }
     } while(opcaoEvento < 1 || opcaoEvento >= eventoMax);
     char* nomeEvento = obterNomeEvento("eventos.txt", opcaoEvento);
 
@@ -38,7 +52,10 @@ void criarUsuario() {
     char confirmacao[4];
     do {
         strcpy(confirmacao, centralizarEObterValorChar("Confirme se os valores estao corretos (sim/nao): ", 3));
-        getchar(); // Limpar o buffer do teclado
+
+        if (strcmp(confirmacao, "0") == 0) {
+            return; // Sai da função se o usuário digitar 0
+        }
 
         if (strcmp(confirmacao, "nao") == 0) {
             system("cls");
@@ -47,6 +64,7 @@ void criarUsuario() {
         }
 
     } while (strcmp(confirmacao, "sim") != 0);
+
 
     // Preencher a estrutura do usuário com os dados inseridos
     usuario.id = carregarUltimoUsuario(); // Incrementar +1 a partir do ID do último usuário

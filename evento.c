@@ -10,9 +10,17 @@ void criarEvento() {
     Evento evento;
 
     imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE EVENTOS", NULL);
+    centralizarFrase("Digite 0 a qualquer momento para sair","warning");
+    imprimirLinhaDivisoria();
 
     char *p_evento = centralizarEObterValorChar("Digite o nome do evento: ", 21);
+    if (strcmp(p_evento, "0") == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
     char *p_descricao = centralizarEObterValorChar("Digite uma descricao para o evento: ", 51);
+    if (strcmp(p_descricao, "0") == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
 
     imprimirLinhaDivisoria();
 
@@ -33,7 +41,10 @@ void criarEvento() {
     char confirmacao[4];
     do {
         strcpy(confirmacao, centralizarEObterValorChar("Confirme se os valores estao corretos (sim/nao): ", 3));
-        getchar(); // Limpar o buffer do teclado
+
+        if (strcmp(confirmacao, "0") == 0) {
+            return; // Sai da função se o usuário digitar 0
+        }
 
         if (strcmp(confirmacao, "nao") == 0) {
             system("cls");

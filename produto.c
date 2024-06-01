@@ -15,19 +15,32 @@ void criarProduto() {
     Produto produto;
 
     imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE PRODUTOS", NULL);
+    centralizarFrase("Digite 0 a qualquer momento para sair","warning");
+    imprimirLinhaDivisoria();
 
     // Solicitar ao usuário que insira os dados do produto
     char *p_descricao = centralizarEObterValorChar("Digite a descricao do produto: ", 51);
+    if (strcmp(p_descricao, "0") == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
     double p_preco = centralizarEObterValorDouble("Digite o preco do produto: ");
+    if (p_preco == 0.0) {
+        return; // Sai da função se o usuário digitar 0
+    }
     int p_estoque = centralizarEObterValorInt("Digite o estoque do produto: ");
+    if (p_estoque == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
 
     listarEventosCadastro();
     int eventoMax = carregarUltimoEvento();
-    int opcaoEvento = 0;
-
+    int opcaoProduto = 0;
     do {
-        opcaoEvento = centralizarEObterValorInt("Digite o codigo do evento para o usuario: ");
-    } while(opcaoEvento < 1 || opcaoEvento >= eventoMax);
+        opcaoProduto = centralizarEObterValorInt("Digite o codigo do evento para o usuario: ");
+        if (opcaoProduto == 0) {
+            return; // Sai da função se o usuário digitar 0
+        }
+    } while(opcaoProduto < 1 || opcaoProduto >= eventoMax);
 
 
 // Convertendo valores para strings
@@ -35,7 +48,7 @@ void criarProduto() {
     char str_estoque[20];
     sprintf(str_preco, "%.2f", p_preco);
     sprintf(str_estoque, "%d", p_estoque);
-    char* nomeEvento = obterNomeEvento("eventos.txt", opcaoEvento);
+    char* nomeEvento = obterNomeEvento("eventos.txt", opcaoProduto);
 
 // Imprimir os valores lidos
     imprimirTituloCabecarioLista("Valores lidos", NULL);
@@ -50,13 +63,15 @@ void criarProduto() {
     strncpy(produto.descricao, p_descricao, sizeof(produto.descricao) - 1);
     produto.preco = p_preco;
     produto.estoque = p_estoque;
-    produto.id_evento = opcaoEvento;
+    produto.id_evento = opcaoProduto;
 
     // Solicitar confirmação
     char confirmacao[4];
     do {
         strcpy(confirmacao, centralizarEObterValorChar("Confirme se os valores estao corretos (sim/nao): ", 3));
-        getchar(); // Limpar o buffer do teclado
+        if (strcmp(confirmacao, "0") == 0) {
+            return; // Sai da função se o usuário digitar 0
+        }
 
         if (strcmp(confirmacao, "nao") == 0) {
             system("cls");
