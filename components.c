@@ -147,7 +147,6 @@ void centralizarString(char *str, int largura) {
     if ((largura - comprimento) % 2 != 0) {
         printf(" ");
     }
-    //printf("\n");
 }
 
 int imprimirTituloCabecarioDuplo(const char *titulo, const char *subtitulo) {
@@ -187,12 +186,12 @@ int imprimirUsuarioEData() {
     // Centraliza "USUARIO: nomeUsuario" na outra metade da linha
     char eventoStr[31];
     snprintf(eventoStr, sizeof(eventoStr), "EVENTO: %-31s ", evento.evento);
-    centralizarString(eventoStr, (LARGURA / 3) );
+    centralizarString(eventoStr, (LARGURA / 2)-3 );
 
     // Centraliza "DATA: ddata" em metade da linha
     char dataStr[20];
     snprintf(dataStr, sizeof(dataStr), "DATA: %-11s", dataAtual);
-    centralizarString(dataStr, (LARGURA / 3) );
+    centralizarString(dataStr, (LARGURA / 5) );
     printf("|\n");
 
 
@@ -364,7 +363,7 @@ char* centralizarEObterValorChar(const char *frase, int tamanho) {
 
     // Verificando se a entrada excede o tamanho permitido
     if (strlen(valor) > tamanho) {
-        printf("Erro: A entrada excede o tamanho máximo permitido de %d caracteres.", tamanho);
+        centralizarFrase("Erro: A entrada excede o tamanho máximo permitido de caracteres.", "error");
         free(valor); // Liberando a memória alocada
         return NULL; // Saída em caso de erro
     }
@@ -427,7 +426,7 @@ char* centralizarEObterValorSenha(const char *frase, int tamanho) {
 
     // Verificando se a entrada excede o tamanho permitido
     if (strlen(valor) > tamanho) {
-        printf("Erro: A entrada excede o tamanho máximo permitido de %d caracteres.", tamanho);
+        centralizarFrase("Erro: A entrada excede o tamanho máximo permitido de %d caracteres.","error");
         free(valor); // Liberando a memória alocada
         return NULL; // Saída em caso de erro
     }

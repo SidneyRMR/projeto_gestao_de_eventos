@@ -21,13 +21,13 @@ int menuAdministrador() {
     while(opcaoAdm != 0) {
     imprimirTituloCabecarioDuplo("MENU ADMINISTRATIVO",NULL);
     imprimirUsuarioEData();
-    printf("| Opcao |     Listar                   | Opcao |     Criar                    | Opcao |     Desativar              |\n");
+    centralizarFrase("ESCOLHA UM NUMERO CORRESPONDENTE A SUA OPCAO","warning");
     imprimirLinhaDivisoria();
-    printf("|   1   |     Listar Eventos           |   4   |     Criar Evento             |   7   |     Editar Evento          |\n");
-    printf("|   2   |     Listar Usuarios          |   5   |     Criar Usuario            |   8   |     Editar Usuario         |\n");
-    printf("|   3   |     Listar Produtos          |   6   |     Criar Produto            |   9   |     Editar Produto         |\n");
+    printf("|       1   -   Ver Eventos           |       4   -   Criar Evento           |       7   -   Editar Evento         |\n");
+    printf("|       2   -   Ver Usuarios          |       5   -   Criar Usuario          |       8   -   Editar Usuario        |\n");
+    printf("|       3   -   Ver Produtos          |       6   -   Criar Produto          |       9   -   Editar Produto        |\n");
     imprimirLinhaDivisoria();
-    printf("|  20   |   Relatorio de Vendas        |   0   |   Fazer Logoff               |  -1   |   Fechar programa          |\n");
+    printf("|      20   -   Relatorio de Vendas   |       0   -   Fazer Logoff           |      -1   -   Fechar programa       |\n");
     imprimirLinhaDivisoria();
 
     opcaoAdm = centralizarEObterValorInt("Escolha uma opcao:");
@@ -100,11 +100,11 @@ int menuAdministrador() {
                 //system("cls");
                 break;
             case -1:
-                centralizarFrase("Saindo do programa!...", "info");
+                centralizarFrase("  Saindo do programa!", "info");
                 Sleep(1000);
                 exit(1);
             case 0:
-                centralizarFrase("Logoff feito com sucesso!...", "info");
+                centralizarFrase("  Logoff feito com sucesso!", "info");
                 //system("cls");
                 login();
                 break;
@@ -346,7 +346,7 @@ int menuEditarUsuario() {
                     atualizarUsuario(usuario);
 
                 } else {
-                    printf("Senha administrativa incorreta.\n");
+                    centralizarFrase("Senha administrativa incorreta.","warning");
                 }
                 // Liberar a memória alocada para senhaAcesso
                 free(senhaAcesso);

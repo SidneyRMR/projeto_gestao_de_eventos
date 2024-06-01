@@ -70,8 +70,6 @@ int listarUsuarios() {
     file = fopen(filename, "r");
 
     if (file != NULL) {
-        //printf("Arquivo foi aberto com sucesso.\n\n");
-
         // Imprimir cabeçalho da tabela
         imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
         imprimirUsuarioEData();
@@ -119,7 +117,6 @@ int carregarUltimoUsuario() {
             }
         }
         fclose(file);
-        //printf("Registro %d\n", contador_linhas);
     } else {
         centralizarFrase("Não foi possível abrir o arquivo.","error");
     }

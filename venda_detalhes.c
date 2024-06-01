@@ -88,12 +88,12 @@ void criteriosOrdenacao() {
     int criterioOpcao;
     int ordemOpcao;
 
-    imprimirTituloCabecarioDuplo("ESCOLHA O CRITERIO DE ORDENACAO",NULL);
+    imprimirTituloCabecario("ESCOLHA UM CRITERIO DE ORDENACAO",NULL);
+    //criterioOpcao = centralizarEObterValorInt("1 - Ordena pelo ID  |  2 - Ordena pela Quantidade de produtos vendido:");
     centralizarFrase("1. ID do Produto                   ", "default");
     centralizarFrase("2. Quantidade de Produtos Vendidos ", "default");
     imprimirLinhaDivisoria();
     criterioOpcao = centralizarEObterValorInt("Escolha uma opcao: ");
-    imprimirLinhaDivisoria();
 
     if (criterioOpcao == 1) {
         strcpy(criterio, "id");
@@ -104,12 +104,12 @@ void criteriosOrdenacao() {
         strcpy(criterio, "id");
     }
 
-    imprimirTituloCabecarioDuplo("ESCOLHA A ORDEM DE ORDENACAO",NULL);
+    imprimirTituloCabecario("ESCOLHA UMA ORDEM DE ORDENACAO",NULL);
     centralizarFrase("1. Crescente                       ", "default");
     centralizarFrase("2. Decrescente                     ", "default");
     imprimirLinhaDivisoria();
     ordemOpcao = centralizarEObterValorInt("Escolha uma opcao: ");
-    imprimirLinhaDivisoria();
+
     if (ordemOpcao == 1) {
         strcpy(ordem, "crescente");
     } else if (ordemOpcao == 2) {
@@ -139,7 +139,7 @@ void relatorioVendasAux(){
         opcaoEvento = centralizarEObterValorInt("Escolha uma opcao: ");
         switch (opcaoEvento) {
             case 1:
-                system("cls");
+                //system("cls");
                 criteriosOrdenacao();
                 break;
             case 2: {
@@ -250,7 +250,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
     system("cls");
     imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", NULL);
     imprimirUsuarioEData();
-    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
+    printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
     if (produtosCount == 0) {
@@ -261,13 +261,13 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
         for (int i = 0; i < produtosCount; i++) {
             accTotal += produtos[i].valor_total;
             accQtd += produtos[i].quantidade_total;
-            printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
+            printf("| %-15d | %-55s | %-10d | %-10.2lf | %-10.2lf | \n",
                    produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
                    produtos[i].valor_total / produtos[i].quantidade_total,
                    produtos[i].valor_total);
         }
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                      |  QTD   %-3d |  R$      %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
     free(nomeEvento);
@@ -324,7 +324,7 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
     system("cls");
     imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA EVENTO", nomeEvento);
     imprimirUsuarioEData();
-    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
+    printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
     if (produtosCount == 0) {
@@ -335,13 +335,13 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
         for (int i = 0; i < produtosCount; i++) {
             accTotal += produtos[i].valor_total;
             accQtd += produtos[i].quantidade_total;
-            printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
+            printf("| %-15d | %-55s | %-10d | %-10.2lf | %-10.2lf | \n",
                    produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
                    produtos[i].valor_total / produtos[i].quantidade_total,
                    produtos[i].valor_total);
         }
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
     int sair;
@@ -363,7 +363,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         // Imprimir cabeçalho da tabela
         imprimirTituloCabecarioDuplo("RELATORIO GERAL DAS VENDAS", NULL);
         imprimirUsuarioEData();
-        printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
+        printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
         imprimirLinhaDivisoria();
 
         fseek(file, 0, SEEK_END);
@@ -409,14 +409,14 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         for (int i = 0; i < produtosCount; i++) {
             accTotal += produtos[i].valor_total;
             accQtd += produtos[i].quantidade_total;
-            printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
+            printf("| %-15d | %-55s | %-10d | %-10.2lf | %-10.2lf | \n",
                    produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
                    produtos[i].valor_total / produtos[i].quantidade_total,
                    produtos[i].valor_total);
         }
 
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
         // Opção para alterar a ordenação
         //imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair", NULL);
@@ -424,7 +424,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         opcaoOrdenacao = centralizarEObterValorInt("Digite 1 para alterar a ordenacao ou 0 para sair: ");
         //Sleep(1000);
         if (opcaoOrdenacao == 1) {
-            system("cls");
+            //system("cls");
             criteriosOrdenacao();
         }
     } else {

@@ -112,7 +112,7 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
     Produto produto = buscarProdutoPorID(codigoProd);
     int produtoExistente = 0;
     if(qtde <= 0 ) {
-        printf("|\tDigite uma quantidade acima de ZERO!\n");
+        centralizarFrase("Digite uma quantidade acima de ZERO!", "warning");
         system("Pause");
         return;
     } else {
