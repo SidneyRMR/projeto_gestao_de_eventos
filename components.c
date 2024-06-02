@@ -340,7 +340,10 @@ char* centralizarEObterValorChar(const char *frase, int tamanho) {
     }
 
     int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
+
+    setColorScheme(getColorSchemeByName("info"));
     printf("%*s%s ", espacosEsquerda, "", frase); // Centraliza a frase
+    setColorScheme(getColorSchemeByName("default"));
 
     char *valor = (char *)malloc((tamanho + 1) * sizeof(char)); // Alocando memória dinamicamente
 

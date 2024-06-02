@@ -205,7 +205,7 @@ Produto buscarProdutoPorID(int id) {
         erroAoAbrirArquivo();
     }
     Produto produto_vazio; // Retorna um produto vazio se não encontrar
-    produto_vazio.id = -1; // Ou outro valor que você considerar adequado
+    produto_vazio.id = -1;
     return produto_vazio;
 }
 
@@ -223,7 +223,6 @@ void atualizarProduto(Produto produto) {
         while (fscanf(file, "%d '%49[^']' %lf %d %d %d\n", &tempProduto.id, tempProduto.descricao, &tempProduto.preco, &tempProduto.estoque, &tempProduto.id_evento, &tempProduto.status) != EOF) {
             if (tempProduto.id == produto.id) {
                 fprintf(tempFile, "%d '%s' %.2lf %d %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento, produto.status);
-                printf("%d '%s' %.2lf %d %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento, produto.status);
             } else {
                 fprintf(tempFile, "%d '%s' %.2lf %d %d %d\n", tempProduto.id, tempProduto.descricao, tempProduto.preco, tempProduto.estoque, tempProduto.id_evento, tempProduto.status);
             }
@@ -253,7 +252,7 @@ Produto carregarProdutoPorID(int id) {
 
     file = fopen(filename, "r");
     if (file != NULL) {
-        while (fscanf(file, "%d '%99[^']' %lf %d %d\n", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento) != EOF) {
+        while (fscanf(file, "%d '%50[^']' %lf %d %d %d\n", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
             if (produto.id == id) {
                 fclose(file);
                 return produto;
@@ -292,17 +291,27 @@ int ajustarEstoqueSelecionado(int idProd) {
 
     opcaoProdutoEstoque = centralizarEObterValorInt("Digite 1 para adicionar ou 2 para remover  (0 - Sair)");
     if (opcaoProdutoEstoque == 1) {
-        quantidade = centralizarEObterValorInt("Digite quantos produtos deseja ADICIONAR:");
+        do {
+            quantidade = centralizarEObterValorInt("Digite quantos produtos deseja ADICIONAR:");
+            if (quantidade > 1000) {
+                centralizarFrase("O estoque nao pode ser maior que 1000. Por favor, insira novamente.","warning");
+            }
+        } while (quantidade > 1000);
         adicionarEstoque(idProd, quantidade);
         system("cls");
-        menuEditarProduto();
+        //menuEditarProduto();
     } else if(opcaoProdutoEstoque == 2) {
-        quantidade = centralizarEObterValorInt("Digite quantos produtos deseja REMOVER:");
+        do {
+            quantidade = centralizarEObterValorInt("Digite quantos produtos deseja REMOVER:");
+            if (quantidade > 1000) {
+                centralizarFrase("O estoque nao pode ser maior que 1000. Por favor, insira novamente.","warning");
+            }
+        } while (quantidade > 1000);
         removerEstoque(idProd, quantidade);
         system("cls");
-        menuEditarProduto();
+        //menuEditarProduto();
     } else if(opcaoProdutoEstoque == 0) {
-
+        system("cls");
         menuEditarProduto();
     } else {
         system("cls");

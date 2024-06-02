@@ -176,8 +176,24 @@ int menuEditarProduto() {
         imprimirTituloCabecarioDuplo("MENU DE EDICAO DE PRODUTO", NULL);
 
         int idProdutoAux = selecaoProduto();
+    while (1) {
         Produto produto = buscarProdutoPorID(idProdutoAux);
+        system("cls");
+        imprimirTituloCabecarioDuplo("EDICAO DE PRODUTO", produto.descricao);
+        char* nomeEvento = obterNomeEvento("eventos.txt", produto.id_evento);
+        char prodAtivado[11];
 
+        if (produto.status == 1) {
+            strcpy(prodAtivado, "Ativo");
+        } else {
+            strcpy(prodAtivado, "Desativado");
+        }
+        imprimirLinhaDivisoria();
+        printf("| %-3s | %-50s | %-10s | %-9s | %-15s | %-10s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento", "Status");
+        imprimirLinhaDivisoria();
+        printf("| %-3d | %-50.50s | %-10.2f | %-9d | %-15.15s | %-10s |\n",
+               produto.id, produto.descricao, produto.preco, produto.estoque, nomeEvento, prodAtivado);
+        imprimirLinhaDivisoria();
         imprimirLinhaDivisoriaAjustavel(47);
         imprimirCentralizadoLista(" COD |  ALTERAR                              ");
         imprimirLinhaDivisoriaAjustavel(47);
@@ -190,7 +206,6 @@ int menuEditarProduto() {
         imprimirCentralizadoLista("  0  |  SAIR                                 ");
         imprimirLinhaDivisoriaAjustavel(47);
 
-    while (1) {
         int opcaoAdmProduto = centralizarEObterValorInt("Escolha uma opcao (0 para selecionar outro produto):");
 
         switch (opcaoAdmProduto) {
@@ -214,17 +229,9 @@ int menuEditarProduto() {
                 break;
             }
             case 3: {
-                    int novoestoque;
-                    do {
-                        novoestoque = centralizarEObterValorInt("Digite o novo estoque do produto: ");
-                        if (novoestoque > 1000) {
-                            centralizarFrase("Erro: O estoque nao pode ser maior que 1000. Por favor, insira novamente.","warning");
-                        }
-                    } while (novoestoque > 1000);
+
 
                     ajustarEstoqueSelecionado(produto.id);
-                    produto.estoque = novoestoque;
-                    atualizarProduto(produto);
                     break;
                 }
             case 4: {
@@ -239,7 +246,7 @@ int menuEditarProduto() {
                 atualizarProduto(produto);
                 break;
             }
-            case 5:
+            case 5:{
                 if (produto.status == 0) {
                     produto.status = 1;
                     atualizarProduto(produto);
@@ -248,6 +255,7 @@ int menuEditarProduto() {
                     atualizarProduto(produto);
                 }
                 break;
+            }
             case 0:
                 system("cls");
                 menuEditarProduto();
@@ -261,149 +269,147 @@ int menuEditarProduto() {
     }
 }
 
-
 int menuEditarEvento() {
     imprimirTituloCabecarioDuplo("MENU DE EDICAO DE EVENTO", NULL);
 
-    int idEventoAux = selecaoEvento();
-    Evento evento = buscarEventoPorID(idEventoAux);
+    int idEventoAux = selecaoEvento(); // Seleciona o evento a ser editado
+    Evento evento = buscarEventoPorID(idEventoAux); // Obtém informações do evento selecionado
 
-    //printf("nome evento: %s \n", evento.evento);
+    while (1) { // Loop para manter o menu em execução
+        system("cls");
 
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista(" COD |  ALTERAR                              ");
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista("  1  |  NOME do evento                       ");
-    imprimirCentralizadoLista("  2  |  DESCRICAO do evento                  ");
-    imprimirCentralizadoLista("  3  |  ATIVAR / DESATIVAR evento            ");
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista("  0  |  SAIR                                 ");
-    imprimirLinhaDivisoriaAjustavel(47);
+        imprimirTituloCabecarioDuplo("EDICAO DE EVENTO", evento.evento); // Título do menu de edição com nome do evento
 
-    int opcaoAdmEvento = centralizarEObterValorInt("Escolha uma opcao:");
+        // Exibição das informações do evento
+        printf("| %-3s | %-30s | %-60s | %-10s |\n", "Cod", "Nome", "Descricao", "Status");
+        imprimirLinhaDivisoria();
+        printf("| %-3d | %-30.30s | %-60.60s | %-10s |\n",
+               evento.id, evento.evento, evento.descricao, evento.status == 1 ? "Ativo" : "Desativado");
+        imprimirLinhaDivisoria();
 
-    switch (opcaoAdmEvento) {
-        case 1:
-            char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 20);
-            strcpy(evento.evento, novoNome);
-            atualizarEvento(evento);
-            break;
-        case 2:
-            char *novaDescricao = centralizarEObterValorChar("Digite o novo nome do evento: ", 50);
-            strcpy(evento.descricao, novaDescricao);
-            atualizarEvento(evento);
-            break;
-        case 3:
-            if (evento.status == 0) {
-                evento.status = 1;
-            } else {
-                evento.status = 0;
+        // Menu de opções para edição do evento
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista(" COD |  ALTERAR                              ");
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista("  1  |  NOME do evento                       ");
+        imprimirCentralizadoLista("  2  |  DESCRICAO do evento                  ");
+        imprimirCentralizadoLista("  3  |  ATIVAR / DESATIVAR evento            ");
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista("  0  |  SAIR                                 ");
+        imprimirLinhaDivisoriaAjustavel(47);
+
+        int opcaoAdmEvento = centralizarEObterValorInt("Escolha uma opcao:");
+
+        switch (opcaoAdmEvento) {
+            case 1: {
+                char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 20);
+                strcpy(evento.evento, novoNome);
+                atualizarEvento(evento);
+                break;
             }
-            atualizarEvento(evento);
-            break;
-        case 0:
-            system("cls");
-            menuEditarEvento();
-            break;
-        default:
-            opcaoInvalida();
-            break;
+            case 2: {
+                char *novaDescricao = centralizarEObterValorChar("Digite a nova descricao do evento: ", 50);
+                strcpy(evento.descricao, novaDescricao);
+                atualizarEvento(evento);
+                break;
+            }
+            case 3: {
+                evento.status = evento.status == 0 ? 1 : 0; // Inverte o status do evento
+                atualizarEvento(evento);
+                break;
+            }
+            case 0: // Opção para sair do menu
+                system("cls");
+                menuEditarEvento();
+            default:
+                opcaoInvalida();
+                break;
+        }
     }
-    //system("PAUSE");
-    system("cls");
-    menuEditarEvento();
-
-    return 0;
 }
-
 int menuEditarUsuario() {
     imprimirTituloCabecarioDuplo("MENU DE EDICAO DE USUARIO", NULL);
 
-    int idUsuarioAux = selecaoUsuario();
+    int idUsuarioAux = selecaoUsuario(); // Seleciona o usuário a ser editado
+    Usuario usuario = buscarUsuarioPorId(idUsuarioAux); // Obtém informações do usuário selecionado
 
-    printf("%d",idUsuarioAux);
-    Usuario usuario = buscarUsuarioPorId(idUsuarioAux);
+    while (1) { // Loop para manter o menu em execução
+        system("cls");
 
+        imprimirTituloCabecarioDuplo("EDICAO DE USUARIO", usuario.nome); // Título do menu de edição com nome do usuário
+        char* nomeEvento = obterNomeEvento("eventos.txt", usuario.id_evento);
+        // Exibição das informações do usuário
+        printf("| %-3s | %-30s | %-20s | %-13s | %-20s | %-11s |\n", "Cod", "Nome", "Login", "Tipo", "Evento", "Status");
+        imprimirLinhaDivisoria();
+        printf("| %-3d | %-30.30s | %-20.20s | %-13s | %-20.20s | %-11s |\n",
+               usuario.id, usuario.nome, usuario.login, usuario.tipo, nomeEvento, usuario.status == 1 ? "Ativo" : "Desativado");
+        imprimirLinhaDivisoria();
 
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista(" COD |  ALTERAR                              ");
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista("  1  |  NOME do usuario                      ");
-    imprimirCentralizadoLista("  2  |  LOGIN do usuario                     ");
-    imprimirCentralizadoLista("  3  |  SENHA do usuario                     ");
-    imprimirCentralizadoLista("  4  |  EVENTO DO usuario                    ");
-    imprimirCentralizadoLista("  5  |  ATIVAR / DESATIVAR usuario           ");
-    imprimirLinhaDivisoriaAjustavel(47);
-    imprimirCentralizadoLista("  0  |  Para voltar ao menu principal        ");
-    imprimirLinhaDivisoriaAjustavel(47);
+        // Menu de opções para edição do usuário
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista(" COD |  ALTERAR                              ");
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista("  1  |  NOME do usuario                      ");
+        imprimirCentralizadoLista("  2  |  LOGIN do usuario                     ");
+        imprimirCentralizadoLista("  3  |  SENHA do usuario                     ");
+        imprimirCentralizadoLista("  4  |  EVENTO DO usuario                    ");
+        imprimirCentralizadoLista("  5  |  ATIVAR / DESATIVAR usuario           ");
+        imprimirLinhaDivisoriaAjustavel(47);
+        imprimirCentralizadoLista("  0  |  Para voltar ao menu principal        ");
+        imprimirLinhaDivisoriaAjustavel(47);
 
-    int opcaoAdmUsuario = centralizarEObterValorInt("Escolha uma opcao:");
+        int opcaoAdmUsuario = centralizarEObterValorInt("Escolha uma opcao:");
 
-    switch (opcaoAdmUsuario) {
-        case 1:
-        {
-            char *novoNome = centralizarEObterValorChar("Digite o novo nome do usuario: ", 50);
-            strcpy(usuario.nome, novoNome);
-            atualizarUsuario(usuario);
-            break;
-        }
-        case 2:
-        {
-            char *novoLogin = centralizarEObterValorChar("Digite o novo login do usuario: ", 20);
-            strcpy(usuario.login, novoLogin);
-            atualizarUsuario(usuario);
-            break;
-        }
-        case 3:
-        {
-            char *senhaAcesso = centralizarEObterValorSenha("Senha de autorizacao: ", 11);
+        switch (opcaoAdmUsuario) {
+            case 1: {
+                char *novoNome = centralizarEObterValorChar("Digite o novo nome do usuario: ", 50);
+                strcpy(usuario.nome, novoNome);
+                atualizarUsuario(usuario);
+                break;
+            }
+            case 2: {
+                char *novoLogin = centralizarEObterValorChar("Digite o novo login do usuario: ", 20);
+                strcpy(usuario.login, novoLogin);
+                atualizarUsuario(usuario);
+                break;
+            }
+            case 3: {
+                char *senhaAcesso = centralizarEObterValorSenha("Senha de autorizacao: ", 11);
                 if (senhaAcesso != NULL && strcmp(senhaAcesso, getUsuarioCompartilhado().senha) == 0) {
                     char *novaSenha = centralizarEObterValorSenha("Digite a nova senha do usuario: ", 11);
                     strcpy(usuario.senha, novaSenha);
                     atualizarUsuario(usuario);
-
                 } else {
                     centralizarFrase("Senha administrativa incorreta.","warning");
                 }
                 // Liberar a memória alocada para senhaAcesso
                 free(senhaAcesso);
-        }
-            break;
-        case 4:
-        {
-            listarEventosCadastro();
-            int eventoMax = carregarUltimoEvento();
-            int idEvento = 0;
-
-            do {
-                idEvento = centralizarEObterValorInt("Digite o novo evento para o usuario: ");
-            } while(idEvento < 1 || idEvento >= eventoMax);
-            usuario.id_evento = idEvento;
-            atualizarUsuario(usuario);
-            break;
-        }
-        case 5:
-        {
-            if (usuario.status == 0) {
-                usuario.status = 1;
-            } else {
-                usuario.status = 0;
+                break;
             }
-            atualizarUsuario(usuario);
-            break;
-        }
-        case 0:
-            system("cls");
-            menuAdministrador();
-            return 0;
-        default:
-            opcaoInvalida();
-            break;
-    }
-    system("cls");
-    menuEditarUsuario();
+            case 4: {
+                listarEventosCadastro();
+                int eventoMax = carregarUltimoEvento();
+                int idEvento = 0;
 
-    return 0;
+                do {
+                    idEvento = centralizarEObterValorInt("Digite o novo evento para o usuario: ");
+                } while(idEvento < 1 || idEvento >= eventoMax);
+                usuario.id_evento = idEvento;
+                atualizarUsuario(usuario);
+                break;
+            }
+            case 5: {
+                usuario.status = usuario.status == 0 ? 1 : 0; // Inverte o status do usuário
+                atualizarUsuario(usuario);
+                break;
+            }
+            case 0: // Opção para sair do menu
+                return 0;
+            default:
+                opcaoInvalida();
+                break;
+        }
+    }
 }
 
 int escolherMenu() {
