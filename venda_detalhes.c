@@ -5,8 +5,8 @@
 #include "venda_detalhes.h"
 #include "venda.h"
 #include "menu.h"
-#include "evento.h"
-#include "components.h"
+#include "evento/evento.h"
+#include "components/components.h"
 
 typedef struct {
     int id_produto;
@@ -26,7 +26,7 @@ void salvarVendaDetalhes(Venda_detalhes venda_detalhes) {
         fclose(file);
         centralizarFrase("--------        Produto da venda salvos com sucesso!        --------", "success");
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -52,8 +52,7 @@ int relatorioVendaEspecificoAux() {
                 }
         }
     } while (escolhaIdVenda != 0 && (escolhaIdVenda < 1 || escolhaIdVenda >= idMax));
-    relatorioVendaEspecificoAux();
-    system("PAUSE");
+    //relatorioVendaEspecificoAux();
     return 0;
 }
 
@@ -89,37 +88,35 @@ void criteriosOrdenacao() {
     int criterioOpcao;
     int ordemOpcao;
 
-    imprimirTituloCabecarioDuplo("ESCOLHA O CRITERIO DE ORDENACAO",NULL);
-    printf("|\t1. ID do Produto                                                                                           |\n");
-    printf("|\t2. Quantidade de Produtos Vendidos                                                                         |\n");
+    imprimirTituloCabecario("ESCOLHA UM CRITERIO DE ORDENACAO",NULL);
+    //criterioOpcao = centralizarEObterValorInt("1 - Ordena pelo ID  |  2 - Ordena pela Quantidade de produtos vendido:");
+    centralizarFrase("1. ID do Produto                   ", "default");
+    centralizarFrase("2. Quantidade de Produtos Vendidos ", "default");
     imprimirLinhaDivisoria();
     criterioOpcao = centralizarEObterValorInt("Escolha uma opcao: ");
-    imprimirLinhaDivisoria();
 
     if (criterioOpcao == 1) {
         strcpy(criterio, "id");
     } else if (criterioOpcao == 2) {
         strcpy(criterio, "quantidade");
     } else {
-        printf("Opcao invalida. Usando 'id' como padrao.\n");
+        centralizarFrase("Opcao invalida. Usando 'id' como padrao.","warning");
         strcpy(criterio, "id");
-        system("PAUSE");
     }
 
-    imprimirTituloCabecarioDuplo("ESCOLHA A ORDEM DE ORDENACAO",NULL);
-    printf("|\t1. Crescente                                                                                               |\n");
-    printf("|\t2. Decrescente                                                                                             |\n");
+    imprimirTituloCabecario("ESCOLHA UMA ORDEM DE ORDENACAO",NULL);
+    centralizarFrase("1. Crescente                       ", "default");
+    centralizarFrase("2. Decrescente                     ", "default");
     imprimirLinhaDivisoria();
     ordemOpcao = centralizarEObterValorInt("Escolha uma opcao: ");
-    imprimirLinhaDivisoria();
+
     if (ordemOpcao == 1) {
         strcpy(ordem, "crescente");
     } else if (ordemOpcao == 2) {
         strcpy(ordem, "decrescente");
     } else {
-        printf("Opcao invalida. Usando 'crescente' como padrao.\n");
+        centralizarFrase("Opcao invalida. Usando 'crescente' como padrao.","warning");
         strcpy(ordem, "crescente");
-        system("PAUSE");
     }
     system("cls");
     relatorioVendasGeral(criterio, ordem);
@@ -140,30 +137,24 @@ void relatorioVendasAux(){
         printf("|   0   |   Menu administrativo                                                                                    |\n");
         imprimirLinhaDivisoria();
         opcaoEvento = centralizarEObterValorInt("Escolha uma opcao: ");
-        //printf("|\tEscolha uma opcao:");
-        //scanf("%d", &opcaoEvento);
         switch (opcaoEvento) {
             case 1:
-                system("cls");
+                //system("cls");
                 criteriosOrdenacao();
-                system("PAUSE");
                 break;
             case 2: {
                 system("cls");
                 relatorioEventoEspecificoAux();
-                system("PAUSE");
                 break;
             }
             case 3: {
                 system("cls");
                 relatorioVendaEspecificoAux();
-                system("PAUSE");
                 break;
             }
             case 0:
                 system("cls");
                 centralizarFrase("Saindo da tela de relatorio!", "warning");
-                //system("PAUSE");
                 menuAdministrador();
             default:
                 opcaoInvalida();
@@ -222,17 +213,17 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
     FILE *file = fopen(caminhoArquivo, "r");
 
     if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
+        centralizarFrase("Erro ao abrir arquivo","error");
         return 0;
     }
 
-    char *nomeEvento = obterNomeEvento("venda.txt", opcao);
-    if (nomeEvento == NULL) {
-        nomeEvento = (char*)malloc(strlen("Nada encontrado") + 1);
-        if (nomeEvento != NULL) {
-            strcpy(nomeEvento, "Nada encontrado");
+    char *nomeVenda = obterNomeEvento("venda.txt", opcao);
+    if (nomeVenda == NULL) {
+        nomeVenda = (char*)malloc(strlen("Nada encontrado") + 1);
+        if (nomeVenda != NULL) {
+            strcpy(nomeVenda, "Nada encontrado");
         } else {
-            perror("Erro ao alocar memória para 'Nada encontrado'");
+            centralizarFrase("Erro ao alocar memória","error");
         }
     }
 
@@ -257,9 +248,9 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
 
     // Imprimir cabeçalho da tabela
     system("cls");
-    imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", NULL);
+    imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", nomeVenda);
     imprimirUsuarioEData();
-    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
+    printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
     if (produtosCount == 0) {
@@ -270,17 +261,21 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
         for (int i = 0; i < produtosCount; i++) {
             accTotal += produtos[i].valor_total;
             accQtd += produtos[i].quantidade_total;
-            printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
+            printf("| %-15d | %-55s | %-10d | %-10.2lf | %-10.2lf | \n",
                    produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
                    produtos[i].valor_total / produtos[i].quantidade_total,
                    produtos[i].valor_total);
         }
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$     %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
-    system("PAUSE");
-    free(nomeEvento);
+    free(nomeVenda);
+    int sair;
+    while (sair != 0) {
+        sair = centralizarEObterValorInt("Digite 0 para sair: ");
+    }
+    relatorioVendaEspecificoAux();
     return 0;
 }
 
@@ -292,7 +287,7 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
     FILE *file = fopen(caminhoArquivo, "r");
 
     if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
+        centralizarFrase("Erro ao abrir o arquivo","error");
         return 0;
     }
 
@@ -329,7 +324,7 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
     system("cls");
     imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA EVENTO", nomeEvento);
     imprimirUsuarioEData();
-    printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
+    printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
 
     if (produtosCount == 0) {
@@ -340,18 +335,19 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
         for (int i = 0; i < produtosCount; i++) {
             accTotal += produtos[i].valor_total;
             accQtd += produtos[i].quantidade_total;
-            printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
+            printf("| %-15d | %-55s | %-10d | %-10.2lf | %-10.2lf | \n",
                    produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
                    produtos[i].valor_total / produtos[i].quantidade_total,
                    produtos[i].valor_total);
         }
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$    %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
-
-    free(nomeEvento);
-    system("PAUSE");
+    int sair;
+    while (sair != 0) {
+        sair = centralizarEObterValorInt("Digite 0 para sair: ");
+    }
     relatorioEventoEspecificoAux();
     return 0;
 }
@@ -367,7 +363,7 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         // Imprimir cabeçalho da tabela
         imprimirTituloCabecarioDuplo("RELATORIO GERAL DAS VENDAS", NULL);
         imprimirUsuarioEData();
-        printf("| %-15s | %-63s | %-10s | %-6s | %-6s |\n", "ID_Produto", "Produto", "Quantidade", "Valor", "Total");
+        printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
         imprimirLinhaDivisoria();
 
         fseek(file, 0, SEEK_END);
@@ -413,27 +409,29 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         for (int i = 0; i < produtosCount; i++) {
             accTotal += produtos[i].valor_total;
             accQtd += produtos[i].quantidade_total;
-            printf("| %-15d | %-63s | %-10d | %-6.2lf | %-6.2lf | \n",
+            printf("| %-15d | %-55s | %-10d | %-10.2lf | %-10.2lf | \n",
                    produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
                    produtos[i].valor_total / produtos[i].quantidade_total,
                    produtos[i].valor_total);
         }
 
         imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------                       |  QTD   %-3d |  R$    %6.2lf  |\n", accQtd, accTotal);
+        printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
         // Opção para alterar a ordenação
         //imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair", NULL);
         int opcaoOrdenacao;
         opcaoOrdenacao = centralizarEObterValorInt("Digite 1 para alterar a ordenacao ou 0 para sair: ");
-        Sleep(1000);
+        //Sleep(1000);
         if (opcaoOrdenacao == 1) {
-            system("cls");
+            //system("cls");
             criteriosOrdenacao();
         }
     } else {
-        printf("Não foi possível abrir o arquivo %s.\n\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
+    centralizarFrase("Retornando ao menu anterior","warning");
+    system("cls");
     return 0;
 }
 
@@ -454,9 +452,8 @@ int carregarUltimaVendaDetalhes() {
             }
         }
         fclose(file);
-        //printf("\tRegisto %d\n", contador_linhas);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     return contador_linhas+1;

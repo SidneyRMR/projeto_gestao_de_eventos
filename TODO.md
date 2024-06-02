@@ -1,7 +1,14 @@
-### TODO's para aprimorar e finalizar o programa
+### TODO's para aprimorar o programa
 
-- **Funções de ativação/desativação**
-    - Criar funções para ativar ou desativar Usuários, Eventos e Produtos
+- **Usar lib para imprimir pedidos e relatórios em pdf**
+- **Lib para fazer inteface visual**
+- **Salvar informações em um banco de dados**
+- **Criptografar as senhas ao cadastrar**
+- **Criar função de backup dos arquivos no menu Administrativo**
+- **Criar um ícone para o programa e um instalador com tudo compilado(inclusive BD)**
+- **Script de criação automática do BD e suas tabelas**
+
+
 
 
 

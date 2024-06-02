@@ -2,26 +2,72 @@
 #include <string.h>
 #include <malloc.h>
 #include "usuario.h"
-#include "evento.h"
-#include "components.h"
+#include "evento/evento.h"
+#include "components/components.h"
 #include "menu.h"
 
-// Função para cadastro de usuário
+// Função para verificar se o login já existe
+int verificarLoginExistente(const char *login) {
+    char caminhoArquivo[100]; // Ajuste o tamanho conforme necessário
+    sprintf(caminhoArquivo, "data/usuarios.txt");
+    FILE *file = fopen(caminhoArquivo, "r");
+
+    if (file == NULL) {
+        centralizarFrase("Não foi possível abrir o arquivo de usuários.", "error");
+        return -1; // Retorna -1 se houver um erro ao abrir o arquivo
+    }
+
+    Usuario usuario;
+
+    while (fscanf(file, "%d '%30[^']' '%[^']' '%[^']' %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
+        if (strcmp(usuario.login, login) == 0) {
+            fclose(file);
+            return 1; // Retorna 1 se o login já existir
+        }
+    }
+
+    fclose(file);
+    return 0; // Retorna 0 se o login não existir
+}
 void criarUsuario() {
     Usuario usuario;
 
     imprimirTituloCabecarioDuplo("TELA DE CADASTRO DE USUARIO", NULL);
+    centralizarFrase("Digite 0 a qualquer momento para sair","warning");
+    imprimirLinhaDivisoria();
 
-    char *p_nome = centralizarEObterValorChar("Digite o nome: ", 51);
-    char *p_login = centralizarEObterValorChar("Digite o login: ", 21);
-    char *p_senha = centralizarEObterValorChar("Digite a senha: ", 11);
+    char *p_nome = centralizarEObterValorChar("Digite o nome: ", 50);
+    if (strcmp(p_nome, "0") == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
+    char *p_login;
+    int loginExistente;
+    do {
+        p_login = centralizarEObterValorChar("Digite o login: ", 20);
+        if (strcmp(p_login, "0") == 0) {
+            free(p_login); // Liberar a memória alocada para o login
+            return; // Sai da função se o usuário digitar 0
+        }
+        loginExistente = verificarLoginExistente(p_login);
+        if (loginExistente) {
+            centralizarFrase("Login ja existe. Por favor, escolha outro login.", "warning");
+            free(p_login); // Liberar a memória alocada para o login
+        }
+    } while (loginExistente);
+    char *p_senha = centralizarEObterValorChar("Digite a senha: ", 10);
+    if (strcmp(p_senha, "0") == 0) {
+        return; // Sai da função se o usuário digitar 0
+    }
 
     listarEventosCadastro();
     int eventoMax = carregarUltimoEvento();
     int opcaoEvento = 0;
     do {
         opcaoEvento = centralizarEObterValorInt("Digite o codigo do evento para o usuario: ");
-    } while(opcaoEvento < 1 || opcaoEvento > eventoMax);
+        if (opcaoEvento == 0) {
+            return; // Sai da função se o usuário digitar 0
+        }
+    } while(opcaoEvento < 1 || opcaoEvento >= eventoMax);
     char* nomeEvento = obterNomeEvento("eventos.txt", opcaoEvento);
 
     imprimirLinhaDivisoria();
@@ -38,7 +84,10 @@ void criarUsuario() {
     char confirmacao[4];
     do {
         strcpy(confirmacao, centralizarEObterValorChar("Confirme se os valores estao corretos (sim/nao): ", 3));
-        getchar(); // Limpar o buffer do teclado
+
+        if (strcmp(confirmacao, "0") == 0) {
+            return; // Sai da função se o usuário digitar 0
+        }
 
         if (strcmp(confirmacao, "nao") == 0) {
             system("cls");
@@ -48,8 +97,9 @@ void criarUsuario() {
 
     } while (strcmp(confirmacao, "sim") != 0);
 
+
     // Preencher a estrutura do usuário com os dados inseridos
-    usuario.id = carregarUltimoUsuario() + 1; // Incrementar +1 a partir do ID do último usuário
+    usuario.id = carregarUltimoUsuario(); // Incrementar +1 a partir do ID do último usuário
     usuario.status = 1; // Status 1 é referente a usuário ativo
     strcpy(usuario.tipo, "vendedor"); // Todos os usuários novos que forem cadastrados serão vendedores
     strncpy(usuario.nome, p_nome, sizeof(usuario.nome) - 1);
@@ -70,35 +120,36 @@ int listarUsuarios() {
     file = fopen(filename, "r");
 
     if (file != NULL) {
-        //printf("Arquivo foi aberto com sucesso.\n\n");
-
         // Imprimir cabeçalho da tabela
         imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
         imprimirUsuarioEData();
 
-        printf("| %-3s | %-30s | %-15s | %-10s | %-13s | %-8s | %-15s |\n", "Cod", "Nome", "Login", "Senha", "Tipo", "Status", "Evento");
+        printf("| %-3s | %-30s | %-20s | %-13s | %-23s | %-8s |\n", "Cod", "Nome", "Login", "Tipo", "Evento", "Status");
         imprimirLinhaDivisoria();
 
         Usuario usuario;
         char aux_senha[20]; // Ajuste o tamanho conforme necessário
 
         // Ler e exibir cada linha do arquivo
-        while (fscanf(file, "%d '%30[^']' %s %s %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
+        while (fscanf(file, "%d '%30[^']' '%15[^']' '%11[^']' %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
             char status[10];
             if(usuario.status == 1){
                 strcpy(status, "Ativo");
             } else {
-                strcpy(status, "Desativo");
+                strcpy(status, "Inativo");
             }
-            strcpy(aux_senha, "******");
+            //strcpy(aux_senha, "***");
             char* nomeEvento = obterNomeEvento("eventos.txt", usuario.id_evento);
 
-            printf("| %-3d | %-30s | %-15s | %-10s | %-13s | %-8s | %-15s |\n", usuario.id, usuario.nome, usuario.login, aux_senha, usuario.tipo, status, nomeEvento);
+            printf("| %-3d | %-30.30s | %-20.20s | %-13s | %-23.23s | %-8s |\n",
+                   usuario.id, usuario.nome, usuario.login, usuario.tipo, nomeEvento, status);
+
+
         }
         imprimirLinhaDivisoria();
         fclose(file);
     } else {
-        perror("Não foi possível abrir o arquivo %s.\n\n");
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
     return 0;
 }
@@ -119,9 +170,8 @@ int carregarUltimoUsuario() {
             }
         }
         fclose(file);
-        //printf("Registro %d\n", contador_linhas);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
     return contador_linhas+1;
 }
@@ -135,12 +185,12 @@ void salvarUsuario(Usuario usuario) {
 
     if (file != NULL) {
         // Escreve os dados do usuário no arquivo
-        fprintf(file, "%d '%s' %s %s %s %d %d\n", usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.status, usuario.id_evento);
+        fprintf(file, "%d '%s' '%s' '%s' %s %d %d\n", usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.status, usuario.id_evento);
         fclose(file);
-        printf("Usuario salvo com sucesso!\n");
+        centralizarFrase("Usuario salvo com sucesso!","success");
     } else {
         // Exibe uma mensagem de erro se o arquivo não pôde ser aberto
-        perror("Erro ao abrir o arquivo");
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 }
 
@@ -151,20 +201,20 @@ char* obterNomeUsuario(const char *nomeArquivo, int idBusca) {
     FILE *file = fopen(caminhoArquivo, "r");
 
     if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
         return NULL;
     }
 
     Usuario usuario;
     char *nomeEvento = NULL;
 
-    while (fscanf(file, "%d '%30[^']' %s %s %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
+    while (fscanf(file, "%d '%30[^']' '%[^']' '%[^']' %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
         if (usuario.id == idBusca) {
             nomeEvento = (char*)malloc(strlen(usuario.nome) + 1);
             if (nomeEvento != NULL) {
                 strcpy(nomeEvento, usuario.nome);
             } else {
-                perror("Erro ao alocar memória para o nome do evento");
+                centralizarFrase("Erro ao alocar memória para o nome do evento","error");
             }
             break;
         }
@@ -181,7 +231,7 @@ Usuario buscarUsuarioPorId(int id) {
 
     file = fopen(filename, "r");
     if (file != NULL) {
-        while (fscanf(file, "%d '%[^']' '%[^']' '%[^']' '%[^']' %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
+        while (fscanf(file, "%d '%[^']' '%[^']' '%[^']' %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
             if (usuario.id == id) {
                 fclose(file);
                 return usuario;
@@ -189,7 +239,7 @@ Usuario buscarUsuarioPorId(int id) {
         }
         fclose(file);
     } else {
-        printf("Erro ao abrir o arquivo %s.\n", filename);
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
 
     // Retornar um usuário vazio caso não seja encontrado
@@ -199,6 +249,7 @@ Usuario buscarUsuarioPorId(int id) {
 
 
 void atualizarUsuario(Usuario usuario) {
+
     FILE *file;
     char filename[] = "data/usuarios.txt";
     FILE *tempFile;
@@ -209,13 +260,13 @@ void atualizarUsuario(Usuario usuario) {
     tempFile = fopen(tempFilename, "w");
 
     if (file != NULL && tempFile != NULL) {
-        while (fscanf(file, "%d '%[^']' '%[^']' '%[^']' '%[^']' %d %d", &tempUsuario.id, tempUsuario.nome, tempUsuario.login, tempUsuario.senha, tempUsuario.tipo, &tempUsuario.status, &tempUsuario.id_evento) != EOF) {
+        while (fscanf(file, "%d '%[^']' '%[^']' '%[^']' %s %d %d", &tempUsuario.id, tempUsuario.nome, tempUsuario.login, tempUsuario.senha, tempUsuario.tipo, &tempUsuario.status, &tempUsuario.id_evento) != EOF) {
             if (tempUsuario.id == usuario.id) {
                 // Escrever o usuário atualizado no arquivo temporário
-                fprintf(tempFile, "%d '%s' '%s' '%s' '%s' %d %d\n", usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.status, usuario.id_evento);
+                fprintf(tempFile, "%d '%s' '%s' '%s' %s %d %d\n", usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, usuario.status, usuario.id_evento);
             } else {
                 // Escrever o usuário sem modificação no arquivo temporário
-                fprintf(tempFile, "%d '%s' '%s' '%s' '%s' %d %d\n", tempUsuario.id, tempUsuario.nome, tempUsuario.login, tempUsuario.senha, tempUsuario.tipo, tempUsuario.status, tempUsuario.id_evento);
+                fprintf(tempFile, "%d '%s' '%s' '%s' %s %d %d\n", tempUsuario.id, tempUsuario.nome, tempUsuario.login, tempUsuario.senha, tempUsuario.tipo, tempUsuario.status, tempUsuario.id_evento);
             }
         }
         fclose(file);
@@ -225,13 +276,13 @@ void atualizarUsuario(Usuario usuario) {
         remove(filename);
         rename(tempFilename, filename);
 
-        centralizarFrase("Usuário atualizado com sucesso.", "success");
+        centralizarFrase("Usuario atualizado com sucesso.", "success");
     } else {
         if (file == NULL) {
-            printf("Erro ao abrir o arquivo %s.\n", filename);
+            centralizarFrase("Não foi possível abrir o arquivo.","error");
         }
         if (tempFile == NULL) {
-            printf("Erro ao criar o arquivo temporário %s.\n", tempFilename);
+            centralizarFrase("Não foi possível abrir o arquivo temporario.","error");
         }
     }
 }
