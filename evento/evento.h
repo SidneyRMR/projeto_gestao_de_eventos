@@ -1,12 +1,13 @@
 #ifndef EVENTO_H
 #define EVENTO_H
 
+// Define uma estrutura chamada Evento para armazenar informações sobre um evento
 typedef struct {
-    int id;
-    char evento[21];
-    char descricao[51];
-    char data[11];
-    int status;
+    int id;               // Identificador único do evento (por exemplo, um número de ID)
+    char evento[21];      // Nome do evento, limitado a 20 caracteres (o último byte é para o caractere nulo)
+    char descricao[51];   // Descrição do evento, limitado a 50 caracteres (o último byte é para o caractere nulo)
+    char data[11];        // Data do evento no formato "dd/mm/aaaa" (10 caracteres mais um byte para o caractere nulo)
+    int status;           // Status do evento (por exemplo, 1 - Ativo, 0 - Inativo.)
 } Evento;
 
 /**

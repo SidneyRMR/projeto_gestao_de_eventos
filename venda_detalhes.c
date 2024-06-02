@@ -5,8 +5,8 @@
 #include "venda_detalhes.h"
 #include "venda.h"
 #include "menu.h"
-#include "evento.h"
-#include "components.h"
+#include "evento/evento.h"
+#include "components/components.h"
 
 typedef struct {
     int id_produto;

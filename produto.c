@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "produto.h"
-#include "components.h"
-#include "evento.h"
+#include "components/components.h"
+#include "evento/evento.h"
 #include "menu.h"
 #include "variaveis_compartilhadas.h"
 
@@ -120,7 +120,7 @@ int listarProdutos() {
             if (produto.status == 1) {
                 strcpy(prodAtivado, "Ativo");
             } else {
-                strcpy(prodAtivado, "Desativado");
+                strcpy(prodAtivado, "Inativo");
             }
 
             printf("| %-3d | %-50.50s | %-10.2f | %-9d | %-15.15s | %-10s |\n",

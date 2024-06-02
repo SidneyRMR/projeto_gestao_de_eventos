@@ -1,10 +1,10 @@
 #include <stdio.h>
 #include <windows.h>
 #include <malloc.h>
-#include "variaveis_compartilhadas.h"
-#include "menu.h"
+#include "../variaveis_compartilhadas.h"
+#include "../menu.h"
 #include "components.h"
-#include "evento.h"
+#include "../evento/evento.h"
 
 #include <conio.h>
 
@@ -99,7 +99,7 @@ void imprimirCentralizadoLista(const char *frase) {
         espacos_restantes = 0;
     }
 
-    char linha[LARGURALISTA + 3]; // LARGURALISTA + 2 para as bordas '|' e +1 para o caractere nulo
+    char linha[LARGURALISTA + 3];
     strcpy(linha, "|");
     for (int i = 0; i < espacos-1; ++i) {
         strcat(linha, " ");
@@ -244,19 +244,10 @@ void centralizarFraseDoisValores(char *frase, char *frase2) {
     }
     printf(" |\n");
 }
-/*
-void centralizarFraseSemBorda(char *frase) {
-    int espacos = 0;
-    int comprimento_frase= 0;
-    comprimento_frase = strlen(frase);
-    espacos = (LARGURA - comprimento_frase) / 2;
-    printf("%*s%-*s%*s\n", espacos, "", comprimento_frase, frase, LARGURA - comprimento_frase - espacos, "");
-}
- */
+
 void limparBufferEntrada() {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {
-        // Discarding characters until end of line or end of file
     }
 }
 

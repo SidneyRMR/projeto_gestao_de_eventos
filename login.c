@@ -5,7 +5,7 @@
 #include "login.h"
 #include "menu.h"
 #include "variaveis_compartilhadas.h"
-#include "components.h"
+#include "components/components.h"
 
 #define MAX_USUARIOS 100 // Defina o número máximo de usuários
 

@@ -7,8 +7,7 @@
 - **Criar função de backup dos arquivos no menu Administrativo**
 - **Criar um ícone para o programa e um instalador com tudo compilado(inclusive BD)**
 - **Script de criação automática do BD e suas tabelas**
-- **Ao cadastrar usuário, realizar verificação se login e senha ja existem**
-- 
+
 
 
 

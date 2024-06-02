@@ -7,4 +7,4 @@
 6 'Festa 6' 'descricao evento6' 27/05/2024 1
 7 'Festa 7' 'descricao evento7' 28/05/2024 1
 8 'Festa 8' 'descricao evento8' 31/05/2024 1
-9 'Festa 9' 'descricao evento9' 01/06/2024 1
+9 'Festa 9' 'descricao evento9' 01/06/2024 0

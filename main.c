@@ -2,7 +2,6 @@
 #include "login.h"
 #include <windows.h>
 //#include <hpdf.h>
-#include <stdio.h>
 //todo - preparar apresentação powerpoint e documentação (pode ser em .md - confirmar com Ana Celia) e guia de usuario(como usar em .md) para dia 8 de junho *******************************
 
 void ajustarTamanhoJanela(int largura, int altura) {
@@ -61,6 +60,9 @@ int impressaoTeste() {
 include_directories("C:/libsC/libharu/include")
 link_directories("C:/libsC/libharu/build/src")
 */
+
+// Função de entrada padrão para aplicativos Windows
+
 int main() {
     ajustarTamanhoJanela(1000, 900); // Ajusta o tamanho da janela do console
     centralizarJanela(); // Centraliza a janela do console

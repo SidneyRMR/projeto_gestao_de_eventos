@@ -1,16 +1,17 @@
 #ifndef USUARIO_H
 #define USUARIO_H
 
-//todo erro do atualizar usuario pode
+// Define uma estrutura chamada Usuario para armazenar informações sobre um usuário
 typedef struct {
-    int id;
-    char nome[51];
-    char login[21];
-    char senha[11];
-    char tipo[15];
-    int status;
-    int id_evento;
+    int id;               // Identificador único do usuário (por exemplo, um número de ID)
+    char nome[51];        // Nome do usuário, limitado a 50 caracteres (o último byte é para o caractere nulo)
+    char login[21];       // Nome de login do usuário, limitado a 20 caracteres (o último byte é para o caractere nulo)
+    char senha[11];       // Senha do usuário, limitada a 10 caracteres (o último byte é para o caractere nulo)
+    char tipo[15];        // Tipo de usuário (por exemplo, admin, usuário comum), limitado a 14 caracteres (o último byte é para o caractere nulo)
+    int status;           // Status do usuário (por exemplo, Ativo, Inativo)
+    int id_evento;        // Identificador do evento associado ao usuário (por exemplo, ID do evento em que o usuário está participando)
 } Usuario;
+
 
 /**
  * Função para criar um novo usuário.

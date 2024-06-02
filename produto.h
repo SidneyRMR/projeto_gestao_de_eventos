@@ -1,21 +1,23 @@
 #ifndef PRODUTO_H
 #define PRODUTO_H
 
+// Define uma estrutura chamada Produto para armazenar informações sobre um produto
 typedef struct {
-    int id;
-    char descricao[51];
-    double preco;
-    int estoque;
-    int id_evento;
-    int status;
+    int id;                // Identificador único do produto (por exemplo, um número de ID)
+    char descricao[51];    // Descrição do produto, limitado a 50 caracteres (o último byte é para o caractere nulo)
+    double preco;          // Preço do produto (valor em ponto flutuante)
+    int estoque;           // Quantidade em estoque do produto (um número inteiro)
+    int id_evento;         // Identificador do evento associado ao produto (por exemplo, ID do evento em que o produto será vendido)
+    int status;            // Status do evento (por exemplo, 1 - Ativo, 0 - Inativo.)
 } Produto;
+
 
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include "produto.h" // Inclui a definição da estrutura Produto e os protótipos das funções relacionadas a produtos
-#include "components.h" // Inclui funções auxiliares para interface de usuário
-#include "evento.h" // Inclui funções relacionadas a eventos
+#include "components/components.h" // Inclui funções auxiliares para interface de usuário
+#include "evento/evento.h" // Inclui funções relacionadas a eventos
 #include "menu.h" // Inclui funções relacionadas a menus
 #include "variaveis_compartilhadas.h" // Inclui variáveis compartilhadas
 

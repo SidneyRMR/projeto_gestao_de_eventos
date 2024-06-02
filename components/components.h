@@ -1,9 +1,6 @@
-//
-// Created by sidne on 14/05/2024.
-//
-
 #ifndef PROJETO_GESTAO_DE_EVENTOS_COMPONENTS_H
 #define PROJETO_GESTAO_DE_EVENTOS_COMPONENTS_H
+
 typedef enum {
     BLACK = 0,
     BLUE,
@@ -23,10 +20,12 @@ typedef enum {
     WHITE
 } Color;
 
+// Define uma estrutura chamada ColorScheme para armazenar informações sobre esquemas de cores
 typedef struct {
-    Color textColor;
-    Color bgColor;
+    Color textColor;  // Cor do texto (pode ser um valor ou enum que representa a cor do texto)
+    Color bgColor;    // Cor de fundo (pode ser um valor ou enum que representa a cor de fundo)
 } ColorScheme;
+
 
 /**
  * @brief Define o esquema de cores a ser usado na interface.

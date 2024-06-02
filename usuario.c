@@ -2,11 +2,33 @@
 #include <string.h>
 #include <malloc.h>
 #include "usuario.h"
-#include "evento.h"
-#include "components.h"
+#include "evento/evento.h"
+#include "components/components.h"
 #include "menu.h"
 
-// Função para cadastro de usuário
+// Função para verificar se o login já existe
+int verificarLoginExistente(const char *login) {
+    char caminhoArquivo[100]; // Ajuste o tamanho conforme necessário
+    sprintf(caminhoArquivo, "data/usuarios.txt");
+    FILE *file = fopen(caminhoArquivo, "r");
+
+    if (file == NULL) {
+        centralizarFrase("Não foi possível abrir o arquivo de usuários.", "error");
+        return -1; // Retorna -1 se houver um erro ao abrir o arquivo
+    }
+
+    Usuario usuario;
+
+    while (fscanf(file, "%d '%30[^']' '%[^']' '%[^']' %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
+        if (strcmp(usuario.login, login) == 0) {
+            fclose(file);
+            return 1; // Retorna 1 se o login já existir
+        }
+    }
+
+    fclose(file);
+    return 0; // Retorna 0 se o login não existir
+}
 void criarUsuario() {
     Usuario usuario;
 
@@ -18,10 +40,20 @@ void criarUsuario() {
     if (strcmp(p_nome, "0") == 0) {
         return; // Sai da função se o usuário digitar 0
     }
-    char *p_login = centralizarEObterValorChar("Digite o login: ", 20);
-    if (strcmp(p_login, "0") == 0) {
-        return; // Sai da função se o usuário digitar 0
-    }
+    char *p_login;
+    int loginExistente;
+    do {
+        p_login = centralizarEObterValorChar("Digite o login: ", 20);
+        if (strcmp(p_login, "0") == 0) {
+            free(p_login); // Liberar a memória alocada para o login
+            return; // Sai da função se o usuário digitar 0
+        }
+        loginExistente = verificarLoginExistente(p_login);
+        if (loginExistente) {
+            centralizarFrase("Login ja existe. Por favor, escolha outro login.", "warning");
+            free(p_login); // Liberar a memória alocada para o login
+        }
+    } while (loginExistente);
     char *p_senha = centralizarEObterValorChar("Digite a senha: ", 10);
     if (strcmp(p_senha, "0") == 0) {
         return; // Sai da função se o usuário digitar 0
@@ -104,7 +136,7 @@ int listarUsuarios() {
             if(usuario.status == 1){
                 strcpy(status, "Ativo");
             } else {
-                strcpy(status, "Desativo");
+                strcpy(status, "Inativo");
             }
             //strcpy(aux_senha, "***");
             char* nomeEvento = obterNomeEvento("eventos.txt", usuario.id_evento);

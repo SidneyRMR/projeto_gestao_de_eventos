@@ -8,7 +8,7 @@
 #include "venda_detalhes.h"
 #include "usuario.h"
 #include "variaveis_compartilhadas.h"
-#include "components.h"
+#include "components/components.h"
 
 
 #define MAX_PRODUTO 100

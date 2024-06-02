@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <time.h>
-#include "evento.h"
+#include "evento/evento.h"
 #include "usuario.h"
 #include "produto.h"
 #include "venda.h"
 #include "menu.h"
 #include "venda_detalhes.h"
 #include "variaveis_compartilhadas.h"
-#include "components.h"
+#include "components/components.h"
 #include "login.h"
 
 
@@ -186,7 +186,7 @@ int menuEditarProduto() {
         if (produto.status == 1) {
             strcpy(prodAtivado, "Ativo");
         } else {
-            strcpy(prodAtivado, "Desativado");
+            strcpy(prodAtivado, "Inativo");
         }
         imprimirLinhaDivisoria();
         printf("| %-3s | %-50s | %-10s | %-9s | %-15s | %-10s |\n", "Cod", "Descricao", "Preco", "Estoque", "Evento", "Status");
@@ -284,7 +284,7 @@ int menuEditarEvento() {
         printf("| %-3s | %-30s | %-60s | %-10s |\n", "Cod", "Nome", "Descricao", "Status");
         imprimirLinhaDivisoria();
         printf("| %-3d | %-30.30s | %-60.60s | %-10s |\n",
-               evento.id, evento.evento, evento.descricao, evento.status == 1 ? "Ativo" : "Desativado");
+               evento.id, evento.evento, evento.descricao, evento.status == 1 ? "Ativo" : "Inativo");
         imprimirLinhaDivisoria();
 
         // Menu de opções para edição do evento
@@ -342,7 +342,7 @@ int menuEditarUsuario() {
         printf("| %-3s | %-30s | %-20s | %-13s | %-20s | %-11s |\n", "Cod", "Nome", "Login", "Tipo", "Evento", "Status");
         imprimirLinhaDivisoria();
         printf("| %-3d | %-30.30s | %-20.20s | %-13s | %-20.20s | %-11s |\n",
-               usuario.id, usuario.nome, usuario.login, usuario.tipo, nomeEvento, usuario.status == 1 ? "Ativo" : "Desativado");
+               usuario.id, usuario.nome, usuario.login, usuario.tipo, nomeEvento, usuario.status == 1 ? "Ativo" : "Inativo");
         imprimirLinhaDivisoria();
 
         // Menu de opções para edição do usuário

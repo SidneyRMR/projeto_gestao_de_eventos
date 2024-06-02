@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "evento.h"
-#include "menu.h"
-#include "components.h"
+#include "../menu.h"
+#include "../components/components.h"
 
 // Definição da estrutura para armazenar os dados do evento
 void criarEvento() {
@@ -84,7 +84,7 @@ void listarEventos() {
             if(evento.status == 1){
                 strcpy(status, "Ativo");
             } else {
-                strcpy(status, "Desativo");
+                strcpy(status, "Inativo");
             }
             printf("| %-3d | %-20s | %-57s | %-10s | %-10s |\n", evento.id, evento.evento, evento.descricao, evento.data, status);
         }
