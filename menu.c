@@ -368,10 +368,22 @@ int menuEditarUsuario() {
                 break;
             }
             case 2: {
-                char *novoLogin = centralizarEObterValorChar("Digite o novo login do usuario: ", 20);
+
+                char *novoLogin;
+                int loginExistente;
+                do {
+                    novoLogin = centralizarEObterValorChar("Digite o novo login do usuario: ", 20);
+
+                    loginExistente = verificarLoginExistente(novoLogin);
+                    if (loginExistente) {
+                        centralizarFrase("Login ja existe. Por favor, escolha outro login.", "warning");
+                        free(novoLogin); // Liberar a memória alocada para o login
+                    }
+                } while (loginExistente);
                 strcpy(usuario.login, novoLogin);
                 atualizarUsuario(usuario);
                 break;
+
             }
             case 3: {
                 char *senhaAcesso = centralizarEObterValorSenha("Senha de autorizacao: ", 11);

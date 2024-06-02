@@ -74,3 +74,5 @@ void obterDataAtual(char *dataAtual);
  * lendo o arquivo que contém os eventos e retornando o nome correspondente.
  */
 char* obterNomeEvento(const char *nomeArquivo, int idEventoBusca);
+int listarProdutosVenda();
+int verificarLoginExistente(const char *login);
