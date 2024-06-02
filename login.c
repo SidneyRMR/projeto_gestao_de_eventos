@@ -51,7 +51,7 @@ void carregarUsuarios() {
 int loginAux() {
     system("cls");
     imprimirTituloCabecarioDuplo("TELA DE LOGIN - GESTAO DE EVENTOS",NULL);
-    char *usuarioo = centralizarEObterValorChar("Digite seu usuario: ", 21);
+    char *usuarioo = centralizarEObterValorSenha("Digite seu usuario: ", 21);
     char *senha = centralizarEObterValorSenha("Digite sua senha: ",11);
 
     for (int i = 0; i < numUsuarios; i++) {

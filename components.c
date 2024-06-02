@@ -207,8 +207,8 @@ void opcaoInvalida() {
 }
 
 void centralizarFrase(char *frase, const char *cor) {
-    int espacos = 0;
-    int comprimento_frase = 0;
+    int espacos;
+    int comprimento_frase;
     comprimento_frase = strlen(frase);
     espacos = (LARGURA - comprimento_frase) / 2;
 
@@ -332,43 +332,49 @@ double centralizarEObterValorDouble(const char* frase) {
     return valor;
 }
 
+
 char* centralizarEObterValorChar(const char *frase, int tamanho) {
     if (strlen(frase) > LARGURA) {
         centralizarFrase("Erro: O valor excede a largura máxima permitida.", "error");
         return NULL; // Saída em caso de erro
     }
 
-    //imprimirLinhaDivisoria();
     int espacosEsquerda = (LARGURA - strlen(frase)) / 2;
-    char *valor = (char *)
-            malloc((tamanho + 1) * sizeof(char)); // Alocando memória dinamicamente
+    printf("%*s%s ", espacosEsquerda, "", frase); // Centraliza a frase
+
+    char *valor = (char *)malloc((tamanho + 1) * sizeof(char)); // Alocando memória dinamicamente
 
     if (valor == NULL) {
         centralizarFrase("Erro: Falha na alocação de memória.", "error");
         return NULL; // Saída em caso de erro de alocação de memória
     }
 
-    // Imprimindo os espaços à esquerda
-    for (int i = 0; i < espacosEsquerda; i++) {
-        printf(" ");
+    int i = 0;
+    char ch;
+
+    while (1) {
+        ch = _getch(); // Lê um caractere sem exibi-lo na tela
+
+        if (ch == 13) { // Enter key (ASCII 13)
+            valor[i] = '\0';
+            break;
+        } else if (ch == 8) { // Backspace key (ASCII 8)
+            if (i > 0) {
+                i--;
+                printf("\b \b"); // Move o cursor para trás, apaga o caractere e move para trás novamente
+            }
+        } else if (i < tamanho) { // Se não exceder o tamanho máximo
+            valor[i] = ch;
+            i++;
+            printf("%c", ch); // Exibe o caractere na tela
+        } else {
+            // Se o tamanho máximo for atingido, toque um som de alerta e ignore mais entradas
+            printf("\a"); // Toca um som de alerta
+        }
     }
-    setColorScheme(getColorSchemeByName("info"));
-    // Imprimindo a frase
-    printf("%s ", frase);
 
-    setColorScheme(getColorSchemeByName("default"));
+    printf("\n"); // Adiciona um newline após a leitura
 
-    // Lendo a entrada com scanf, garantindo que não exceda o tamanho máximo
-    scanf(" %97[^\n]", valor); // lê no máximo 97 caracteres para garantir espaço para o terminador nulo
-
-    // Verificando se a entrada excede o tamanho permitido
-    if (strlen(valor) > tamanho) {
-        centralizarFrase("Erro: A entrada excede o tamanho máximo permitido de caracteres.", "error");
-        free(valor); // Liberando a memória alocada
-        return NULL; // Saída em caso de erro
-    }
-
-    // Retornando a entrada lida
     return valor;
 }
 
@@ -419,8 +425,6 @@ char* centralizarEObterValorSenha(const char *frase, int tamanho) {
 
     setColorScheme(getColorSchemeByName("default"));
 
-    char *senha;
-    //printf("Enter password: ");
     getPassword(valor, tamanho);
     printf("\n");
 

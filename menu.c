@@ -39,7 +39,6 @@ int menuAdministrador() {
                 system("cls");
                 imprimirTituloCabecarioDuplo("LISTAGEM DE TODOS OS EVENTO", NULL);
                 listarEventos();
-                opcaoSair = 1;
                 while (opcaoSair != 0) {
                     opcaoSair = centralizarEObterValorInt("Digite 0 para sair.");
                 }
@@ -196,21 +195,38 @@ int menuEditarProduto() {
 
         switch (opcaoAdmProduto) {
             case 1: {
-                char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 51);
+                char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 50);
                 strcpy(produto.descricao, novoNome);
                 atualizarProduto(produto);
                 break;
             }
             case 2: {
-                double novopreco = centralizarEObterValorDouble("Digite o novo preco do produto: ");
+                double novopreco;
+                do {
+                    novopreco = centralizarEObterValorDouble("Digite o novo preco do produto: ");
+                    if (novopreco > 1000) {
+                        centralizarFrase("Erro: O preço nao pode ser maior que 1000. Por favor, insira novamente.", "warning");
+                    }
+                } while (novopreco > 1000);
+
                 produto.preco = novopreco;
                 atualizarProduto(produto);
                 break;
             }
-            case 3:
-                ajustarEstoqueSelecionado(produto.id);
-                atualizarProduto(produto);
-                break;
+            case 3: {
+                    int novoestoque;
+                    do {
+                        novoestoque = centralizarEObterValorInt("Digite o novo estoque do produto: ");
+                        if (novoestoque > 1000) {
+                            centralizarFrase("Erro: O estoque nao pode ser maior que 1000. Por favor, insira novamente.","warning");
+                        }
+                    } while (novoestoque > 1000);
+
+                    ajustarEstoqueSelecionado(produto.id);
+                    produto.estoque = novoestoque;
+                    atualizarProduto(produto);
+                    break;
+                }
             case 4: {
                 listarEventosCadastro();
                 int eventoMax = carregarUltimoEvento();
@@ -234,6 +250,7 @@ int menuEditarProduto() {
                 break;
             case 0:
                 system("cls");
+                menuEditarProduto();
                 return 0;
 
             default:
@@ -267,12 +284,12 @@ int menuEditarEvento() {
 
     switch (opcaoAdmEvento) {
         case 1:
-            char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 21);
+            char *novoNome = centralizarEObterValorChar("Digite o novo nome do evento: ", 20);
             strcpy(evento.evento, novoNome);
             atualizarEvento(evento);
             break;
         case 2:
-            char *novaDescricao = centralizarEObterValorChar("Digite o novo nome do evento: ", 51);
+            char *novaDescricao = centralizarEObterValorChar("Digite o novo nome do evento: ", 50);
             strcpy(evento.descricao, novaDescricao);
             atualizarEvento(evento);
             break;
@@ -325,14 +342,14 @@ int menuEditarUsuario() {
     switch (opcaoAdmUsuario) {
         case 1:
         {
-            char *novoNome = centralizarEObterValorChar("Digite o novo nome do usuario: ", 51);
+            char *novoNome = centralizarEObterValorChar("Digite o novo nome do usuario: ", 50);
             strcpy(usuario.nome, novoNome);
             atualizarUsuario(usuario);
             break;
         }
         case 2:
         {
-            char *novoLogin = centralizarEObterValorChar("Digite o novo login do usuario: ", 21);
+            char *novoLogin = centralizarEObterValorChar("Digite o novo login do usuario: ", 20);
             strcpy(usuario.login, novoLogin);
             atualizarUsuario(usuario);
             break;
@@ -422,7 +439,7 @@ char* obterNomeEvento(const char *nomeArquivo, int idEventoBusca) {
     FILE *file = fopen(caminhoArquivo, "r");
 
     if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
+        centralizarFrase("Erro ao abrir o arquivo","error");
         return NULL;
     }
 
@@ -435,7 +452,7 @@ char* obterNomeEvento(const char *nomeArquivo, int idEventoBusca) {
             if (nomeEvento != NULL) {
                 strcpy(nomeEvento, evento.evento);
             } else {
-                perror("Erro ao alocar memória para o nome do evento");
+                centralizarFrase("Erro ao alocar memória","error");
             }
             break;
         }

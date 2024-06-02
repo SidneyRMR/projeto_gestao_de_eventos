@@ -14,15 +14,15 @@ void criarUsuario() {
     centralizarFrase("Digite 0 a qualquer momento para sair","warning");
     imprimirLinhaDivisoria();
 
-    char *p_nome = centralizarEObterValorChar("Digite o nome: ", 51);
+    char *p_nome = centralizarEObterValorChar("Digite o nome: ", 50);
     if (strcmp(p_nome, "0") == 0) {
         return; // Sai da função se o usuário digitar 0
     }
-    char *p_login = centralizarEObterValorChar("Digite o login: ", 21);
+    char *p_login = centralizarEObterValorChar("Digite o login: ", 20);
     if (strcmp(p_login, "0") == 0) {
         return; // Sai da função se o usuário digitar 0
     }
-    char *p_senha = centralizarEObterValorChar("Digite a senha: ", 11);
+    char *p_senha = centralizarEObterValorChar("Digite a senha: ", 10);
     if (strcmp(p_senha, "0") == 0) {
         return; // Sai da função se o usuário digitar 0
     }
@@ -92,24 +92,27 @@ int listarUsuarios() {
         imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
         imprimirUsuarioEData();
 
-        printf("| %-3s | %-30s | %-15s | %-10s | %-13s | %-15s | %-8s |\n", "Cod", "Nome", "Login", "Senha", "Tipo", "Evento", "Status");
+        printf("| %-3s | %-30s | %-20s | %-13s | %-23s | %-8s |\n", "Cod", "Nome", "Login", "Tipo", "Evento", "Status");
         imprimirLinhaDivisoria();
 
         Usuario usuario;
         char aux_senha[20]; // Ajuste o tamanho conforme necessário
 
         // Ler e exibir cada linha do arquivo
-        while (fscanf(file, "%d '%30[^']' '%21[^']' '%11[^']' %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
+        while (fscanf(file, "%d '%30[^']' '%15[^']' '%11[^']' %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
             char status[10];
             if(usuario.status == 1){
                 strcpy(status, "Ativo");
             } else {
                 strcpy(status, "Desativo");
             }
-            strcpy(aux_senha, "******");
+            //strcpy(aux_senha, "***");
             char* nomeEvento = obterNomeEvento("eventos.txt", usuario.id_evento);
 
-            printf("| %-3d | %-30s | %-15s | %-10s | %-13s | %-15s | %-8s |\n", usuario.id, usuario.nome, usuario.login, aux_senha, usuario.tipo, nomeEvento, status);
+            printf("| %-3d | %-30.30s | %-20.20s | %-13s | %-23.23s | %-8s |\n",
+                   usuario.id, usuario.nome, usuario.login, usuario.tipo, nomeEvento, status);
+
+
         }
         imprimirLinhaDivisoria();
         fclose(file);

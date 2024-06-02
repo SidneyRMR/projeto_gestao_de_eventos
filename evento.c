@@ -13,11 +13,11 @@ void criarEvento() {
     centralizarFrase("Digite 0 a qualquer momento para sair","warning");
     imprimirLinhaDivisoria();
 
-    char *p_evento = centralizarEObterValorChar("Digite o nome do evento: ", 21);
+    char *p_evento = centralizarEObterValorChar("Digite o nome do evento: ", 20);
     if (strcmp(p_evento, "0") == 0) {
         return; // Sai da função se o usuário digitar 0
     }
-    char *p_descricao = centralizarEObterValorChar("Digite uma descricao para o evento: ", 51);
+    char *p_descricao = centralizarEObterValorChar("Digite uma descricao para o evento: ", 50);
     if (strcmp(p_descricao, "0") == 0) {
         return; // Sai da função se o usuário digitar 0
     }
@@ -32,8 +32,8 @@ void criarEvento() {
 
     // Preencher a estrutura do evento com os dados inseridos
     evento.id = carregarUltimoEvento() ; // Incrementar o ID do último evento
-    strncpy(evento.evento, p_evento, sizeof(evento.evento) - 1);
-    strncpy(evento.descricao, p_descricao, sizeof(evento.descricao) - 1);
+    strcpy(evento.evento, p_evento);
+    strcpy(evento.descricao, p_descricao);
     obterDataAtual(evento.data);
     evento.status = 1;
 

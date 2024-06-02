@@ -19,18 +19,31 @@ void criarProduto() {
     imprimirLinhaDivisoria();
 
     // Solicitar ao usuário que insira os dados do produto
-    char *p_descricao = centralizarEObterValorChar("Digite a descricao do produto: ", 51);
+    char *p_descricao = centralizarEObterValorChar("Digite a descricao do produto: ", 50);
     if (strcmp(p_descricao, "0") == 0) {
         return; // Sai da função se o usuário digitar 0
     }
-    double p_preco = centralizarEObterValorDouble("Digite o preco do produto: ");
-    if (p_preco == 0.0) {
-        return; // Sai da função se o usuário digitar 0
-    }
-    int p_estoque = centralizarEObterValorInt("Digite o estoque do produto: ");
-    if (p_estoque == 0) {
-        return; // Sai da função se o usuário digitar 0
-    }
+    double p_preco;
+    do {
+        p_preco = centralizarEObterValorDouble("Digite o preco do produto: ");
+        if (p_preco == 0.0) {
+            return; // Sai da função se o usuário digitar 0
+        }
+        if (p_preco > 1000) {
+            printf("Erro: O preço não pode ser maior que 1000. Por favor, insira novamente.\n");
+        }
+    } while (p_preco > 1000);
+
+    int p_estoque;
+    do {
+        p_estoque = centralizarEObterValorInt("Digite o estoque do produto: ");
+        if (p_estoque == 0) {
+            return; // Sai da função se o usuário digitar 0
+        }
+        if (p_estoque > 1000) {
+            printf("Erro: O estoque não pode ser maior que 1000. Por favor, insira novamente.\n");
+        }
+    } while (p_estoque > 1000);
 
     listarEventosCadastro();
     int eventoMax = carregarUltimoEvento();
@@ -110,7 +123,7 @@ int listarProdutos() {
                 strcpy(prodAtivado, "Desativado");
             }
 
-            printf("| %-3d | %-50s | %-10.2f | %-9d | %-15s | %-10s |\n",
+            printf("| %-3d | %-50.50s | %-10.2f | %-9d | %-15.15s | %-10s |\n",
                    produto.id, produto.descricao, produto.preco, produto.estoque, nomeEvento, prodAtivado);
             //imprimirLinhaDivisoria();
             free(nomeEvento);  // Liberar memória alocada para o nome do evento
@@ -147,12 +160,6 @@ int carregarUltimoProduto() {
 
     return contador_linhas+1;
 }
-
-
-void editarProduto(int idProduto, int idEvento){
-    //todo
-}
-
 
 void salvarProduto(Produto produto) {
     FILE *file;
@@ -216,6 +223,7 @@ void atualizarProduto(Produto produto) {
         while (fscanf(file, "%d '%49[^']' %lf %d %d %d\n", &tempProduto.id, tempProduto.descricao, &tempProduto.preco, &tempProduto.estoque, &tempProduto.id_evento, &tempProduto.status) != EOF) {
             if (tempProduto.id == produto.id) {
                 fprintf(tempFile, "%d '%s' %.2lf %d %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento, produto.status);
+                printf("%d '%s' %.2lf %d %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento, produto.status);
             } else {
                 fprintf(tempFile, "%d '%s' %.2lf %d %d %d\n", tempProduto.id, tempProduto.descricao, tempProduto.preco, tempProduto.estoque, tempProduto.id_evento, tempProduto.status);
             }

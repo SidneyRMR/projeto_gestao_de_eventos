@@ -213,17 +213,17 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
     FILE *file = fopen(caminhoArquivo, "r");
 
     if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
+        centralizarFrase("Erro ao abrir arquivo","error");
         return 0;
     }
 
-    char *nomeEvento = obterNomeEvento("venda.txt", opcao);
-    if (nomeEvento == NULL) {
-        nomeEvento = (char*)malloc(strlen("Nada encontrado") + 1);
-        if (nomeEvento != NULL) {
-            strcpy(nomeEvento, "Nada encontrado");
+    char *nomeVenda = obterNomeEvento("venda.txt", opcao);
+    if (nomeVenda == NULL) {
+        nomeVenda = (char*)malloc(strlen("Nada encontrado") + 1);
+        if (nomeVenda != NULL) {
+            strcpy(nomeVenda, "Nada encontrado");
         } else {
-            perror("Erro ao alocar memória para 'Nada encontrado'");
+            centralizarFrase("Erro ao alocar memória","error");
         }
     }
 
@@ -248,7 +248,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
 
     // Imprimir cabeçalho da tabela
     system("cls");
-    imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", NULL);
+    imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", nomeVenda);
     imprimirUsuarioEData();
     printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
@@ -270,7 +270,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
         printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
-    free(nomeEvento);
+    free(nomeVenda);
     int sair;
     while (sair != 0) {
         sair = centralizarEObterValorInt("Digite 0 para sair: ");
@@ -287,7 +287,7 @@ int relatorioEventoEspecifico(const char *nomeArquivo, int opcao) {
     FILE *file = fopen(caminhoArquivo, "r");
 
     if (file == NULL) {
-        perror("Erro ao abrir o arquivo");
+        centralizarFrase("Erro ao abrir o arquivo","error");
         return 0;
     }
 
