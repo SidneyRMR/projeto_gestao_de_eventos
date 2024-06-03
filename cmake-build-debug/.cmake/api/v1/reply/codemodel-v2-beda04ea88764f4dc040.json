@@ -58,8 +58,8 @@
 	"kind" : "codemodel",
 	"paths" : 
 	{
-		"build" : "C:/Users/sidne/OneDrive/\u00c1rea de Trabalho/Fatec 2\u00ba Semestre/LP - Maromo/projeto_gestao_de_eventos/cmake-build-debug",
-		"source" : "C:/Users/sidne/OneDrive/\u00c1rea de Trabalho/Fatec 2\u00ba Semestre/LP - Maromo/projeto_gestao_de_eventos"
+		"build" : "C:/maromoForkII/projeto_gestao_de_eventos/cmake-build-debug",
+		"source" : "C:/maromoForkII/projeto_gestao_de_eventos"
 	},
 	"version" : 
 	{
