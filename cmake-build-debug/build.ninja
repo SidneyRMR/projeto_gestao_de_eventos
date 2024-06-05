@@ -41,39 +41,6 @@ include CMakeFiles/rules.ninja
 
 cmake_ninja_workdir = C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/cmake-build-debug/
 # =============================================================================
-# Object build statements for EXECUTABLE target CreatePDF
-
-
-#############################################
-# Order-only phony target for CreatePDF
-
-build cmake_object_order_depends_target_CreatePDF: phony || CMakeFiles/CreatePDF.dir
-
-build CMakeFiles/CreatePDF.dir/main.c.obj: C_COMPILER__CreatePDF_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/main.c || cmake_object_order_depends_target_CreatePDF
-  DEP_FILE = CMakeFiles\CreatePDF.dir\main.c.obj.d
-  FLAGS = -g -std=gnu11 -fdiagnostics-color=always
-  OBJECT_DIR = CMakeFiles\CreatePDF.dir
-  OBJECT_FILE_DIR = CMakeFiles\CreatePDF.dir
-
-
-# =============================================================================
-# Link build statements for EXECUTABLE target CreatePDF
-
-
-#############################################
-# Link the executable CreatePDF.exe
-
-build CreatePDF.exe: C_EXECUTABLE_LINKER__CreatePDF_Debug CMakeFiles/CreatePDF.dir/main.c.obj
-  FLAGS = -g
-  LINK_LIBRARIES = -lhpdf  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
-  OBJECT_DIR = CMakeFiles\CreatePDF.dir
-  POST_BUILD = cd .
-  PRE_LINK = cd .
-  TARGET_FILE = CreatePDF.exe
-  TARGET_IMPLIB = libCreatePDF.dll.a
-  TARGET_PDB = CreatePDF.exe.dbg
-
-# =============================================================================
 # Object build statements for EXECUTABLE target projeto_gestao_de_eventos
 
 
@@ -106,11 +73,11 @@ build CMakeFiles/projeto_gestao_de_eventos.dir/venda.c.obj: C_COMPILER__projeto_
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
-build CMakeFiles/projeto_gestao_de_eventos.dir/evento/evento.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/evento/evento.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\evento\evento.c.obj.d
+build CMakeFiles/projeto_gestao_de_eventos.dir/evento.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/evento.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
+  DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\evento.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
-  OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir\evento
+  OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/menu.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/menu.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\menu.c.obj.d
@@ -136,11 +103,11 @@ build CMakeFiles/projeto_gestao_de_eventos.dir/variaveis_compartilhadas.c.obj: C
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
   OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
-build CMakeFiles/projeto_gestao_de_eventos.dir/components/components.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/components/components.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
-  DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\components\components.c.obj.d
+build CMakeFiles/projeto_gestao_de_eventos.dir/components.c.obj: C_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/components.c || cmake_object_order_depends_target_projeto_gestao_de_eventos
+  DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\components.c.obj.d
   FLAGS = -g -std=gnu11 -fdiagnostics-color=always
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
-  OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir\components
+  OBJECT_FILE_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
 
 build CMakeFiles/projeto_gestao_de_eventos.dir/resources/resources.rc.obj: RC_COMPILER__projeto_gestao_de_eventos_unscanned_Debug C$:/Users/sidne/OneDrive/Área$ de$ Trabalho/Fatec$ 2º$ Semestre/LP$ -$ Maromo/projeto_gestao_de_eventos/cmake-build-debug/resources/resources.rc || cmake_object_order_depends_target_projeto_gestao_de_eventos
   DEP_FILE = CMakeFiles\projeto_gestao_de_eventos.dir\resources\resources.rc.obj.d
@@ -155,7 +122,7 @@ build CMakeFiles/projeto_gestao_de_eventos.dir/resources/resources.rc.obj: RC_CO
 #############################################
 # Link the executable projeto_gestao_de_eventos.exe
 
-build projeto_gestao_de_eventos.exe: C_EXECUTABLE_LINKER__projeto_gestao_de_eventos_Debug CMakeFiles/projeto_gestao_de_eventos.dir/main.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/produto.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/usuario.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/venda.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/evento/evento.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/menu.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/venda_detalhes.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/login.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/variaveis_compartilhadas.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/components/components.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/resources/resources.rc.obj
+build projeto_gestao_de_eventos.exe: C_EXECUTABLE_LINKER__projeto_gestao_de_eventos_Debug CMakeFiles/projeto_gestao_de_eventos.dir/main.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/produto.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/usuario.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/venda.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/evento.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/menu.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/venda_detalhes.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/login.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/variaveis_compartilhadas.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/components.c.obj CMakeFiles/projeto_gestao_de_eventos.dir/resources/resources.rc.obj
   FLAGS = -g
   LINK_LIBRARIES = -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\projeto_gestao_de_eventos.dir
@@ -191,8 +158,6 @@ build rebuild_cache: phony CMakeFiles/rebuild_cache.util
 # =============================================================================
 # Target aliases.
 
-build CreatePDF: phony CreatePDF.exe
-
 build projeto_gestao_de_eventos: phony projeto_gestao_de_eventos.exe
 
 # =============================================================================
@@ -203,7 +168,7 @@ build projeto_gestao_de_eventos: phony projeto_gestao_de_eventos.exe
 #############################################
 # Folder: C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cmake-build-debug
 
-build all: phony CreatePDF.exe projeto_gestao_de_eventos.exe
+build all: phony projeto_gestao_de_eventos.exe
 
 # =============================================================================
 # Built-in targets

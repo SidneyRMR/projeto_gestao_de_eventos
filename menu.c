@@ -3,14 +3,14 @@
 #include <stdlib.h>
 #include <windows.h>
 #include <time.h>
-#include "evento/evento.h"
+#include "evento.h"
 #include "usuario.h"
 #include "produto.h"
 #include "venda.h"
 #include "menu.h"
 #include "venda_detalhes.h"
 #include "variaveis_compartilhadas.h"
-#include "components/components.h"
+#include "components.h"
 #include "login.h"
 
 

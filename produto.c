@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "produto.h"
-#include "components/components.h"
-#include "evento/evento.h"
+#include "components.h"
+#include "evento.h"
 #include "menu.h"
 #include "variaveis_compartilhadas.h"
 
@@ -77,6 +77,7 @@ void criarProduto() {
     produto.preco = p_preco;
     produto.estoque = p_estoque;
     produto.id_evento = opcaoProduto;
+    produto.status = 1;
 
     // Solicitar confirmação
     char confirmacao[4];
@@ -168,7 +169,7 @@ void salvarProduto(Produto produto) {
 
     if (file != NULL) {
         // Escrever os dados do produto no arquivo
-        fprintf(file, "%d '%s' %.2f %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento);
+        fprintf(file, "%d '%s' %.2f %d %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento, produto.status);
         fclose(file);
         centralizarFrase("Produto salvo com sucesso.","success");
     } else {

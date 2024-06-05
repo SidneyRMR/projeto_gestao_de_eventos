@@ -7,8 +7,8 @@ set(CMAKE_C_STANDARD 11)
 set(RESOURCE_FILES resources/resources.rc)
 
 
-add_executable(CreatePDF main.c)
-target_link_libraries(CreatePDF hpdf)
+#add_executable(CreatePDF main.c)
+#target_link_libraries(CreatePDF hpdf)
 
 add_executable(projeto_gestao_de_eventos
         main.c
@@ -18,8 +18,8 @@ add_executable(projeto_gestao_de_eventos
         usuario.h
         venda.c
         venda.h
-        evento/evento.c
-        evento/evento.h
+        evento.c
+        evento.h
         menu.c
         menu.h
         venda_detalhes.c
@@ -28,7 +28,7 @@ add_executable(projeto_gestao_de_eventos
         login.h
         variaveis_compartilhadas.c
         variaveis_compartilhadas.h
-        components/components.c
-        components/components.h
+        components.c
+        components.h
         ${RESOURCE_FILES}
 )

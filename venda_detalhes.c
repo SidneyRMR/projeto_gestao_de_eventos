@@ -5,8 +5,9 @@
 #include "venda_detalhes.h"
 #include "venda.h"
 #include "menu.h"
-#include "evento/evento.h"
-#include "components/components.h"
+#include "evento.h"
+#include "components.h"
+#include "usuario.h"
 
 typedef struct {
     int id_produto;
@@ -217,38 +218,40 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
         return 0;
     }
 
-    char *nomeVenda = obterNomeEvento("venda.txt", opcao);
-    if (nomeVenda == NULL) {
-        nomeVenda = (char*)malloc(strlen("Nada encontrado") + 1);
-        if (nomeVenda != NULL) {
-            strcpy(nomeVenda, "Nada encontrado");
+    Venda venda = buscarVendaPorId(opcao);
+
+    char *nomeUsuario = obterNomeUsuario("usuarios.txt", venda.id_usuario);
+    if (nomeUsuario == NULL) {
+        nomeUsuario = (char*)malloc(strlen("Nada encontrado") + 1);
+        if (nomeUsuario != NULL) {
+            strcpy(nomeUsuario, "Nada encontrado");
         } else {
             centralizarFrase("Erro ao alocar memória","error");
         }
     }
 
-    Venda_detalhes vendas[1000];
+    Venda_detalhes venda_detalhes[1000];
     int count = 0;
 
     // Ler todas as vendas do arquivo
-    while (fscanf(file, "%d %d %d %d '%50[^']' %d %lf", &vendas[count].id, &vendas[count].id_venda,
-                  &vendas[count].id_produto, &vendas[count].id_evento, vendas[count].descricao_produto,
-                  &vendas[count].quantidade_produto, &vendas[count].valor_produto) != EOF) {
-        if (vendas[count].id_venda == opcao) {
+    while (fscanf(file, "%d %d %d %d '%50[^']' %d %lf", &venda_detalhes[count].id, &venda_detalhes[count].id_venda,
+                  &venda_detalhes[count].id_produto, &venda_detalhes[count].id_evento, venda_detalhes[count].descricao_produto,
+                  &venda_detalhes[count].quantidade_produto, &venda_detalhes[count].valor_produto) != EOF) {
+        if (venda_detalhes[count].id_venda == opcao) {
             count++;
         }
     }
     fclose(file);
 
     Produto_Acumulado produtos[1000];
-    int produtosCount = juntarProdutos(vendas, count, produtos);
+    int produtosCount = juntarProdutos(venda_detalhes, count, produtos);
     qsort(produtos, produtosCount, sizeof(Produto_Acumulado), compararProdutosPorIdCrescente);
     double accTotal = 0;
     int accQtd = 0;
 
     // Imprimir cabeçalho da tabela
     system("cls");
-    imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", nomeVenda);
+    imprimirTituloCabecarioDuplo("RELATORIO ESPECIFICO PARA CADA VENDA", nomeUsuario);
     imprimirUsuarioEData();
     printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
     imprimirLinhaDivisoria();
@@ -270,7 +273,7 @@ int relatorioVendaEspecifico(const char *nomeArquivo, int opcao) {
         printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
         imprimirLinhaDivisoria();
     }
-    free(nomeVenda);
+    free(nomeUsuario);
     int sair;
     while (sair != 0) {
         sair = centralizarEObterValorInt("Digite 0 para sair: ");

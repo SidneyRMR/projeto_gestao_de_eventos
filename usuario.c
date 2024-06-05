@@ -2,8 +2,8 @@
 #include <string.h>
 #include <malloc.h>
 #include "usuario.h"
-#include "evento/evento.h"
-#include "components/components.h"
+#include "evento.h"
+#include "components.h"
 #include "menu.h"
 
 // Função para verificar se o login já existe
@@ -76,7 +76,7 @@ void criarUsuario() {
     imprimirTituloCabecarioLista("Valores lidos", NULL);
     centralizarFraseDoisValores("Nome:  ", p_nome);
     centralizarFraseDoisValores("Login: ", p_login);
-    centralizarFraseDoisValores("Senha: ", p_senha);
+    //centralizarFraseDoisValores("Senha: ", p_senha);
     centralizarFraseDoisValores("Evento: ", nomeEvento);
     imprimirLinhaLista();
 

@@ -5,7 +5,7 @@
 #include "login.h"
 #include "menu.h"
 #include "variaveis_compartilhadas.h"
-#include "components/components.h"
+#include "components.h"
 
 #define MAX_USUARIOS 100 // Defina o número máximo de usuários
 
@@ -67,13 +67,14 @@ int loginAux() {
     }
     centralizarFrase("Login invalido, tente novamente.","warning");
     Sleep(500);
-    system("cls");
+    //system("cls");
     return 0;
 }
 
 // Função de login
 void login() {
     carregarUsuarios(); // Carregar os usuários do arquivo
+    system("cls");
     int tentativas = 3;
     while (tentativas > 0) {
         if (loginAux()) {
@@ -84,6 +85,7 @@ void login() {
             char fraseTentativas[114];
             sprintf(fraseTentativas, "Voce tem %d tentativas restantes.", tentativas);
             centralizarFrase(fraseTentativas, "warning");
+            Sleep(1000);
         }
     }
     centralizarFrase("Numero maximo de tentativas excedido. Saindo...","error");

@@ -8,7 +8,7 @@
 #include "venda_detalhes.h"
 #include "usuario.h"
 #include "variaveis_compartilhadas.h"
-#include "components/components.h"
+#include "components.h"
 
 
 #define MAX_PRODUTO 100
@@ -374,7 +374,7 @@ void criarVenda() {
     int contId = 0;
     for (int i = 0; i < contProduto; ++i) {
         venda_detalhes.id = idUltimaVendaDetalhes + contId;
-        venda_detalhes.id_venda = idUltimaVenda;
+        venda_detalhes.id_venda = idUltimaVenda-1;
         venda_detalhes.id_produto = resumoVendas[i].id_produto;
         strcpy(venda_detalhes.descricao_produto, resumoVendas[i].descricao_produto);
         venda_detalhes.quantidade_produto = resumoVendas[i].quantidade_produto;
@@ -458,4 +458,26 @@ int listarProdutosVenda() {
     imprimirLinhaDivisoria();
     fclose(file);
     return 0;
+}
+Venda buscarVendaPorId(int id) {
+    FILE *file;
+    char filename[] = "data/vendas.txt";
+    Venda venda;
+
+    file = fopen(filename, "r");
+    if (file != NULL) {
+        while (fscanf(file, "%d %10s %d %d '%15[^']'", &venda.id, venda.data, &venda.id_evento, &venda.id_usuario, venda.formaPgto) != EOF) {
+            if (venda.id == id) {
+                fclose(file);
+                return venda;
+            }
+        }
+        fclose(file);
+    } else {
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
+    }
+
+    // Retornar um usuário vazio caso não seja encontrado
+    Venda vendaNaoEncontrada = {0, "", 0, 0, ""};
+    return vendaNaoEncontrada;
 }

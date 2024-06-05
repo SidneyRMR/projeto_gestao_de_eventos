@@ -1,4 +1,4 @@
 "C:\Users\sidne\AppData\Local\JetBrains\CLion 2023.3.4\bin\cmake\win\x64\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug "-DCMAKE_MAKE_PROGRAM=C:/Users/sidne/AppData/Local/JetBrains/CLion 2023.3.4/bin/ninja/win/x64/ninja.exe" -G Ninja -S "C:\Users\sidne\OneDrive\Área de Trabalho\Fatec 2º Semestre\LP - Maromo\projeto_gestao_de_eventos" -B "C:\Users\sidne\OneDrive\Área de Trabalho\Fatec 2º Semestre\LP - Maromo\projeto_gestao_de_eventos\cmake-build-debug"
--- Configuring done (0.3s)
+-- Configuring done (0.2s)
 -- Generating done (0.0s)
 -- Build files have been written to: C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cmake-build-debug

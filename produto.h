@@ -16,8 +16,8 @@ typedef struct {
 #include <string.h>
 #include <stdlib.h>
 #include "produto.h" // Inclui a definição da estrutura Produto e os protótipos das funções relacionadas a produtos
-#include "components/components.h" // Inclui funções auxiliares para interface de usuário
-#include "evento/evento.h" // Inclui funções relacionadas a eventos
+#include "components.h" // Inclui funções auxiliares para interface de usuário
+#include "evento.h" // Inclui funções relacionadas a eventos
 #include "menu.h" // Inclui funções relacionadas a menus
 #include "variaveis_compartilhadas.h" // Inclui variáveis compartilhadas
 

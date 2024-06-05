@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "evento.h"
-#include "../menu.h"
-#include "../components/components.h"
+#include "menu.h"
+#include "components.h"
 
 // Definição da estrutura para armazenar os dados do evento
 void criarEvento() {

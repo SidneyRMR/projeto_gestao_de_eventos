@@ -178,12 +178,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "evento/evento.c",
+			"path" : "evento.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "evento/evento.h",
+			"path" : "evento.h",
 			"sourceGroupIndex" : 1
 		},
 		{
@@ -233,12 +233,12 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "components/components.c",
+			"path" : "components.c",
 			"sourceGroupIndex" : 0
 		},
 		{
 			"backtrace" : 1,
-			"path" : "components/components.h",
+			"path" : "components.h",
 			"sourceGroupIndex" : 1
 		},
 		{
