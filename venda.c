@@ -8,7 +8,7 @@
 #include "venda_detalhes.h"
 #include "usuario.h"
 #include "variaveis_compartilhadas.h"
-#include "components/components.h"
+#include "components.h"
 
 
 #define MAX_PRODUTO 100
@@ -122,7 +122,7 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 // Se o produto já existe, atualiza apenas a quantidade
                 resumoVendas[i].quantidade_produto += qtde;
                 produtoExistente = 1;
-                centralizarFrase("---------      Adicionando um item      ---------", "success");
+                centralizarFrase("Adicionando um item", "success");
                 break; // Sai do loop após encontrar o produto
             }
         }
@@ -134,9 +134,9 @@ void adicionarProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[contProduto].quantidade_produto = qtde;
                 resumoVendas[contProduto].valor_produto = produto.preco;
                 contProduto++;
-                centralizarFrase("---------      Adicionando um item       ---------", "success");
+                centralizarFrase("Adicionando um item", "success");
             } else {
-                centralizarFrase("---------      Limite de produtos atingido!      ---------", "error");
+                centralizarFrase("Limite de produtos atingido!", "error");
             }
         }
     }
@@ -148,7 +148,7 @@ void removerProdutoResumo(int codigoProd, int qtde) {
         if (resumoVendas[i].id_produto == codigoProd) {
             if (resumoVendas[i].quantidade_produto > qtde) {
                 resumoVendas[i].quantidade_produto -= qtde;
-                centralizarFrase("Removendo items da venda!", "success");
+                centralizarFrase("Removendo items da venda!", "warning");
                 break; // Sai do loop após atualizar a quantidade do produto
             } else if (resumoVendas[i].quantidade_produto <= qtde) {
                 resumoVendas[i].id_produto = 0; // Limpa o id do produto
@@ -156,10 +156,10 @@ void removerProdutoResumo(int codigoProd, int qtde) {
                 resumoVendas[i].quantidade_produto = 0; // Limpa a quantidade do produto
                 resumoVendas[i].valor_produto = 0.0; // Limpa o valor do produto
                 contProduto = contProduto -1;
-                centralizarFrase("Removendo um item da venda!", "success");
+                centralizarFrase("Removendo um item da venda!", "warning");
                 break; // Sai do loop após atualizar a quantidade do produto
             } else {
-                centralizarFrase("Digite uma quantidade valida!", "warning");
+                centralizarFrase("Digite uma quantidade valida!", "error");
                 break; // Sai do loop
             }
         }
@@ -176,14 +176,10 @@ void limparResumo() {
         resumoVendas[i].valor_produto = 0.0; // Limpa o valor do produto
     }
     totalGeral = 0.00;
-    centralizarFrase("-------            Limpando todos os itens da venda!           -------", "success");
+    centralizarFrase("Limpando todos os itens da venda!", "warning");
     //system("PAUSE");
     contProduto = 0; // Redefine o contador de produtos para zero
-    //itensPedido = 0;
     }
-    //else {
-    //    centralizarFrase("-------            Nao possui itens na venda ainda!           -------", "error");
-    //}
 }
 
 
@@ -202,13 +198,12 @@ void opcoesVenda() {
         centralizarFrase("   0  |  Digite 0 e para sair do programa.                        ", "default");
     imprimirLinhaDivisoria();
     int opcao = centralizarEObterValorInt("Escolha uma opcao ou codigo do produto:");
-
     switch (opcao) {
         case 0:
             if(strcmp(getUsuarioCompartilhado().tipo, "vendedor")) {
                 escolherMenu();
             } else {
-                centralizarFrase("Logoff feito com sucesso!...", "success");
+                centralizarFrase("Logoff feito com sucesso!", "success");
                 login();
             }
             break;
@@ -276,7 +271,6 @@ void resumoVenda() {
         printf("|                        ---     TOTAL GERAL     ---                        |   QTD %-10d  |   R$ %10.2f  |\n", totalQtde, totalGeral);
         imprimirLinhaDivisoria();
     }
-
 }
 
 int verificaValorPago(double valorVenda) {
@@ -362,7 +356,7 @@ void criarVenda() {
     if (file != NULL) {
         fprintf(file, "%d %s %d %d '%s'\n", venda.id, venda.data, venda.id_evento, venda.id_usuario, venda.formaPgto);
         fclose(file);
-        centralizarFrase("--------        Venda salva com sucesso!        --------", "success");
+        centralizarFrase("Venda salva com sucesso!", "success");
     } else {
         centralizarFrase("Não foi possível abrir o arquivo.","error");
     }
@@ -374,7 +368,7 @@ void criarVenda() {
     int contId = 0;
     for (int i = 0; i < contProduto; ++i) {
         venda_detalhes.id = idUltimaVendaDetalhes + contId;
-        venda_detalhes.id_venda = idUltimaVenda;
+        venda_detalhes.id_venda = idUltimaVenda-1;
         venda_detalhes.id_produto = resumoVendas[i].id_produto;
         strcpy(venda_detalhes.descricao_produto, resumoVendas[i].descricao_produto);
         venda_detalhes.quantidade_produto = resumoVendas[i].quantidade_produto;
@@ -423,6 +417,7 @@ void criarVenda() {
     system("cls");
 }
 
+
 int listarProdutosVenda() {
     FILE *file;
     char filename[] = "data/produtos.txt";
@@ -439,23 +434,54 @@ int listarProdutosVenda() {
     printf("| %-3s | %-75s | %-10s | %-15s |\n", "Cod", "Descricao", "Preco", "Estoque");
     imprimirLinhaDivisoria();
 
+    int foundProduct = 0; // Variável para rastrear se algum produto foi encontrado
+
     for (int i = 0; i < MAX_PRODUTO; i++) {
         if (fscanf(file, "%d '%[^']' %lf %d %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
             int quantidade_vendida = 0;
             if (produto.id_evento == getUsuarioCompartilhado().id_evento && produto.status == 1) {
-
-            for (int j = 0; j < MAX_RESUMO_VENDA; j++) {
-                if (resumoVendas[j].id_produto == produto.id ) {
-                    quantidade_vendida += resumoVendas[j].quantidade_produto;
+                for (int j = 0; j < MAX_RESUMO_VENDA; j++) {
+                    if (resumoVendas[j].id_produto == produto.id ) {
+                        quantidade_vendida += resumoVendas[j].quantidade_produto;
+                    }
                 }
-            }
-            printf("| %-3d | %-75s | %-10.2f | %-15d |\n", produto.id, produto.descricao, produto.preco, produto.estoque - quantidade_vendida);
+                printf("| %-3d | %-75s | %-10.2f | %-15d |\n", produto.id, produto.descricao, produto.preco, produto.estoque - quantidade_vendida);
+                foundProduct = 1; // Marca que pelo menos um produto foi encontrado
+
             };
         } else {
             break; // Se não houver mais produtos no arquivo, termina o loop
         }
     }
+
+    if (!foundProduct) { // Se nenhum produto foi encontrado
+        centralizarFrase("Nenhum produto encontrado.","error");
+    }
+
     imprimirLinhaDivisoria();
     fclose(file);
     return 0;
+}
+
+Venda buscarVendaPorId(int id) {
+    FILE *file;
+    char filename[] = "data/vendas.txt";
+    Venda venda;
+
+    file = fopen(filename, "r");
+    if (file != NULL) {
+        while (fscanf(file, "%d %10s %d %d '%15[^']'", &venda.id, venda.data, &venda.id_evento, &venda.id_usuario, venda.formaPgto) != EOF) {
+            if (venda.id == id) {
+                fclose(file);
+                return venda;
+            }
+        }
+        fclose(file);
+    } else {
+        centralizarFrase("Não foi possível abrir o arquivo.","error");
+    }
+
+    // Retornar um usuário vazio caso não seja encontrado
+    Venda vendaNaoEncontrada = {0, "", 0, 0, ""};
+    return vendaNaoEncontrada;
 }

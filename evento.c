@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "evento.h"
-#include "../menu.h"
-#include "../components/components.h"
+#include "menu.h"
+#include "components.h"
 
 // Definição da estrutura para armazenar os dados do evento
 void criarEvento() {
@@ -57,7 +57,7 @@ void criarEvento() {
     // Salvar o evento
     salvarEvento(evento);
 
-    centralizarFrase("Evento criado com sucesso.", "success");
+    //centralizarFrase("Evento criado com sucesso.", "success");
 }
 
 
@@ -67,35 +67,33 @@ void listarEventos() {
     file = fopen(filename, "r");
 
     if (file != NULL) {
-
         imprimirTituloCabecario("LISTA DE EVENTOS", NULL);
         imprimirUsuarioEData();
 
         printf("| %-3s | %-20s | %-57s | %-10s | %-10s |\n", "Cod", "Evento", "Descricao", "Data", "Status");
         imprimirLinhaDivisoria();
 
-        // Variável para armazenar cada registro lido do arquivo
         Evento evento;
+        int encontrouEventos = 0;
 
-        // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%[^']' '%[^']' %s %d", &evento.id, evento.evento, evento.descricao, evento.data, &evento.status) != EOF) {
             char status[10];
-            if(evento.id == 0) continue;
+            if(evento.id == 0) continue; // Condição para ignorar registros com ID zero, se necessário
             if(evento.status == 1){
                 strcpy(status, "Ativo");
             } else {
                 strcpy(status, "Inativo");
             }
             printf("| %-3d | %-20s | %-57s | %-10s | %-10s |\n", evento.id, evento.evento, evento.descricao, evento.data, status);
+            encontrouEventos = 1;
+        }
+        if (!encontrouEventos) {
+            centralizarFrase("Nenhum evento encontrado.", "warning");
         }
         imprimirLinhaDivisoria();
         fclose(file);
-
-
-
-
     } else {
-        centralizarFrase("Não foi possível abrir o arquivo.","error");
+        centralizarFrase("Não foi possível abrir o arquivo.", "error");
     }
 }
 

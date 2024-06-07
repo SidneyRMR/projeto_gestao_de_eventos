@@ -2,8 +2,8 @@
 #include <string.h>
 #include <malloc.h>
 #include "usuario.h"
-#include "evento/evento.h"
-#include "components/components.h"
+#include "evento.h"
+#include "components.h"
 #include "menu.h"
 
 // Função para verificar se o login já existe
@@ -76,7 +76,7 @@ void criarUsuario() {
     imprimirTituloCabecarioLista("Valores lidos", NULL);
     centralizarFraseDoisValores("Nome:  ", p_nome);
     centralizarFraseDoisValores("Login: ", p_login);
-    centralizarFraseDoisValores("Senha: ", p_senha);
+    //centralizarFraseDoisValores("Senha: ", p_senha);
     centralizarFraseDoisValores("Evento: ", nomeEvento);
     imprimirLinhaLista();
 
@@ -110,8 +110,9 @@ void criarUsuario() {
     // Salvar o usuário
     salvarUsuario(usuario);
 
-    centralizarFrase("Usuario criado com sucesso.", "success");
+    //centralizarFrase("Usuario criado com sucesso.", "success");
 }
+
 
 
 int listarUsuarios() {
@@ -121,14 +122,14 @@ int listarUsuarios() {
 
     if (file != NULL) {
         // Imprimir cabeçalho da tabela
-        imprimirTituloCabecario("LISTA DE USUARIOS",NULL);
+        imprimirTituloCabecario("LISTA DE USUARIOS", NULL);
         imprimirUsuarioEData();
 
         printf("| %-3s | %-30s | %-20s | %-13s | %-23s | %-8s |\n", "Cod", "Nome", "Login", "Tipo", "Evento", "Status");
         imprimirLinhaDivisoria();
 
         Usuario usuario;
-        char aux_senha[20]; // Ajuste o tamanho conforme necessário
+        int encontrouUsuarios = 0;
 
         // Ler e exibir cada linha do arquivo
         while (fscanf(file, "%d '%30[^']' '%15[^']' '%11[^']' %s %d %d", &usuario.id, usuario.nome, usuario.login, usuario.senha, usuario.tipo, &usuario.status, &usuario.id_evento) != EOF) {
@@ -138,18 +139,23 @@ int listarUsuarios() {
             } else {
                 strcpy(status, "Inativo");
             }
-            //strcpy(aux_senha, "***");
             char* nomeEvento = obterNomeEvento("eventos.txt", usuario.id_evento);
 
             printf("| %-3d | %-30.30s | %-20.20s | %-13s | %-23.23s | %-8s |\n",
                    usuario.id, usuario.nome, usuario.login, usuario.tipo, nomeEvento, status);
 
-
+            free(nomeEvento);  // Liberar memória alocada para o nome do evento
+            encontrouUsuarios = 1;
+        }
+        if (!encontrouUsuarios) {
+            centralizarFrase("Nenhum usuário encontrado.", "warning");
         }
         imprimirLinhaDivisoria();
         fclose(file);
+
+
     } else {
-        centralizarFrase("Não foi possível abrir o arquivo.","error");
+        centralizarFrase("Não foi possível abrir o arquivo.", "error");
     }
     return 0;
 }

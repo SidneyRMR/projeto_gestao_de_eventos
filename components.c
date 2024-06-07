@@ -1,17 +1,14 @@
 #include <stdio.h>
 #include <windows.h>
 #include <malloc.h>
-#include "../variaveis_compartilhadas.h"
-#include "../menu.h"
+#include "variaveis_compartilhadas.h"
+#include "menu.h"
 #include "components.h"
-#include "../evento/evento.h"
-
+#include "evento.h"
 #include <conio.h>
-
 
 #define LARGURA 114
 #define LARGURALISTA 32
-
 
 
 void setColorScheme(ColorScheme scheme) {

@@ -1,4 +1,4 @@
-# Install script for directory: C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos
+# Install script for directory: C:/Users/sidne/OneDrive/Área de Trabalho/repositorio final Maromo/projeto_gestao_de_eventos
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -45,5 +45,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "C:/Users/sidne/OneDrive/Área de Trabalho/Fatec 2º Semestre/LP - Maromo/projeto_gestao_de_eventos/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/sidne/OneDrive/Área de Trabalho/repositorio final Maromo/projeto_gestao_de_eventos/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

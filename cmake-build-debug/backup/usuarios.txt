@@ -1,0 +1,2 @@
+1 'Administrador' 'admin' 'admin' administrador 1 0
+2 'u1' 'u1' 'u1' vendedor 1 1
