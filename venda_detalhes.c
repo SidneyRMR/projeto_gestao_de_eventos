@@ -369,16 +369,6 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
         printf("| %-15s | %-55s | %-10s | %-10s | %-10s |\n", "Cod", "Produto", "Quantidade", "Valor", "Total");
         imprimirLinhaDivisoria();
 
-        fseek(file, 0, SEEK_END);
-        if (ftell(file) == 0) {
-            imprimirLinhaDivisoria();
-            centralizarFrase(" Nenhuma venda encontrada.", "warning");
-            imprimirLinhaDivisoria();
-            fclose(file);
-            return 0;
-        }
-        rewind(file);
-
         Venda_detalhes vendas[1000];
         int count = 0;
 
@@ -408,19 +398,25 @@ int relatorioVendasGeral(char* criterio, char* ordem) {
 
         double accTotal = 0;
         int accQtd = 0;
+        if (produtosCount == 0) {
+            imprimirLinhaDivisoria();
+            centralizarFrase(" Nenhuma venda encontrada para as vendas gerais.", "warning");
+            imprimirLinhaDivisoria();
+        } else {
+            for (int i = 0; i < produtosCount; i++) {
+                accTotal += produtos[i].valor_total;
+                accQtd += produtos[i].quantidade_total;
+                printf("| %-15d | %-55s | %-10d | %-10.2lf | %-10.2lf | \n",
+                       produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
+                       produtos[i].valor_total / produtos[i].quantidade_total,
+                       produtos[i].valor_total);
+            }
 
-        for (int i = 0; i < produtosCount; i++) {
-            accTotal += produtos[i].valor_total;
-            accQtd += produtos[i].quantidade_total;
-            printf("| %-15d | %-55s | %-10d | %-10.2lf | %-10.2lf | \n",
-                   produtos[i].id_produto, produtos[i].descricao_produto, produtos[i].quantidade_total,
-                   produtos[i].valor_total / produtos[i].quantidade_total,
-                   produtos[i].valor_total);
+            imprimirLinhaDivisoria();
+            printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n",
+                   accQtd, accTotal);
+            imprimirLinhaDivisoria();
         }
-
-        imprimirLinhaDivisoria();
-        printf("|                       --------     TOTAL GERAL     --------               |  QTD   %-3d |     R$  %12.2lf    |\n", accQtd, accTotal);
-        imprimirLinhaDivisoria();
         // Opção para alterar a ordenação
         //imprimirTituloCabecario("Digite 1 para alterar a ordenacao ou 0 para sair", NULL);
         int opcaoOrdenacao;
