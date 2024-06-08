@@ -1,4 +1,4 @@
-C:/maromoForkII/projeto_gestao_de_eventos/cmake-build-debug/CMakeFiles/CreatePDF.dir
-C:/maromoForkII/projeto_gestao_de_eventos/cmake-build-debug/CMakeFiles/projeto_gestao_de_eventos.dir
-C:/maromoForkII/projeto_gestao_de_eventos/cmake-build-debug/CMakeFiles/edit_cache.dir
-C:/maromoForkII/projeto_gestao_de_eventos/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+C:/Users/sidne/OneDrive/Área de Trabalho/repositorio final Maromo/projeto_gestao_de_eventos/cmake-build-debug/CMakeFiles/CreatePDF.dir
+C:/Users/sidne/OneDrive/Área de Trabalho/repositorio final Maromo/projeto_gestao_de_eventos/cmake-build-debug/CMakeFiles/projeto_gestao_de_eventos.dir
+C:/Users/sidne/OneDrive/Área de Trabalho/repositorio final Maromo/projeto_gestao_de_eventos/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/sidne/OneDrive/Área de Trabalho/repositorio final Maromo/projeto_gestao_de_eventos/cmake-build-debug/CMakeFiles/rebuild_cache.dir

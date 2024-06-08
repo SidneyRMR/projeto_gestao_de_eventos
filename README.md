@@ -214,6 +214,7 @@ Este projeto foi desenvolvido com dedicação e esforço pela nossa equipe, comp
 - [Sidney Mantovani](https://github.com/SidneyRMR)
 - [Renan Mazzilli](https://github.com/renan-mazzilli)
 - [Gustavo Zafani](https://github.com/gustapolettini)
+- [Marcus Vinicius Fernandes](https://github.com/marcusfrnds)
   <br>
 
 Estamos à disposição para ajudá-lo em qualquer questão relacionada ao Controle de Vendas em Eventos. Seu feedback é extremamente importante para nós, pois nos ajuda a aprimorar continuamente o nosso sistema.
