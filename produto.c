@@ -2,8 +2,8 @@
 #include <string.h>
 #include <stdlib.h>
 #include "produto.h"
-#include "components/components.h"
-#include "evento/evento.h"
+#include "components.h"
+#include "evento.h"
 #include "menu.h"
 #include "variaveis_compartilhadas.h"
 
@@ -77,6 +77,7 @@ void criarProduto() {
     produto.preco = p_preco;
     produto.estoque = p_estoque;
     produto.id_evento = opcaoProduto;
+    produto.status = 1;
 
     // Solicitar confirmação
     char confirmacao[4];
@@ -96,7 +97,7 @@ void criarProduto() {
     // Salvar o produto
     salvarProduto(produto);
 
-    centralizarFrase("Produto criado com sucesso.", "success");
+    //centralizarFrase("Produto criado com sucesso.", "success");
 }
 
 int listarProdutos() {
@@ -112,6 +113,7 @@ int listarProdutos() {
         imprimirLinhaDivisoria();
 
         Produto produto;
+        int encontrouProdutos = 0;
 
         while (fscanf(file, "%d '%[^']' %lf %d %d %d", &produto.id, produto.descricao, &produto.preco, &produto.estoque, &produto.id_evento, &produto.status) != EOF) {
             char* nomeEvento = obterNomeEvento("eventos.txt", produto.id_evento);
@@ -122,13 +124,15 @@ int listarProdutos() {
             } else {
                 strcpy(prodAtivado, "Inativo");
             }
-
+            //rewind(file);
             printf("| %-3d | %-50.50s | %-10.2f | %-9d | %-15.15s | %-10s |\n",
                    produto.id, produto.descricao, produto.preco, produto.estoque, nomeEvento, prodAtivado);
-            //imprimirLinhaDivisoria();
             free(nomeEvento);  // Liberar memória alocada para o nome do evento
+            encontrouProdutos = 1;
         }
-
+        if (!encontrouProdutos) {
+            centralizarFrase("Nenhum produto encontrado.", "warning");
+        }
         imprimirLinhaDivisoria();
         fclose(file);
     } else {
@@ -168,7 +172,7 @@ void salvarProduto(Produto produto) {
 
     if (file != NULL) {
         // Escrever os dados do produto no arquivo
-        fprintf(file, "%d '%s' %.2f %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento);
+        fprintf(file, "%d '%s' %.2f %d %d %d\n", produto.id, produto.descricao, produto.preco, produto.estoque, produto.id_evento, produto.status);
         fclose(file);
         centralizarFrase("Produto salvo com sucesso.","success");
     } else {

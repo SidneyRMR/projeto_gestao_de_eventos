@@ -16,7 +16,7 @@ Certifique-se de que seu sistema atenda aos seguintes requisitos mínimos para e
 •	Espaço em Disco: Mínimo de 500 MB
 ## Instalação
 Download do Software: Para baixar o Programa de Controle de Vendas em Eventos, clique no link abaixo para acessar o Mega e fazer o download do instalador: Download do Programa de Controle de Vendas em Eventos:
-Acesse o [link](https://mega.nz/file/Iv81URrQ#-BXR4LXbpPob8ZmYLHR0GNS0JJP0yGA0RYRkKAeRS00) para download.<br>
+Acesse o [link](https://mega.nz/file/Qv0lxZpT#sHhGu42BHde2YkGSJieXlGDSwJiA-rmD6ehg8t3kiqs) para download.<br>
 Faça o Download do instalador
 ## Instruções de Instalação
 -	Após baixar o arquivo de instalação, clique duas vezes para iniciar o processo de instalação.

@@ -66,4 +66,7 @@ void resumoVenda();
  */
 void limparResumo();
 
+Venda buscarVendaPorId(int id);
+
+
 #endif // VENDA_H
