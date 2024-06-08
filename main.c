@@ -15,9 +15,6 @@
 #define MKDIR(path, mode) mkdir(path, mode)
 #endif
 
-//#include <hpdf.h>
-//todo - preparar apresentação powerpoint e documentação (pode ser em .md - confirmar com Ana Celia) e guia de usuario(como usar em .md) para dia 8 de junho *******************************
-
 void ajustarTamanhoJanela(int largura, int altura) {
     HWND hwnd = GetConsoleWindow(); // Obtém o identificador da janela do console
     RECT rect;
@@ -37,44 +34,6 @@ void centralizarJanela() {
     int posY = (screenHeight - windowHeight) / 2; // Calcula a posição Y para centralizar a janela
     MoveWindow(hwnd, posX, posY, windowWidth, windowHeight, TRUE); // Move a janela para as coordenadas centralizadas
 }
-
-/*
-void error_handler(HPDF_STATUS error_no, HPDF_STATUS detail_no, void *user_data) {
-    printf("Error: error_no=%04X, detail_no=%u\n", (HPDF_UINT)error_no, (HPDF_UINT)detail_no);
-}
-
-int impressaoTeste() {
-    HPDF_Doc pdf;
-    HPDF_Page page;
-    HPDF_Font font;
-
-    pdf = HPDF_New(error_handler, NULL);
-    if (!pdf) {
-        printf("Failed to create pdf object\n");
-        return 1;
-    }
-
-    page = HPDF_AddPage(pdf);
-    HPDF_Page_SetSize(page, HPDF_PAGE_SIZE_A4, HPDF_PAGE_PORTRAIT);
-
-    font = HPDF_GetFont(pdf, "Helvetica", NULL);
-    HPDF_Page_SetFontAndSize(page, font, 24);
-
-    HPDF_Page_BeginText(page);
-    HPDF_Page_TextOut(page, 50, 750, "Hello, World!");
-    HPDF_Page_EndText(page);
-
-    HPDF_SaveToFile(pdf, "output.pdf");
-
-    HPDF_Free(pdf);
-    return 0;
-}
-
- CmakeList :
- # Adicione os diretórios de inclusão e biblioteca manualmente
-include_directories("C:/libsC/libharu/include")
-link_directories("C:/libsC/libharu/build/src")
-*/
 
 // Função para obter o nome do arquivo sem a extensão
 char* get_filename(const char* path) {
@@ -118,7 +77,7 @@ void mostrarBarraProgresso(const char* mensagem) {
             printf(" ");
         }
         printf("] %d%%", (i * 100) / total);
-        Sleep(1);  // tempo de espera para simular o progresso
+        Sleep(0);  // tempo de espera para simular o progresso
     }
     printf("\n");
 }
